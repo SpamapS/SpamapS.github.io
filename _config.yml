@@ -16,6 +16,7 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://spamaps.github.io" # the base hostname & protocol for your site
 twitter_username: SpamapS
 github_username:  SpamapS
+permalink: "/:year/:month/:title/"
 
 # Build settings
 markdown: kramdown
