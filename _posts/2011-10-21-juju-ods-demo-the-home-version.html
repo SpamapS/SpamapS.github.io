@@ -12,44 +12,42 @@ author_login: clint
 author_email: clint@fewbar.com
 author_url: http://fewbar.com
 excerpt: "A few weeks ago I gave a live demo during Canonical CEO Jane Silber's keynote
-  at the&nbsp;<a href=\"http:&#47;&#47;www.openstack.org&#47;community&#47;events&#47;openstack-conference-fall-2011&#47;\">Essex
-  OpenStack Conference<&#47;a>, which was held in Boston October 4-7 (See&nbsp;<a
-  href=\"http:&#47;&#47;fewbar.com&#47;2011&#47;10&#47;openstack-an-amoeba-on-a-mission&#47;\">my
-  previous post for details of the conference and summit<&#47;a>). The demo was meant
+  at the <a href=\"http://www.openstack.org/community/events/openstack-conference-fall-2011/\">Essex
+  OpenStack Conference</a>, which was held in Boston October 4-7 (See <a href=\"http://fewbar.com/2011/10/openstack-an-amoeba-on-a-mission/\">my
+  previous post for details of the conference and summit</a>). The demo was meant
   to showcase our new favorite cloud technology at Canonical, juju. In order to do
-  this,&nbsp;we deployed hadoop on top of our private OpenStack cloud (also deployed
-  earlier in the week via juju and Ubuntu Orchestra) and fed it a \"real\" workload
-  (a big giant chunk of data to sort) in less than 5 minutes.\r\n\r\nI've had a few
-  requests to explain how it works, so, here is a step by step on how to repeat said
-  demo.\r\n\r\nFirst, you need to setup juju to be able to talk to your cloud. The
-  simplest way to do this is to sign up for an AWS account on Amazon, and get EC2
-  credentials (a secret key and a key ID is needed).\r\n\r\nIf you install juju in
-  Ubuntu 11.10, or from the <a href=\"https:&#47;&#47;launchpad.net&#47;~juju&#47;+archive&#47;pkgs\">daily
-  build PPA<&#47;a> in any other release, you'll get a skeleton environments.yaml
-  just by running 'juju'.\r\n\r\nOnce this is done, edit ~&#47;.juju&#47;environments.yaml
-  to add your access-key: and secret-key:. Optionally, you can set them in AWS_ACCESS_KEY_ID
-  and AWS_SECRET_ACCESS_KEY in the environment.\r\n\r\nNow, you need the \"magic\"
-  bit that turns juju status changes into commands for the \"gource\" source code
-  visualization tool. Its available here:\r\n\r\nhttp:&#47;&#47;bazaar.launchpad.net&#47;~clint-fewbar&#47;juju&#47;gource-output&#47;view&#47;head:&#47;misc&#47;status2gource.py\r\n\r\n(wgettable
-  here)\r\n\r\n<code>\r\nhttp:&#47;&#47;bazaar.launchpad.net&#47;~clint-fewbar&#47;juju&#47;gource-output&#47;download&#47;head:&#47;status2gource.py-20110908235607-pfnddi4d114nl8qd-1&#47;status2gource.py\r\n<&#47;code>\r\n\r\nYou'll
+  this, we deployed hadoop on top of our private OpenStack cloud (also deployed earlier
+  in the week via juju and Ubuntu Orchestra) and fed it a \"real\" workload (a big
+  giant chunk of data to sort) in less than 5 minutes.\r\n\r\nI've had a few requests
+  to explain how it works, so, here is a step by step on how to repeat said demo.\r\n\r\nFirst,
+  you need to setup juju to be able to talk to your cloud. The simplest way to do
+  this is to sign up for an AWS account on Amazon, and get EC2 credentials (a secret
+  key and a key ID is needed).\r\n\r\nIf you install juju in Ubuntu 11.10, or from
+  the <a href=\"https://launchpad.net/~juju/+archive/pkgs\">daily build PPA</a> in
+  any other release, you'll get a skeleton environments.yaml just by running 'juju'.\r\n\r\nOnce
+  this is done, edit ~/.juju/environments.yaml to add your access-key: and secret-key:.
+  Optionally, you can set them in AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in the
+  environment.\r\n\r\nNow, you need the \"magic\" bit that turns juju status changes
+  into commands for the \"gource\" source code visualization tool. Its available here:\r\n\r\nhttp://bazaar.launchpad.net/~clint-fewbar/juju/gource-output/view/head:/misc/status2gource.py\r\n\r\n(wgettable
+  here)\r\n\r\n<code>\r\nhttp://bazaar.launchpad.net/~clint-fewbar/juju/gource-output/download/head:/status2gource.py-20110908235607-pfnddi4d114nl8qd-1/status2gource.py\r\n</code>\r\n\r\nYou'll
   also need to install the 'gource' visualization tool. I only tried this on Ubuntu
   11.10, but it is available on other releases as well.\r\n\r\nMake sure your desired
-  target environment is either the only one in .juju&#47;environments.yaml, or set
-  to be the default with 'default: xxxx' at the root of the file. You need 'juju status'
+  target environment is either the only one in .juju/environments.yaml, or set to
+  be the default with 'default: xxxx' at the root of the file. You need 'juju status'
   to return something meaningful (after bootstrap) for status2gource.py to work.\r\n\r\nNow,
   in its own terminal, run this, note that cof_orange_hex.png is part of the official
   Ubuntu logo packs, but I forget where I got that. You may omit that commandline
   argument if you like, and a generic \"person\" image will be used.\r\n\r\n<code>python
   -u status2gource.py | gource --highlight-dirs \\\r\n--file-idle-time 1000000 \\\r\n--log-format
-  custom \\\r\n--default-user-image cof_orange_hex.png \\\r\n--user-friction 0.5 \\\r\n-<&#47;code>\r\n\r\nThis
+  custom \\\r\n--default-user-image cof_orange_hex.png \\\r\n--user-friction 0.5 \\\r\n-</code>\r\n\r\nThis
   will not show anything until juju bootstrap is done and 'juju status' shows the
   machine 0 running. If you already have services deployed, it should build the tree
-  rapidly.\r\n\r\nSo next if you haven't done it already\r\n\r\n<code>juju bootstrap\r\n<&#47;code>\r\nOnce
+  rapidly.\r\n\r\nSo next if you haven't done it already\r\n\r\n<code>juju bootstrap\r\n</code>\r\nOnce
   your instance starts up, you should see a gource window pop up and the first two
-  bits, the bootstrap node and the machine 0 node, will be added.\r\n\r\n<a href=\"http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2011&#47;10&#47;Screenshot-at-2011-10-21-1539421.png\"><img
+  bits, the bootstrap node and the machine 0 node, will be added.\r\n\r\n<a href=\"http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2011/10/Screenshot-at-2011-10-21-1539421.png\"><img
   class=\"size-medium wp-image-460 alignnone\" title=\"Screenshot at 2011-10-21 15:39:42\"
-  src=\"http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2011&#47;10&#47;Screenshot-at-2011-10-21-1539421-300x233.png\"
-  alt=\"\" width=\"300\" height=\"233\" &#47;><&#47;a>\r\n\r\n"
+  src=\"http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2011/10/Screenshot-at-2011-10-21-1539421-300x233.png\"
+  alt=\"\" width=\"300\" height=\"233\" /></a>\r\n\r\n"
 wordpress_id: 454
 wordpress_url: http://fewbar.com/?p=454
 date: '2011-10-21 17:03:23 -0700'
@@ -69,69 +67,69 @@ tags:
 - aws
 - gource
 ---
-<p>A few weeks ago I gave a live demo during Canonical CEO Jane Silber's keynote at the&nbsp;<a href="http:&#47;&#47;www.openstack.org&#47;community&#47;events&#47;openstack-conference-fall-2011&#47;">Essex OpenStack Conference<&#47;a>, which was held in Boston October 4-7 (See&nbsp;<a href="http:&#47;&#47;fewbar.com&#47;2011&#47;10&#47;openstack-an-amoeba-on-a-mission&#47;">my previous post for details of the conference and summit<&#47;a>). The demo was meant to showcase our new favorite cloud technology at Canonical, juju. In order to do this,&nbsp;we deployed hadoop on top of our private OpenStack cloud (also deployed earlier in the week via juju and Ubuntu Orchestra) and fed it a "real" workload (a big giant chunk of data to sort) in less than 5 minutes.</p>
+<p>A few weeks ago I gave a live demo during Canonical CEO Jane Silber's keynote at the <a href="http://www.openstack.org/community/events/openstack-conference-fall-2011/">Essex OpenStack Conference</a>, which was held in Boston October 4-7 (See <a href="http://fewbar.com/2011/10/openstack-an-amoeba-on-a-mission/">my previous post for details of the conference and summit</a>). The demo was meant to showcase our new favorite cloud technology at Canonical, juju. In order to do this, we deployed hadoop on top of our private OpenStack cloud (also deployed earlier in the week via juju and Ubuntu Orchestra) and fed it a "real" workload (a big giant chunk of data to sort) in less than 5 minutes.</p>
 <p>I've had a few requests to explain how it works, so, here is a step by step on how to repeat said demo.</p>
 <p>First, you need to setup juju to be able to talk to your cloud. The simplest way to do this is to sign up for an AWS account on Amazon, and get EC2 credentials (a secret key and a key ID is needed).</p>
-<p>If you install juju in Ubuntu 11.10, or from the <a href="https:&#47;&#47;launchpad.net&#47;~juju&#47;+archive&#47;pkgs">daily build PPA<&#47;a> in any other release, you'll get a skeleton environments.yaml just by running 'juju'.</p>
-<p>Once this is done, edit ~&#47;.juju&#47;environments.yaml to add your access-key: and secret-key:. Optionally, you can set them in AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in the environment.</p>
+<p>If you install juju in Ubuntu 11.10, or from the <a href="https://launchpad.net/~juju/+archive/pkgs">daily build PPA</a> in any other release, you'll get a skeleton environments.yaml just by running 'juju'.</p>
+<p>Once this is done, edit ~/.juju/environments.yaml to add your access-key: and secret-key:. Optionally, you can set them in AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in the environment.</p>
 <p>Now, you need the "magic" bit that turns juju status changes into commands for the "gource" source code visualization tool. Its available here:</p>
-<p>http:&#47;&#47;bazaar.launchpad.net&#47;~clint-fewbar&#47;juju&#47;gource-output&#47;view&#47;head:&#47;misc&#47;status2gource.py</p>
+<p>http://bazaar.launchpad.net/~clint-fewbar/juju/gource-output/view/head:/misc/status2gource.py</p>
 <p>(wgettable here)</p>
 <p><code><br />
-http:&#47;&#47;bazaar.launchpad.net&#47;~clint-fewbar&#47;juju&#47;gource-output&#47;download&#47;head:&#47;status2gource.py-20110908235607-pfnddi4d114nl8qd-1&#47;status2gource.py<br />
-<&#47;code></p>
+http://bazaar.launchpad.net/~clint-fewbar/juju/gource-output/download/head:/status2gource.py-20110908235607-pfnddi4d114nl8qd-1/status2gource.py<br />
+</code></p>
 <p>You'll also need to install the 'gource' visualization tool. I only tried this on Ubuntu 11.10, but it is available on other releases as well.</p>
-<p>Make sure your desired target environment is either the only one in .juju&#47;environments.yaml, or set to be the default with 'default: xxxx' at the root of the file. You need 'juju status' to return something meaningful (after bootstrap) for status2gource.py to work.</p>
+<p>Make sure your desired target environment is either the only one in .juju/environments.yaml, or set to be the default with 'default: xxxx' at the root of the file. You need 'juju status' to return something meaningful (after bootstrap) for status2gource.py to work.</p>
 <p>Now, in its own terminal, run this, note that cof_orange_hex.png is part of the official Ubuntu logo packs, but I forget where I got that. You may omit that commandline argument if you like, and a generic "person" image will be used.</p>
 <p><code>python -u status2gource.py | gource --highlight-dirs \<br />
 --file-idle-time 1000000 \<br />
 --log-format custom \<br />
 --default-user-image cof_orange_hex.png \<br />
 --user-friction 0.5 \<br />
--<&#47;code></p>
+-</code></p>
 <p>This will not show anything until juju bootstrap is done and 'juju status' shows the machine 0 running. If you already have services deployed, it should build the tree rapidly.</p>
 <p>So next if you haven't done it already</p>
 <p><code>juju bootstrap<br />
-<&#47;code><br />
+</code><br />
 Once your instance starts up, you should see a gource window pop up and the first two bits, the bootstrap node and the machine 0 node, will be added.</p>
-<p><a href="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2011&#47;10&#47;Screenshot-at-2011-10-21-1539421.png"><img class="size-medium wp-image-460 alignnone" title="Screenshot at 2011-10-21 15:39:42" src="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2011&#47;10&#47;Screenshot-at-2011-10-21-1539421-300x233.png" alt="" width="300" height="233" &#47;><&#47;a></p>
+<p><a href="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2011/10/Screenshot-at-2011-10-21-1539421.png"><img class="size-medium wp-image-460 alignnone" title="Screenshot at 2011-10-21 15:39:42" src="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2011/10/Screenshot-at-2011-10-21-1539421-300x233.png" alt="" width="300" height="233" /></a></p>
 <p><a id="more"></a><a id="more-454"></a></p>
-<p>Once this is done, you can just deploy&#47;add-relation&#47;etc. to your heart's content.</p>
+<p>Once this is done, you can just deploy/add-relation/etc. to your heart's content.</p>
 <p>To setup a local repo of charms, we did this:</p>
 <p><code>mkdir charms<br />
-bzr init-repo charms&#47;oneiric<br />
-cd charms&#47;oneiric<br />
-bzr branch lp:~mark-mims&#47;+junk&#47;charm-hadoop-master hadoop-master<br />
-bzr branch lp:~mark-mims&#47;+junk&#47;charm-hadoop-slave hadoop-slave<br />
-bzr branch lp:~mark-mims&#47;+junk&#47;charm-ganglia ganglia<&#47;code></p>
-<p>Those particular charms were specifically made for the demo, but most of the changes have been folded back in to the main "charm collection", so you can probabl change lp:~mark-mims&#47;+junk&#47;charm- to lp:charm&#47;.</p>
+bzr init-repo charms/oneiric<br />
+cd charms/oneiric<br />
+bzr branch lp:~mark-mims/+junk/charm-hadoop-master hadoop-master<br />
+bzr branch lp:~mark-mims/+junk/charm-hadoop-slave hadoop-slave<br />
+bzr branch lp:~mark-mims/+junk/charm-ganglia ganglia</code></p>
+<p>Those particular charms were specifically made for the demo, but most of the changes have been folded back in to the main "charm collection", so you can probabl change lp:~mark-mims/+junk/charm- to lp:charm/.</p>
 <p>You will also need a file in your current directory called 'config.yaml' with this content:</p>
-<pre><code>namenode: job_size: 100000 job_maps: 10 job_reduces: 10 job_data_dir: in_one job_output_dir: out_one <&#47;code><&#47;pre></p>
-<pre>These numbers heavily control how the job runs with 1 or 100 hadoop instances. If you want to spend a couple of bucks in Amazon, and fire up 20 nodes, then raise job_maps to 100 and job_reduces to 100. Also job_size to 10000000. Otherwise its over very fast!<&#47;pre><br />
-We started the demo after bootstrap was already done, so the next step is to deploy Hadoop&#47;HDFS and ganglia to keep an eye on the nodes as they came up.</p>
+<pre><code>namenode: job_size: 100000 job_maps: 10 job_reduces: 10 job_data_dir: in_one job_output_dir: out_one </code></pre>
+<pre>These numbers heavily control how the job runs with 1 or 100 hadoop instances. If you want to spend a couple of bucks in Amazon, and fire up 20 nodes, then raise job_maps to 100 and job_reduces to 100. Also job_size to 10000000. Otherwise its over very fast!</pre>
+<p>We started the demo after bootstrap was already done, so the next step is to deploy Hadoop/HDFS and ganglia to keep an eye on the nodes as they came up.</p>
 <p><code>juju deploy --repository . --config config.yaml hadoop-master namenode<br />
 juju deploy --repository . hadoop-slave datacluster<br />
 juju deploy --repository . ganglia jobmonitor<br />
 juju add-relation namenode datacluster<br />
 juju add-relation datacluster jobmonitor<br />
-juju expose jobmonitor<&#47;code></p>
+juju expose jobmonitor</code></p>
 <p>This should get you a tree in gource showing all of the machines, services, and relations that are setup.</p>
-<p><a href="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2011&#47;10&#47;Screenshot-at-2011-10-21-164343.png"><img class="size-medium wp-image-462 alignnone" title="Screenshot at 2011-10-21 16:43:43" src="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2011&#47;10&#47;Screenshot-at-2011-10-21-164343-300x233.png" alt="" width="300" height="233" &#47;><&#47;a></p>
-<p>You can scale out hadoop next with this command. Here I only create 4, but it could be 100.. depending on how fast you need your data map&#47;reduced.</p>
+<p><a href="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2011/10/Screenshot-at-2011-10-21-164343.png"><img class="size-medium wp-image-462 alignnone" title="Screenshot at 2011-10-21 16:43:43" src="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2011/10/Screenshot-at-2011-10-21-164343-300x233.png" alt="" width="300" height="233" /></a></p>
+<p>You can scale out hadoop next with this command. Here I only create 4, but it could be 100.. depending on how fast you need your data map/reduced.</p>
 <p>for i in 1 2 3 4 ; do juju add-unit datacluster ; done</p>
-<p><a href="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2011&#47;10&#47;Screenshot-at-2011-10-21-164623.png"><img class="size-medium wp-image-463 alignnone" title="Screenshot at 2011-10-21 16:46:23" src="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2011&#47;10&#47;Screenshot-at-2011-10-21-164623-300x233.png" alt="" width="300" height="233" &#47;><&#47;a></p>
-<p>Finally, to start the teragen&#47;terasort:</p>
-<p><code>juju ssh namenode&#47;0<&#47;code></p>
-<p><code>$ sudo su -u hdfs sh &#47;usr&#47;lib&#47;hadoop&#47;terasort.sh<br />
-<&#47;code><br />
+<p><a href="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2011/10/Screenshot-at-2011-10-21-164623.png"><img class="size-medium wp-image-463 alignnone" title="Screenshot at 2011-10-21 16:46:23" src="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2011/10/Screenshot-at-2011-10-21-164623-300x233.png" alt="" width="300" height="233" /></a></p>
+<p>Finally, to start the teragen/terasort:</p>
+<p><code>juju ssh namenode/0</code></p>
+<p><code>$ sudo su -u hdfs sh /usr/lib/hadoop/terasort.sh<br />
+</code><br />
 You may also want to note the hostname of the machine assigned to the jobmonitor node so you can bring it up in a browser. You will be able to see it in 'juju status'.</p>
-<p><a href="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2011&#47;10&#47;Screenshot-at-2011-10-21-165030.png"><img class="size-medium wp-image-464 alignnone" title="Screenshot at 2011-10-21 16:50:30" src="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2011&#47;10&#47;Screenshot-at-2011-10-21-165030-300x217.png" alt="" width="300" height="217" &#47;><&#47;a></p>
+<p><a href="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2011/10/Screenshot-at-2011-10-21-165030.png"><img class="size-medium wp-image-464 alignnone" title="Screenshot at 2011-10-21 16:50:30" src="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2011/10/Screenshot-at-2011-10-21-165030-300x217.png" alt="" width="300" height="217" /></a></p>
 <p>Its worth noting that we had a fail rate of about 1 in 20 tries while practicing the demo because of this bug:</p>
-<p><a href="https:&#47;&#47;bugs.launchpad.net&#47;juju&#47;+bug&#47;872378">https:&#47;&#47;bugs.launchpad.net&#47;juju&#47;+bug&#47;872378<&#47;a></p>
-<p>This causes the "juju expose jobmonitor" to fail, which means you may not be able to reach the ganglia instance. You can fix this by stopping&#47;starting the provisioning agent on the bootstrap node. That is easier said than done, but can be scripted. Its fixed in juju's trunk, so if you are using the daily build, not the distro version, you shouldn't see that issue.</p>
+<p><a href="https://bugs.launchpad.net/juju/+bug/872378">https://bugs.launchpad.net/juju/+bug/872378</a></p>
+<p>This causes the "juju expose jobmonitor" to fail, which means you may not be able to reach the ganglia instance. You can fix this by stopping/starting the provisioning agent on the bootstrap node. That is easier said than done, but can be scripted. Its fixed in juju's trunk, so if you are using the daily build, not the distro version, you shouldn't see that issue.</p>
 <p>So once you're done, you'll probably want to get rid of all these nodes you've created. Juju has a tool that strips everything down that it has brought up, which can be dangerous if you have data on the nodes, so be careful!</p>
 <p><code><br />
 juju destroy-environment<br />
-<&#47;code></p>
+</code></p>
 <p>It does not have a '--force' or '-y', by design. Make sure to keep the gource running when you do this. Say 'y', and then enjoy the show at the end. :)</p>
 <p>I'd be interested to hear from anybody who is brave enough to try this how their experience is!</p>

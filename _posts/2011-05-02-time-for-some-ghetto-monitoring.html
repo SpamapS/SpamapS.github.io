@@ -23,7 +23,7 @@ tags:
 - ubuntu
 - upstart
 ---
-<p><a href="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2011&#47;05&#47;4584789991_7045d10c2c.jpg"><img class="alignleft size-medium wp-image-401" title="4584789991_7045d10c2c" src="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2011&#47;05&#47;4584789991_7045d10c2c-300x225.jpg" alt="" width="300" height="225" &#47;><&#47;a></p>
+<p><a href="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2011/05/4584789991_7045d10c2c.jpg"><img class="alignleft size-medium wp-image-401" title="4584789991_7045d10c2c" src="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2011/05/4584789991_7045d10c2c-300x225.jpg" alt="" width="300" height="225" /></a></p>
 <p>If you came here between April 28 and about an hour ago, you got a "couldn't connect to database" error. Oops! Seems my limited memory EC2 instance got a little overwhelmed by php processes and decided the db server, drizzled, should die to make more room for PHP. Ooops! Time to drop pm.max_children.</p>
 <p>I don't have any monitoring setup for the site, so I just now figured it out. Until I get proper monitoring, I've installed this fancy bit of duct-tape upstart magic:<br />
 <code><br />
@@ -32,6 +32,6 @@ task<br />
 script<br />
   env | mail -s "$JOB is stopping!" me@myemail.com<br />
 end script<br />
-<&#47;code></p>
+</code></p>
 <p>What does this do? Well is emails me whenever upstart gives up respawning something, or I manually stop a service.</p>
 <p>Its not monitoring. I need monitoring. But this is a nice little hack to prevent a regression while I figure that out.</p>

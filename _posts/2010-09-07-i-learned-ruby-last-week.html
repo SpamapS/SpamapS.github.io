@@ -13,17 +13,17 @@ author_email: clint@fewbar.com
 author_url: http://fewbar.com
 excerpt: "Time to give myself a little pat on the back.\r\n\r\nLast week I sat down
   to work for a whole working day on \"whatever I wanted to\", as part of the Canonical
-  Server Team's pilot \"<a href=\"http:&#47;&#47;blogs.atlassian.com&#47;rebelutionary&#47;archives&#47;000495.html\">Fedex
-  Day<&#47;a>\" program. <a href=\"http:&#47;&#47;ubuntumathiaz.wordpress.com&#47;\">Mathias
-  Gug<&#47;a> and I both looked at this idea from <a href=\"http:&#47;&#47;www.goodreads.com&#47;book&#47;show&#47;6452796-drive\">Dan
-  Pink's book \"Drive\"<&#47;a> and thought it made sense to try it out.\r\n\r\nManagement
+  Server Team's pilot \"<a href=\"http://blogs.atlassian.com/rebelutionary/archives/000495.html\">Fedex
+  Day</a>\" program. <a href=\"http://ubuntumathiaz.wordpress.com/\">Mathias Gug</a>
+  and I both looked at this idea from <a href=\"http://www.goodreads.com/book/show/6452796-drive\">Dan
+  Pink's book \"Drive\"</a> and thought it made sense to try it out.\r\n\r\nManagement
   approved, and we set about on a day of \"work on one thing, make it go, and then
   show it off the following week\".\r\n\r\nI was originally going to work on improving
-  the search capabilities of the <a href=\"http:&#47;&#47;moinmo.in&#47;\">MoinMoin<&#47;a>
-  wiki software that we use at Canonical. But it turns out, somebody already did that
-  by adding Xapian support, and so we really just need to backport that to whatever
-  version of Ubuntu canonical's servers run on.\r\n\r\nSo, I decided to tackle another
-  issue that has been nagging at me."
+  the search capabilities of the <a href=\"http://moinmo.in/\">MoinMoin</a> wiki software
+  that we use at Canonical. But it turns out, somebody already did that by adding
+  Xapian support, and so we really just need to backport that to whatever version
+  of Ubuntu canonical's servers run on.\r\n\r\nSo, I decided to tackle another issue
+  that has been nagging at me."
 wordpress_id: 267
 wordpress_url: http://fewbar.com/?p=267
 date: '2010-09-07 16:09:49 -0700'
@@ -40,40 +40,40 @@ tags:
 - debigem
 ---
 <p>Time to give myself a little pat on the back.</p>
-<p>Last week I sat down to work for a whole working day on "whatever I wanted to", as part of the Canonical Server Team's pilot "<a href="http:&#47;&#47;blogs.atlassian.com&#47;rebelutionary&#47;archives&#47;000495.html">Fedex Day<&#47;a>" program. <a href="http:&#47;&#47;ubuntumathiaz.wordpress.com&#47;">Mathias Gug<&#47;a> and I both looked at this idea from <a href="http:&#47;&#47;www.goodreads.com&#47;book&#47;show&#47;6452796-drive">Dan Pink's book "Drive"<&#47;a> and thought it made sense to try it out.</p>
+<p>Last week I sat down to work for a whole working day on "whatever I wanted to", as part of the Canonical Server Team's pilot "<a href="http://blogs.atlassian.com/rebelutionary/archives/000495.html">Fedex Day</a>" program. <a href="http://ubuntumathiaz.wordpress.com/">Mathias Gug</a> and I both looked at this idea from <a href="http://www.goodreads.com/book/show/6452796-drive">Dan Pink's book "Drive"</a> and thought it made sense to try it out.</p>
 <p>Management approved, and we set about on a day of "work on one thing, make it go, and then show it off the following week".</p>
-<p>I was originally going to work on improving the search capabilities of the <a href="http:&#47;&#47;moinmo.in&#47;">MoinMoin<&#47;a> wiki software that we use at Canonical. But it turns out, somebody already did that by adding Xapian support, and so we really just need to backport that to whatever version of Ubuntu canonical's servers run on.</p>
+<p>I was originally going to work on improving the search capabilities of the <a href="http://moinmo.in/">MoinMoin</a> wiki software that we use at Canonical. But it turns out, somebody already did that by adding Xapian support, and so we really just need to backport that to whatever version of Ubuntu canonical's servers run on.</p>
 <p>So, I decided to tackle another issue that has been nagging at me.<a id="more"></a><a id="more-267"></a></p>
-<p>I love perl. I've used it for years, and I have always found that the ease with which one can get software from perl's central repository, <a href="http:&#47;&#47;www.cpan.org&#47;">CPAN<&#47;a>, was a <strong>huge<&#47;strong> differentiator from other languages.</p>
-<p>So much so, that <a href="http:&#47;&#47;pear.php.net&#47;">PHP<&#47;a>, <a href="http:&#47;&#47;pypi.python.org&#47;pypi">Python<&#47;a>, and <a href="http:&#47;&#47;rubygems.org">Ruby<&#47;a> have in many ways gone even further than CPAN with their respective tools, PEAR, pypi, and rubygems.</p>
+<p>I love perl. I've used it for years, and I have always found that the ease with which one can get software from perl's central repository, <a href="http://www.cpan.org/">CPAN</a>, was a <strong>huge</strong> differentiator from other languages.</p>
+<p>So much so, that <a href="http://pear.php.net/">PHP</a>, <a href="http://pypi.python.org/pypi">Python</a>, and <a href="http://rubygems.org">Ruby</a> have in many ways gone even further than CPAN with their respective tools, PEAR, pypi, and rubygems.</p>
 <p>Well one thing Debian developers love is perl too. So for a long time now, its been relatively simple, even braindead simple, to create a debian source package from a CPAN module.</p>
 <p>Simply download the tarball, unpack, and 'dh-make-perl', that gets you 90% of the way there. All that is left is renaming a few dependencies, making sure the copyrights are done, and verifying that the module doesn't do anything nasty.</p>
 <p>How cool is that?</p>
 <p>Python has a few tools like this too, like sdist, so they're covered.</p>
-<p>But <a href="http:&#47;&#47;www.ruby-lang.org&#47;">Ruby<&#47;a> had no such thing for rubygems. There are definitely tools to create debs from ruby source distributions, but often times projects don't actually distribute source any other way than a .gem file or code repository. To make matters worse, <a href="http:&#47;&#47;bugs.debian.org&#47;cgi-bin&#47;bugreport.cgi?bug=448639">there is a bit of confusion between some users of rubygems on Debian and Ubuntu<&#47;a> about how it should work. Many people feel that gems is a poor way to distribute software, or that it lacks certain features. Others would just like to use it like any other developer tool.</p>
+<p>But <a href="http://www.ruby-lang.org/">Ruby</a> had no such thing for rubygems. There are definitely tools to create debs from ruby source distributions, but often times projects don't actually distribute source any other way than a .gem file or code repository. To make matters worse, <a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=448639">there is a bit of confusion between some users of rubygems on Debian and Ubuntu</a> about how it should work. Many people feel that gems is a poor way to distribute software, or that it lacks certain features. Others would just like to use it like any other developer tool.</p>
 <p>Well I happen to think that many ruby users would probably grow to love .debs if they covered a large portion of rubygems software.</p>
 <p>So, DebiGem is born! I created this project in about 8 working hours, with zero Ruby knowledge beforehand. I'm sure that shows in my style of Ruby. With some help from perusing the rubygems code base and about 80 Ruby tutorial pages on the net, I think I've created something that actually works.</p>
-<p>If you want to try it, go ahead and fire it up, simply install the debs available in <a href="https:&#47;&#47;launchpad.net&#47;~clint-fewbar&#47;+archive&#47;debigem">my PPA on Launchpad,<&#47;a> and then download a .gem, and turn it into a source package (apologies for all the debug output, we're talking about v0.0.2 here!).<br />
+<p>If you want to try it, go ahead and fire it up, simply install the debs available in <a href="https://launchpad.net/~clint-fewbar/+archive/debigem">my PPA on Launchpad,</a> and then download a .gem, and turn it into a source package (apologies for all the debug output, we're talking about v0.0.2 here!).<br />
 <code><br />
-clint@ubuntu:~&#47;testgem$ wget http:&#47;&#47;rubygems.org&#47;downloads&#47;a2ws-0.1.9.gem<br />
---2010-09-07 15:58:46--  http:&#47;&#47;rubygems.org&#47;downloads&#47;a2ws-0.1.9.gem<br />
+clint@ubuntu:~/testgem$ wget http://rubygems.org/downloads/a2ws-0.1.9.gem<br />
+--2010-09-07 15:58:46--  http://rubygems.org/downloads/a2ws-0.1.9.gem<br />
 Resolving rubygems.org... 72.4.120.124<br />
 Connecting to rubygems.org|72.4.120.124|:80... connected.<br />
 HTTP request sent, awaiting response... 302 Found<br />
-Location: &#47;gems&#47;a2ws-0.1.9.gem [following]<br />
---2010-09-07 15:58:46--  http:&#47;&#47;rubygems.org&#47;gems&#47;a2ws-0.1.9.gem<br />
+Location: /gems/a2ws-0.1.9.gem [following]<br />
+--2010-09-07 15:58:46--  http://rubygems.org/gems/a2ws-0.1.9.gem<br />
 Reusing existing connection to rubygems.org:80.<br />
 HTTP request sent, awaiting response... 302 Found<br />
-Location: http:&#47;&#47;production.cf.rubygems.org&#47;gems&#47;a2ws-0.1.9.gem [following]<br />
---2010-09-07 15:58:46--  http:&#47;&#47;production.cf.rubygems.org&#47;gems&#47;a2ws-0.1.9.gem<br />
+Location: http://production.cf.rubygems.org/gems/a2ws-0.1.9.gem [following]<br />
+--2010-09-07 15:58:46--  http://production.cf.rubygems.org/gems/a2ws-0.1.9.gem<br />
 Resolving production.cf.rubygems.org... 216.137.37.222, 216.137.37.239, 216.137.37.11, ...<br />
 Connecting to production.cf.rubygems.org|216.137.37.222|:80... connected.<br />
 HTTP request sent, awaiting response... 200 OK<br />
 Length: 7168 (7.0K) []<br />
 Saving to: `a2ws-0.1.9.gem'</p>
-<p>100%[================================================================================================================================================================>] 7,168       --.-K&#47;s   in 0.07s   </p>
-<p>2010-09-07 15:58:46 (94.9 KB&#47;s) - `a2ws-0.1.9.gem' saved [7168&#47;7168]</p>
-<p>clint@ubuntu:~&#47;testgem$ dh-make-gem a2ws-0.1.9.gem<br />
+<p>100%[================================================================================================================================================================>] 7,168       --.-K/s   in 0.07s   </p>
+<p>2010-09-07 15:58:46 (94.9 KB/s) - `a2ws-0.1.9.gem' saved [7168/7168]</p>
+<p>clint@ubuntu:~/testgem$ dh-make-gem a2ws-0.1.9.gem<br />
 Extracting gem file a2ws-0.1.9.gem<br />
 tar -xvf a2ws-0.1.9.gem data.tar.gz<br />
 data.tar.gz<br />
@@ -86,16 +86,16 @@ tar: README.rdoc: implausibly old time stamp 1969-12-31 16:00:00<br />
 tar: Rakefile: implausibly old time stamp 1969-12-31 16:00:00<br />
 tar: VERSION.yml: implausibly old time stamp 1969-12-31 16:00:00<br />
 tar: a2ws.gemspec: implausibly old time stamp 1969-12-31 16:00:00<br />
-tar: lib&#47;a2ws.rb: implausibly old time stamp 1969-12-31 16:00:00<br />
-tar: lib&#47;a2ws&#47;base.rb: implausibly old time stamp 1969-12-31 16:00:00<br />
-tar: lib&#47;a2ws&#47;image.rb: implausibly old time stamp 1969-12-31 16:00:00<br />
-tar: lib&#47;a2ws&#47;image_search.rb: implausibly old time stamp 1969-12-31 16:00:00<br />
-tar: lib&#47;a2ws&#47;item.rb: implausibly old time stamp 1969-12-31 16:00:00<br />
-tar: lib&#47;a2ws&#47;item_search.rb: implausibly old time stamp 1969-12-31 16:00:00<br />
-tar: lib&#47;a2ws&#47;methodize.rb: implausibly old time stamp 1969-12-31 16:00:00<br />
-tar: spec&#47;a2ws_spec.rb: implausibly old time stamp 1969-12-31 16:00:00<br />
-tar: spec&#47;spec_helper.rb: implausibly old time stamp 1969-12-31 16:00:00<br />
-tar -zcf liba2ws-ruby_0.1.9.orig.tar.gz --exclude=liba2ws-ruby-0.1.9&#47;debian liba2ws-ruby-0.1.9<br />
+tar: lib/a2ws.rb: implausibly old time stamp 1969-12-31 16:00:00<br />
+tar: lib/a2ws/base.rb: implausibly old time stamp 1969-12-31 16:00:00<br />
+tar: lib/a2ws/image.rb: implausibly old time stamp 1969-12-31 16:00:00<br />
+tar: lib/a2ws/image_search.rb: implausibly old time stamp 1969-12-31 16:00:00<br />
+tar: lib/a2ws/item.rb: implausibly old time stamp 1969-12-31 16:00:00<br />
+tar: lib/a2ws/item_search.rb: implausibly old time stamp 1969-12-31 16:00:00<br />
+tar: lib/a2ws/methodize.rb: implausibly old time stamp 1969-12-31 16:00:00<br />
+tar: spec/a2ws_spec.rb: implausibly old time stamp 1969-12-31 16:00:00<br />
+tar: spec/spec_helper.rb: implausibly old time stamp 1969-12-31 16:00:00<br />
+tar -zcf liba2ws-ruby_0.1.9.orig.tar.gz --exclude=liba2ws-ruby-0.1.9/debian liba2ws-ruby-0.1.9<br />
 changing working dir to liba2ws-ruby-0.1.9<br />
 DEBUG: a2ws-0.1.9.gem.gemspec<br />
 WARNING:  no description specified<br />
@@ -108,7 +108,7 @@ DEBUG: type=runtime<br />
   Name: a2ws<br />
   Version: 0.1.9<br />
   PackageName: liba2ws-ruby<br />
-clint@ubuntu:~&#47;testgem$ cat liba2ws-ruby-0.1.9&#47;debian&#47;control<br />
+clint@ubuntu:~/testgem$ cat liba2ws-ruby-0.1.9/debian/control<br />
 Source: liba2ws-ruby<br />
 Section: ruby<br />
 Priority: optional<br />
@@ -121,8 +121,8 @@ Architecture: all<br />
 Depends: ruby, ${shlibs:Depends}, libhttparty-ruby (>= 0.4.3), libactivesupport-ruby (>= 2.2.2)<br />
 Description: Wrapper for Amazon Associates Web Service (A2WS).<br />
    <no description specified please create one><br />
-clint@ubuntu:~&#47;testgem$ cat liba2ws-ruby-0.1.9&#47;debian&#47;rules<br />
-#!&#47;usr&#47;bin&#47;make -f<br />
+clint@ubuntu:~/testgem$ cat liba2ws-ruby-0.1.9/debian/rules<br />
+#!/usr/bin/make -f<br />
 # This file was generated by 'gem debsrc'<br />
 #<br />
 %:<br />
@@ -134,14 +134,14 @@ clint@ubuntu:~&#47;testgem$ cat liba2ws-ruby-0.1.9&#47;debian&#47;rules<br />
 <p>override_dh_clean::<br />
 	dh_rubygems clean<br />
 	dh_clean<br />
-clint@ubuntu:~&#47;testgem$ ls -l liba2ws-ruby-0.1.9&#47;debian<br />
+clint@ubuntu:~/testgem$ ls -l liba2ws-ruby-0.1.9/debian<br />
 total 20<br />
 -rw-r--r-- 1 clint clint  151 2010-09-07 15:58 changelog<br />
 -rw-r--r-- 1 clint clint    2 2010-09-07 15:58 compat<br />
 -rw-r--r-- 1 clint clint  410 2010-09-07 15:58 control<br />
 -rw-r--r-- 1 clint clint 2078 2010-09-07 15:58 liba2ws-ruby.gemspec<br />
 -rw-r--r-- 1 clint clint  213 2010-09-07 15:58 rules<br />
-<&#47;code></p>
+</code></p>
 <p>It also includes the dh_rubygems tool and dh-rubygems package you see mentioned above.</p>
 <p>Given this tool, its relatively easy to create .deb files and focus on the real work of creating packages, which is reviewing licensing and code, rather than turning them into the actual .deb. Sure you still have to update the maintainer field, and will probably want to check those dependencies, but for the most part, this works and gets the gem into an installable state.</p>
 <p>I do hope someone finds this useful, it was great fun implementing it.</p>

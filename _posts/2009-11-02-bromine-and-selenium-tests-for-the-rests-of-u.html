@@ -37,27 +37,27 @@ tags:
 - software
 ---
 <p>If you're an engineer, you hate testing. Seriously, who likes doing what those mere mortal "users" do? We're POWER users and we don't need to use all those silly features on all those sites. Just look at Craigslist, clearly an engineer's dream tool.</p>
-<p>For web apps, testing actually isn't *that* hard. The client program (the browser) is readily available on every platform known to man, and they generally don't do much more than store and retrieve data in clever ways. So, its not like we have to fire up a Large Hadron Collider to observe the effects of our web app.<a id="more"></a><a id="more-125"></a><a href="http:&#47;&#47;fewbar.com&#47;wp-content&#47;uploads&#47;2009&#47;11&#47;periodictable.jpg"><img class="size-full wp-image-127 alignleft" title="periodictable" src="http:&#47;&#47;fewbar.com&#47;wp-content&#47;uploads&#47;2009&#47;11&#47;periodictable.jpg" alt="periodictable" width="234" height="142" &#47;><&#47;a></p>
+<p>For web apps, testing actually isn't *that* hard. The client program (the browser) is readily available on every platform known to man, and they generally don't do much more than store and retrieve data in clever ways. So, its not like we have to fire up a Large Hadron Collider to observe the effects of our web app.<a id="more"></a><a id="more-125"></a><a href="http://fewbar.com/wp-content/uploads/2009/11/periodictable.jpg"><img class="size-full wp-image-127 alignleft" title="periodictable" src="http://fewbar.com/wp-content/uploads/2009/11/periodictable.jpg" alt="periodictable" width="234" height="142" /></a></p>
 <p>Therein lies the problem though, as clicking around on web forms and entering the same email address, password, address, phone number, etc. etc., 100 times, is BORING.</p>
-<p>Enter <a href="http:&#47;&#47;seleniumhq.org&#47;">Selenium<&#47;a>. This amazing little tool has been on the scene for a little while now, but its just now getting some momentum. Click through to the website and watch "the magic" as they put it, but basically here's how it goes:</p>
+<p>Enter <a href="http://seleniumhq.org/">Selenium</a>. This amazing little tool has been on the scene for a little while now, but its just now getting some momentum. Click through to the website and watch "the magic" as they put it, but basically here's how it goes:</p>
 <ul>
-<li> open their firefox plugin and click 'record<&#47;li>
-<li>do something<&#47;li>
-<li>click 'record' again.<&#47;li><br />
-<&#47;ul><br />
-Then just save this little test case to a file, and the next time you change anything that might relate to the series of clicks and data entries you just made, run this test again. There are all kinds of assertions you can make while you're doing something. Like 'Make sure the title is X' or 'make sure a link to Y exists'.</p>
-<p>But wait, I could have done that with something like Test::More,&nbsp; PHPUnit, or lime. Where's the real benefit?</p>
+<li> open their firefox plugin and click 'record</li>
+<li>do something</li>
+<li>click 'record' again.</li>
+</ul>
+<p>Then just save this little test case to a file, and the next time you change anything that might relate to the series of clicks and data entries you just made, run this test again. There are all kinds of assertions you can make while you're doing something. Like 'Make sure the title is X' or 'make sure a link to Y exists'.</p>
+<p>But wait, I could have done that with something like Test::More,  PHPUnit, or lime. Where's the real benefit?</p>
 <p>Well because Selenium remotely controls your browser, all those gotchya's regarding javascript CSS incompatibilities can come into play here. Because Selenium can control Internet Explorer, Firefox, *and* Safari. In fact it can also control Opera, and according to their website, any browser that properly supports javascript fully.</p>
 <p>This is really a nice evolutionary step for web shops, as tools like this generally are OS specific and cost a lot of money. Once again open source software appears where a need becomes somewhat ubiquitous.</p>
-<p>You can even take it a step further. The next thing that generally happens in a web dev shop when they get bigger than 20 or 30 people is they hire people who actually <strong>like<&#47;strong> testing. Well not really, but they dislike it *less* than software engineers. These are QA engineers. And they <strong>DO<&#47;strong> like things to be orderly and efficient.</p>
-<p><a href="http:&#47;&#47;seleniumhq.org&#47;projects&#47;bromine&#47;">Bromine<&#47;a> is the answer for that. Its still pretty rough around the edges, but it gets the job done.</p>
+<p>You can even take it a step further. The next thing that generally happens in a web dev shop when they get bigger than 20 or 30 people is they hire people who actually <strong>like</strong> testing. Well not really, but they dislike it *less* than software engineers. These are QA engineers. And they <strong>DO</strong> like things to be orderly and efficient.</p>
+<p><a href="http://seleniumhq.org/projects/bromine/">Bromine</a> is the answer for that. Its still pretty rough around the edges, but it gets the job done.</p>
 <p>Again check out their website and watch the screencast, but basically it goes like this:</p>
 <ul>
-<li>Write selenium tests as specified above<&#47;li>
-<li>Upload tests to Bromine server<&#47;li>
-<li>Attach tests to requirements<&#47;li>
-<li>Run selenium remote control on all required OS&#47;browser version combinations (can you say virtualbox?)<&#47;li>
-<li>Run tests<&#47;li><br />
-<&#47;ul><br />
-Another nice thing about using bromine is now you are running your tests in a server side language, not just the Selenium IDE, which is limited to the IDE's generated "Selenese" XML commands for tests. The IDE exports your basic test into PHP or Java, and then on the bromine server you can do interesting things, like check an IMAP box for an email, run a backend process, or send an SMS.</p>
+<li>Write selenium tests as specified above</li>
+<li>Upload tests to Bromine server</li>
+<li>Attach tests to requirements</li>
+<li>Run selenium remote control on all required OS/browser version combinations (can you say virtualbox?)</li>
+<li>Run tests</li>
+</ul>
+<p>Another nice thing about using bromine is now you are running your tests in a server side language, not just the Selenium IDE, which is limited to the IDE's generated "Selenese" XML commands for tests. The IDE exports your basic test into PHP or Java, and then on the bromine server you can do interesting things, like check an IMAP box for an email, run a backend process, or send an SMS.</p>
 <p>At first it may not seem like much, but eventually you end up with a multitude of useful tests for your web app that can be run all the time against development branches before release, and catch many problems. Quality means happier users, which hopefully means loyal users that keep coming back.</p>

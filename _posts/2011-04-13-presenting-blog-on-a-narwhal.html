@@ -41,30 +41,30 @@ tags:
 <p>Well thats all over now. I decided to marry all the new tech I've been playing with lately into one glorious blog migration.<a id="more"></a><a id="more-374"></a></p>
 <p>The old blog was:</p>
 <ul>
-<li>Xen domU<&#47;li>
-<li>500MB RAM allocated<&#47;li>
-<li>9GB storage<&#47;li>
-<li>CentOS 5.5<&#47;li>
-<li>Apache + mod_php (5.3.5 from IUS project)<&#47;li>
-<li>MySQL 5.0.77<&#47;li>
-<li>Wordpress 3.0.5 manually installed single-site<&#47;li><br />
-<&#47;ul><br />
-The new hotness is:</p>
+<li>Xen domU</li>
+<li>500MB RAM allocated</li>
+<li>9GB storage</li>
+<li>CentOS 5.5</li>
+<li>Apache + mod_php (5.3.5 from IUS project)</li>
+<li>MySQL 5.0.77</li>
+<li>Wordpress 3.0.5 manually installed single-site</li>
+</ul>
+<p>The new hotness is:</p>
 <ul>
-<li>﻿EC2 t1.micro (its upgradable! ;)<&#47;li>
-<li>692MB RAM<&#47;li>
-<li>8GB EBS<&#47;li>
-<li>nginx + php5-fpm (5.3.5 from natty)<&#47;li>
-<li>Drizzle 2011.03.13 (wordpress-plugin 0.0.2)<&#47;li>
-<li>Wordpress 3.0.5 from natty in multisite mode<&#47;li><br />
-<&#47;ul><br />
-The steps to migrate weren't altogether complicated. A bit of configuration for nginx to have it serve my PHP using php5-fpm, and copying most of wp-content over. Drizzle couldn't have been more straight forward:</p>
+<li>﻿EC2 t1.micro (its upgradable! ;)</li>
+<li>692MB RAM</li>
+<li>8GB EBS</li>
+<li>nginx + php5-fpm (5.3.5 from natty)</li>
+<li>Drizzle 2011.03.13 (wordpress-plugin 0.0.2)</li>
+<li>Wordpress 3.0.5 from natty in multisite mode</li>
+</ul>
+<p>The steps to migrate weren't altogether complicated. A bit of configuration for nginx to have it serve my PHP using php5-fpm, and copying most of wp-content over. Drizzle couldn't have been more straight forward:</p>
 <ul>
-<li>Install drizzle7-client from EPEL on CentOS vm<&#47;li>
-<li>drizzledump blog database (drizzledump automatically converts mysql schemas to drizzle compatible ones)<&#47;li>
-<li>load it into drizzle on Ubuntu server<&#47;li><br />
-<&#47;ul><br />
-Wordpress still needs *some* help to use Drizzle. Much of this will be handled by the wordpress-drizzle package from my ppa (add-apt-repository ppa:clint-fewbar&#47;drizzle) which filters DDL to change things like LONGTEXT to TEXT. Because Drizzle has done away with the eeeeevil of datetimes with &nbsp;0000-00-00 as their date (a non-existent date), we need to change all instances of that to '0001-01-01'. In the future I'd like to see this abstracted out of wordpress even more so that it is more aware of the datetime fields and can use actual NULL values. I believe this can be done in the plugin by overloading the insert&#47;update methods. I've begun working on that, but for now I'll just have to keep patching wp-includes&#47;post.php , which seems to be the main user of 0000-00-00 to denote a "draft" post.</p>
+<li>Install drizzle7-client from EPEL on CentOS vm</li>
+<li>drizzledump blog database (drizzledump automatically converts mysql schemas to drizzle compatible ones)</li>
+<li>load it into drizzle on Ubuntu server</li>
+</ul>
+<p>Wordpress still needs *some* help to use Drizzle. Much of this will be handled by the wordpress-drizzle package from my ppa (add-apt-repository ppa:clint-fewbar/drizzle) which filters DDL to change things like LONGTEXT to TEXT. Because Drizzle has done away with the eeeeevil of datetimes with  0000-00-00 as their date (a non-existent date), we need to change all instances of that to '0001-01-01'. In the future I'd like to see this abstracted out of wordpress even more so that it is more aware of the datetime fields and can use actual NULL values. I believe this can be done in the plugin by overloading the insert/update methods. I've begun working on that, but for now I'll just have to keep patching wp-includes/post.php , which seems to be the main user of 0000-00-00 to denote a "draft" post.</p>
 <p>We also have to alter the wp_posts table slightly. Thats because wordpress relies on mysql's broken "NOT NULL" producing an "empty string" in varchars. This ALTER does that:</p>
-<pre>﻿ALTER TABLE wp_posts MODIFY COLUMN post_mime_type VARCHAR(100) COLLATE utf8_general_ci DEFAULT '';<&#47;pre><br />
-Anyway, goodbye CentOS, hello Ubuntu!</p>
+<pre>﻿ALTER TABLE wp_posts MODIFY COLUMN post_mime_type VARCHAR(100) COLLATE utf8_general_ci DEFAULT '';</pre>
+<p>Anyway, goodbye CentOS, hello Ubuntu!</p>

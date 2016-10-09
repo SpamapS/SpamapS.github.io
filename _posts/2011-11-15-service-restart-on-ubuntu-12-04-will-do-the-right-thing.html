@@ -23,20 +23,20 @@ tags:
 - wtf
 - precise
 ---
-<p>Just a quick note.. I was watching <a href="http:&#47;&#47;www.youtube.com&#47;watch?v=oebqlzblfyo&amp;feature=autoshare">Artur Bergman's rant about Full Stack awareness<&#47;a> at Velocity Europe with glee, until I saw how we, the Ubuntu devs, had drawn his ire for breaking something so simple, 'restart'.</p>
-<p>http:&#47;&#47;www.youtube.com&#47;watch?v=oebqlzblfyo&feature=autoshare</p>
+<p>Just a quick note.. I was watching <a href="http://www.youtube.com/watch?v=oebqlzblfyo&amp;feature=autoshare">Artur Bergman's rant about Full Stack awareness</a> at Velocity Europe with glee, until I saw how we, the Ubuntu devs, had drawn his ire for breaking something so simple, 'restart'.</p>
+<p>http://www.youtube.com/watch?v=oebqlzblfyo&feature=autoshare</p>
 <p>I've heard this before, and I realized that its true! Restart should ignore that the service is stopped, and just start it, otherwise just restart it as I requested.</p>
 <p>So, first off, instead of:</p>
 <pre>
-&#47;etc&#47;init.d&#47;apache2 restart<br />
-<&#47;pre></p>
+/etc/init.d/apache2 restart
+</pre>
 <p>or (for upstart controlled services)</p>
 <pre>
-restart mysql<br />
-<&#47;pre></p>
+restart mysql
+</pre>
 <p> get in the habit of doing:</p>
 <pre>
-service apache2 restart<br />
-<&#47;pre></p>
+service apache2 restart
+</pre>
 <p>This command will do the right thing more often than not (including clearing out the environment for sysvinit jobs, which can help solve the "why does the service only work when I restart it manually"). And as of 12.04, it will start doing the right thing with restart too.</p>
-<p>Its not perfect, and there are still bugs in upstart, but<a href="https:&#47;&#47;launchpad.net&#47;ubuntu&#47;+source&#47;sysvinit&#47;2.88dsf-13.10ubuntu5"> the version of 'sysvinit' that I just uploaded<&#47;a> to Precise Pangolin (the future 12.04 &#47; LTS release of Ubuntu) at least gives scripters and sysadmins a chance at uniformity by making upstart jobs and sysvinit scripts do the same thing with restart. I don't think we can backport this all the way to 10.04, so sorry for that. However, please, users, keep the rants coming.. we need them!</p>
+<p>Its not perfect, and there are still bugs in upstart, but<a href="https://launchpad.net/ubuntu/+source/sysvinit/2.88dsf-13.10ubuntu5"> the version of 'sysvinit' that I just uploaded</a> to Precise Pangolin (the future 12.04 / LTS release of Ubuntu) at least gives scripters and sysadmins a chance at uniformity by making upstart jobs and sysvinit scripts do the same thing with restart. I don't think we can backport this all the way to 10.04, so sorry for that. However, please, users, keep the rants coming.. we need them!</p>

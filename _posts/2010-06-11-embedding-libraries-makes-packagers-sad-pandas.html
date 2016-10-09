@@ -11,18 +11,17 @@ author:
 author_login: clint
 author_email: clint@fewbar.com
 author_url: http://fewbar.com
-excerpt: "<a href=\"http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2010&#47;06&#47;stop_the_insanity.jpg\"><img
-  src=\"http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2010&#47;06&#47;stop_the_insanity.jpg\"
+excerpt: "<a href=\"http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2010/06/stop_the_insanity.jpg\"><img
+  src=\"http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2010/06/stop_the_insanity.jpg\"
   alt=\"STOP THE INSANITY!\" title=\"stop_the_insanity\" width=\"400\" height=\"300\"
-  class=\"alignleft size-full wp-image-200\" &#47;><&#47;a>\r\n<p &#47;>\r\nSo, in
-  my role at <a href=\"http:&#47;&#47;www.canonical.com\">Canonical<&#47;a>, I've
-  been asked to package some of the hotter \"web 2.0\" and \"cloud\" server technologies
-  for <a href=\"http:&#47;&#47;ubuntu.com\">Ubuntu<&#47;a>'s next release, 10.10,
-  aka \"Maverick Meerkat\".\r\n<p &#47;>\r\nWhile working on this, I've discovered
-  something very frustrating from a packaging point of view thats been going on with
-  fast moving open source projects. It would seem that rather than produce stable
-  API's that do not change, there is a preference to dump feature after feature into
-  libraries and software products"
+  class=\"alignleft size-full wp-image-200\" /></a>\r\n<p />\r\nSo, in my role at
+  <a href=\"http://www.canonical.com\">Canonical</a>, I've been asked to package some
+  of the hotter \"web 2.0\" and \"cloud\" server technologies for <a href=\"http://ubuntu.com\">Ubuntu</a>'s
+  next release, 10.10, aka \"Maverick Meerkat\".\r\n<p />\r\nWhile working on this,
+  I've discovered something very frustrating from a packaging point of view thats
+  been going on with fast moving open source projects. It would seem that rather than
+  produce stable API's that do not change, there is a preference to dump feature after
+  feature into libraries and software products"
 wordpress_id: 201
 wordpress_url: http://fewbar.com/?p=201
 date: '2010-06-11 23:19:21 -0700'
@@ -38,34 +37,34 @@ tags:
 - embedding
 - versioning
 ---
-<p><a href="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2010&#47;06&#47;stop_the_insanity.jpg"><img src="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2010&#47;06&#47;stop_the_insanity.jpg" alt="STOP THE INSANITY!" title="stop_the_insanity" width="400" height="300" class="alignleft size-full wp-image-200" &#47;><&#47;a></p>
-<p &#47;>
-So, in my role at <a href="http:&#47;&#47;www.canonical.com">Canonical<&#47;a>, I've been asked to package some of the hotter "web 2.0" and "cloud" server technologies for <a href="http:&#47;&#47;ubuntu.com">Ubuntu<&#47;a>'s next release, 10.10, aka "Maverick Meerkat".</p>
-<p &#47;>
+<p><a href="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2010/06/stop_the_insanity.jpg"><img src="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2010/06/stop_the_insanity.jpg" alt="STOP THE INSANITY!" title="stop_the_insanity" width="400" height="300" class="alignleft size-full wp-image-200" /></a></p>
+<p />
+So, in my role at <a href="http://www.canonical.com">Canonical</a>, I've been asked to package some of the hotter "web 2.0" and "cloud" server technologies for <a href="http://ubuntu.com">Ubuntu</a>'s next release, 10.10, aka "Maverick Meerkat".</p>
+<p />
 While working on this, I've discovered something very frustrating from a packaging point of view thats been going on with fast moving open source projects. It would seem that rather than produce stable API's that do not change, there is a preference to dump feature after feature into libraries and software products<a id="more"></a><a id="more-201"></a>, and completely defenestrate API stability (or as benblack from #cassandra on freenode calls it, API stasis).</p>
-<p &#47;>
-So who cares, right? People who choose to use these pieces of software are digging their own grave. Right? But thats not really the whole story.  We have a bit of a new world order when it comes to "Web 2.0". There's this new concept of "<a href="http:&#47;&#47;www.jedi.be&#47;blog&#47;2010&#47;02&#47;12&#47;what-is-this-devops-thing-anyway&#47;">devops<&#47;a>". People may be on to something there. As "devops" professionals, we need to pick things that scale and ship *on time*. That may mean shunning the traditional methods of loose coupling defined by rigid API's. Maybe instead, we should just build a new moderately loose coupling for each project. As crazy as it sounds, its working out for a lot of people. Though it may be leaving some ticking time bombs for security long term.</p>
-<p &#47;>
-To provide a concrete example, I'll pick on the CPAN module <a href="http:&#47;&#47;search.cpan.org&#47;dist&#47;Memcached-libmemcached&#47;">Memcached::libmemcached<&#47;a>. This is basically just a perl wrapper around the <a href="http:&#47;&#47;libmemcached.org&#47;libMemcached.html">C library libmemcached<&#47;a>. It seeks to provide perl programmers with access to all of the fantastic features that libmemcached has to offer. The only trouble is, it only supports everything that libmemcached had to offer in v0.31 of libmemcached.</p>
-<p &#47;>
+<p />
+So who cares, right? People who choose to use these pieces of software are digging their own grave. Right? But thats not really the whole story.  We have a bit of a new world order when it comes to "Web 2.0". There's this new concept of "<a href="http://www.jedi.be/blog/2010/02/12/what-is-this-devops-thing-anyway/">devops</a>". People may be on to something there. As "devops" professionals, we need to pick things that scale and ship *on time*. That may mean shunning the traditional methods of loose coupling defined by rigid API's. Maybe instead, we should just build a new moderately loose coupling for each project. As crazy as it sounds, its working out for a lot of people. Though it may be leaving some ticking time bombs for security long term.</p>
+<p />
+To provide a concrete example, I'll pick on the CPAN module <a href="http://search.cpan.org/dist/Memcached-libmemcached/">Memcached::libmemcached</a>. This is basically just a perl wrapper around the <a href="http://libmemcached.org/libMemcached.html">C library libmemcached</a>. It seeks to provide perl programmers with access to all of the fantastic features that libmemcached has to offer. The only trouble is, it only supports everything that libmemcached had to offer in v0.31 of libmemcached.</p>
+<p />
 Now, that is normal for a wrapper. Wrappers are going to lag their wrapped components newer features. But, they generally can take advantage of any behind the scenes improvement in a library, right? Just upgrade the shared library, and the systems dynamic linker will find it right? Well thats going to be tough, because there have been quite a few incompatible changes to the library since 0.31 was published last summer. And the API itself has grown massively, changing calls that are fundamental to its operation, if only slightly.</p>
-<p &#47;>
+<p />
 So, rather than be slave to somebody upgrading the shared library and recompiling Memcached::libmemcached, the maintainers simply embedded version 0.31 of libmemcached in their software distribution. The build process just statically links their wrapper against it. Problem solved, right?</p>
-<p &#47;>
+<p />
 However, from a larger scale software distributor's standpoint, this presents us with a big problem. We have a lot of things depending on libmemcached, and we really only want to ship maybe 1 or 2 versions (an old compatible version and the latest one) of this library. What happens when a software vulnerability is found and published affecting "every version of libmemcached prior to 0.41". Now we have to patch not only our v0.40 that we shipped, but also v0.31 inside Memcached::libmemcached. Even worse, what if we also had some ruby code we wanted to ship? The Ruby wrapper for libmemcached has v0.37 embedded. So now we have to patch and test three versions of this library. This gets ugly quickly.</p>
-<p &#47;>
+<p />
 From Memcached::libmemcached's point of view, they want something known to be working *for the project today*. The original authors have moved on to other things now that they've shipped the product, and the current maintainers are somewhat annoyed by the incompatibilities between 0.31 and 0.40, and don't have much impetus to advance the library. Even if they did, the perl code depending on it must be updated since the API changed so heavily.</p>
-<p &#47;>
+<p />
 Now, I am somewhat zen about "problems" and I like to stay solution focused, and present them as opportunities (HIPPIE ALERT!). So, what opportunity does this challenge present us, the packagers, the integrators, the distributors, with?</p>
-<p &#47;>
+<p />
 I think we have an opportunity to make things better for people using packaging, and people not using packaging. Rather than fighting the trends we see in the market, maybe we should embrace it. Right now, a debian format package (which Ubuntu uses) control file defines a field called "Depends". This field tells the system "Before you install this package, you must install these other packages to make it work". This is how we can get working, complex software to install very easily with a command like 'apt-get install foo'.</p>
-<p &#47;>
+<p />
 However, it gets more difficult to maintain when we start depending on specific versions. Suddenly we can't upgrade "superfoo" because it relies on libbar v0.1, but libbar v0.2 is out and most other things depend on that version.</p>
-<p &#47;>
+<p />
 What if, however, we added a field. "Embeds: libbar=0.1". This would tell us that this package includes its own private version of libbar v0.1. When the maintenance problem occurs for libbar "versions prior to v0.3", we can simply publish a test case that tests for the bad behavior in an automated fashion. If we see this bad behavior, we can then evaluate whether it is worth patching. Any gross incompatibilities with the test case will have to be solved manually, but even with the most aggressive API breaking behavior, that can probably be reduced to 2 - 3 customizations.</p>
-<p &#47;>
+<p />
 "But we're already too busy patching software!". This is a valid point that I don't have a good answer for. However, the current pain we suffer in trying to package things from source is probably eating up a lot more time than backporting tests and fixes would. If we strive for test coverage and embedded software tracking, at least we can know where we're *really* vulnerable, and not just assume. Meanwhile, we can know exactly which version of libraries are embedded in each software product, and so we can reliably notify users that they are vulnerable, allowing them to accept risks if they so desire.</p>
-<p &#47;>
+<p />
 Of course, this requires a tool that can find embedded software, and track it in these packages. I don't think such a thing exists, but it would not be hard to write. If a dir contains 99% of the files from a given software package, then it can be suggested that it embeds said software package. If we can work that down to checking a list of 1000 md5sums against another list of 1000 md5sums, we should be able to suggest that we think we know what the software embeds, and sometimes even provide 100% certainty.</p>
-<p &#47;>
+<p />
 I look forward to fleshing out this idea in the coming months, as I see this happening more and more as we lower the barriers between developers and operations. Cloud computing has made it easy for a developer to simply say "give me 3 servers like that" and quickly deploy applications. I can see a lot of them deploying a lot more embedded software, and not really understanding what risk their taking. As Mathias Gug told me recently.. this should help us spend more time being "fire inspectors" and less time being "fire fighters".</p>

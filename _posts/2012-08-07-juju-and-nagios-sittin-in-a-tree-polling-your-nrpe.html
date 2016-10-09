@@ -12,20 +12,19 @@ author_login: clint
 author_email: clint@fewbar.com
 author_url: http://fewbar.com
 excerpt: "Monitoring. Could it get any more nerdy than monitoring? Well I think we
-  can make monitoring cool again...\r\n\r\n<a href=\"http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;1010_hall_monitor_cartman.jpg\"><img
-  class=\"alignleft size-full wp-image-558\" title=\"1010_hall_monitor_cartman\" src=\"http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;1010_hall_monitor_cartman.jpg\"
-  alt=\"\" width=\"720\" height=\"556\" &#47;><&#47;a>\r\n\r\n&nbsp;\r\n\r\nIf you're
-  using <a href=\"http:&#47;&#47;juju.ubuntu.com&#47;\" target=\"_blank\">Juju<&#47;a>,
-  <a href=\"http:&#47;&#47;www.nagios.org&#47;\" target=\"_blank\">Nagios<&#47;a>
-  is about to get a lot easier to leverage into your environment. Anyone who has ever
-  tried to automate their Nagios configuration, knows that it can be daunting. Nagios
-  is so flexible and has so many options, its hard to get right when doing it by hand.
-  Automating it requires even more thought. Part of this is because monitoring itself
-  is a bit hard to genercise. There are lots of types of monitors. Nagios really focuses
-  on two of these:\r\n<ul>\r\n\t<li><strong>Service monitoring<&#47;strong> - Make
-  a script that pretends to be a user and see if your synthetic monitor sees what
-  you expect.<&#47;li>\r\n\t<li><strong>Resource monitoring<&#47;strong> - Look at
-  the counters and metrics afforded a user of a normal system.<&#47;li>\r\n<&#47;ul>\r\nThe
+  can make monitoring cool again...\r\n\r\n<a href=\"http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2012/08/1010_hall_monitor_cartman.jpg\"><img
+  class=\"alignleft size-full wp-image-558\" title=\"1010_hall_monitor_cartman\" src=\"http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2012/08/1010_hall_monitor_cartman.jpg\"
+  alt=\"\" width=\"720\" height=\"556\" /></a>\r\n\r\n&nbsp;\r\n\r\nIf you're using
+  <a href=\"http://juju.ubuntu.com/\" target=\"_blank\">Juju</a>, <a href=\"http://www.nagios.org/\"
+  target=\"_blank\">Nagios</a> is about to get a lot easier to leverage into your
+  environment. Anyone who has ever tried to automate their Nagios configuration, knows
+  that it can be daunting. Nagios is so flexible and has so many options, its hard
+  to get right when doing it by hand. Automating it requires even more thought. Part
+  of this is because monitoring itself is a bit hard to genercise. There are lots
+  of types of monitors. Nagios really focuses on two of these:\r\n<ul>\r\n\t<li><strong>Service
+  monitoring</strong> - Make a script that pretends to be a user and see if your synthetic
+  monitor sees what you expect.</li>\r\n\t<li><strong>Resource monitoring</strong>
+  - Look at the counters and metrics afforded a user of a normal system.</li>\r\n</ul>\r\nThe
   trick is, the service monitoring wants to interrogate the real services from outside
   of the machine, while the resource monitoring wants to see things only visible with
   privileged access. "
@@ -47,48 +46,49 @@ tags:
 - encapsulation
 ---
 <p>Monitoring. Could it get any more nerdy than monitoring? Well I think we can make monitoring cool again...</p>
-<p><a href="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;1010_hall_monitor_cartman.jpg"><img class="alignleft size-full wp-image-558" title="1010_hall_monitor_cartman" src="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;1010_hall_monitor_cartman.jpg" alt="" width="720" height="556" &#47;><&#47;a></p>
+<p><a href="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2012/08/1010_hall_monitor_cartman.jpg"><img class="alignleft size-full wp-image-558" title="1010_hall_monitor_cartman" src="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2012/08/1010_hall_monitor_cartman.jpg" alt="" width="720" height="556" /></a></p>
 <p>&nbsp;</p>
-<p>If you're using <a href="http:&#47;&#47;juju.ubuntu.com&#47;" target="_blank">Juju<&#47;a>, <a href="http:&#47;&#47;www.nagios.org&#47;" target="_blank">Nagios<&#47;a> is about to get a lot easier to leverage into your environment. Anyone who has ever tried to automate their Nagios configuration, knows that it can be daunting. Nagios is so flexible and has so many options, its hard to get right when doing it by hand. Automating it requires even more thought. Part of this is because monitoring itself is a bit hard to genercise. There are lots of types of monitors. Nagios really focuses on two of these:</p>
+<p>If you're using <a href="http://juju.ubuntu.com/" target="_blank">Juju</a>, <a href="http://www.nagios.org/" target="_blank">Nagios</a> is about to get a lot easier to leverage into your environment. Anyone who has ever tried to automate their Nagios configuration, knows that it can be daunting. Nagios is so flexible and has so many options, its hard to get right when doing it by hand. Automating it requires even more thought. Part of this is because monitoring itself is a bit hard to genercise. There are lots of types of monitors. Nagios really focuses on two of these:</p>
 <ul>
-<li><strong>Service monitoring<&#47;strong> - Make a script that pretends to be a user and see if your synthetic monitor sees what you expect.<&#47;li>
-<li><strong>Resource monitoring<&#47;strong> - Look at the counters and metrics afforded a user of a normal system.<&#47;li><br />
-<&#47;ul><br />
-The trick is, the service monitoring wants to interrogate the real services from outside of the machine, while the resource monitoring wants to see things only visible with privileged access. <a id="more"></a><a id="more-547"></a>This is why we have <a href="http:&#47;&#47;exchange.nagios.org&#47;directory&#47;Addons&#47;Monitoring-Agents&#47;NRPE--2D-Nagios-Remote-Plugin-Executor&#47;details" target="_blank">NRPE<&#47;a>, or "Nagios Remote Plugin Executor" (and NSCA, and <a href="http:&#47;&#47;jujucharms.com&#47;charms&#47;precise&#47;munin" target="_blank">munin<&#47;a>, but ignore those for now). NRPE is a little daemon that runs on a server and will run a nagios plugin script, returning the result when asked by Nagios. With this you get those privileged things like how much RAM and disk space is used. Normally when you want to use Nagios, you need to sit down and figure out how to tell it to monitor all of your stuff. This involves creating generic objects, figuring out how to get your list of hosts into nagios's config files, and how to get the classifications for said hosts into nagios. Does anybody trying to make sure their pager goes off when things are broken actually want to learn Nagios? So, here's how to get Nagios in your Juju environment. First lets assume you have deployed a stack of applications.</p>
-<pre>juju deploy mysql wikidb                # single MySQL db server<br />
-juju deploy haproxy wikibalancer        # and single haproxy load balancer<br />
-juju deploy -n 5 mediawiki wiki-app     # 5 app-server nodes to handle mediawiki<br />
-juju deploy memcached wiki-cache        # memcached<br />
-juju add-relation wikidb:db wiki-app:db # use wikidb service as r&#47;w db for app<br />
-juju add-relation wiki-app wikibalancer # load balance wiki-app behind haproxy<br />
-juju add-relation wiki-cache wiki-app   # use wiki-cache service for wiki-app<&#47;pre><br />
-This gives one a nice stack of services that is pretty common in most applications today, with a DB and&nbsp;cache for persistent and ephemeral storage and then many app nodes to scale the heavy lifting.</p>
-<p><a href="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;mediawiki.png"><img class="aligncenter size-full wp-image-549" title="mediawiki" src="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;mediawiki.png" alt="" width="1024" height="435" &#47;><&#47;a><a href="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;InstantWiki.png"><img class="alignleft size-full wp-image-550" title="InstantWiki" src="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;InstantWiki.png" alt="" width="965" height="673" &#47;><&#47;a></p>
+<li><strong>Service monitoring</strong> - Make a script that pretends to be a user and see if your synthetic monitor sees what you expect.</li>
+<li><strong>Resource monitoring</strong> - Look at the counters and metrics afforded a user of a normal system.</li>
+</ul>
+<p>The trick is, the service monitoring wants to interrogate the real services from outside of the machine, while the resource monitoring wants to see things only visible with privileged access. <a id="more"></a><a id="more-547"></a>This is why we have <a href="http://exchange.nagios.org/directory/Addons/Monitoring-Agents/NRPE--2D-Nagios-Remote-Plugin-Executor/details" target="_blank">NRPE</a>, or "Nagios Remote Plugin Executor" (and NSCA, and <a href="http://jujucharms.com/charms/precise/munin" target="_blank">munin</a>, but ignore those for now). NRPE is a little daemon that runs on a server and will run a nagios plugin script, returning the result when asked by Nagios. With this you get those privileged things like how much RAM and disk space is used. Normally when you want to use Nagios, you need to sit down and figure out how to tell it to monitor all of your stuff. This involves creating generic objects, figuring out how to get your list of hosts into nagios's config files, and how to get the classifications for said hosts into nagios. Does anybody trying to make sure their pager goes off when things are broken actually want to learn Nagios? So, here's how to get Nagios in your Juju environment. First lets assume you have deployed a stack of applications.</p>
+<pre>juju deploy mysql wikidb                # single MySQL db server
+juju deploy haproxy wikibalancer        # and single haproxy load balancer
+juju deploy -n 5 mediawiki wiki-app     # 5 app-server nodes to handle mediawiki
+juju deploy memcached wiki-cache        # memcached
+juju add-relation wikidb:db wiki-app:db # use wikidb service as r/w db for app
+juju add-relation wiki-app wikibalancer # load balance wiki-app behind haproxy
+juju add-relation wiki-cache wiki-app   # use wiki-cache service for wiki-app</pre>
+<p>This gives one a nice stack of services that is pretty common in most applications today, with a DB and cache for persistent and ephemeral storage and then many app nodes to scale the heavy lifting.</p>
+<p><a href="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2012/08/mediawiki.png"><img class="aligncenter size-full wp-image-549" title="mediawiki" src="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2012/08/mediawiki.png" alt="" width="1024" height="435" /></a><a href="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2012/08/InstantWiki.png"><img class="alignleft size-full wp-image-550" title="InstantWiki" src="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2012/08/InstantWiki.png" alt="" width="965" height="673" /></a></p>
 <p>Now you have your app running, but what about when it breaks? How will you find out? Well this is where Nagios comes in:</p>
-<pre>juju deploy nagios                          # custom nagios charm<br />
-juju add-relation nagios wikidb             # monitor wikidb via nagios<br />
-juju add-relation nagios wiki-app           # ""<br />
-juju add-relation nagios wikibalancer       # ""<&#47;pre><br />
-You now should have nagios monitoring things. You can check it out by exposing it and then browsing to the hostname of the nagios instance at 'http:&#47;&#47;x.x.x.x&#47;nagios3'. You can find out the password for the 'nagiosadmin' user by catting a file that the charm leaves for this purpose:</p>
-<pre>juju ssh nagios&#47;0 sudo cat &#47;var&#47;lib&#47;juju&#47;nagios.passwd<&#47;pre><br />
-<a href="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;InstantNagios2.png"><img class="alignleft size-full wp-image-553" title="InstantNagios" src="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;InstantNagios2.png" alt="" width="985" height="693" &#47;><&#47;a></p>
+<pre>juju deploy nagios                          # custom nagios charm
+juju add-relation nagios wikidb             # monitor wikidb via nagios
+juju add-relation nagios wiki-app           # ""
+juju add-relation nagios wikibalancer       # ""</pre>
+<p>You now should have nagios monitoring things. You can check it out by exposing it and then browsing to the hostname of the nagios instance at 'http://x.x.x.x/nagios3'. You can find out the password for the 'nagiosadmin' user by catting a file that the charm leaves for this purpose:</p>
+<pre>juju ssh nagios/0 sudo cat /var/lib/juju/nagios.passwd</pre>
+<p><a href="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2012/08/InstantNagios2.png"><img class="alignleft size-full wp-image-553" title="InstantNagios" src="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2012/08/InstantNagios2.png" alt="" width="985" height="693" /></a></p>
 <p>Now, the checks are very sparse at the moment. This is because we have used the generic monitoring interface which can just monitor the basic things (SSH, ping, etc). We can add some resource monitoring by deploying NRPE:</p>
-<pre>juju deploy nrpe                          # create a subordinate NRPE service<br />
-juju add-relation nrpe wikibalancer       # Put NRPE on wikibalancer<br />
-juju add-relation nrpe wiki-app           # Put NRPE on wiki-app<br />
-juju add-relation nrpe:monitors nagios:monitors # Tells Nagios to monitor all NRPEs<&#47;pre><br />
-Now we will get memory stats, root filesystem, etc.</p>
+<pre>juju deploy nrpe                          # create a subordinate NRPE service
+juju add-relation nrpe wikibalancer       # Put NRPE on wikibalancer
+juju add-relation nrpe wiki-app           # Put NRPE on wiki-app
+juju add-relation nrpe:monitors nagios:monitors # Tells Nagios to monitor all NRPEs</pre>
+<p>Now we will get memory stats, root filesystem, etc.</p>
 <p>You may have noticed we left off wikidb, that is because it will show you an ambiguous relation warning when you try this:</p>
-<pre>juju add-relation nrpe wikidb # Put NRPE on wikidb</p>
-<p>ERROR Ambiguous relation 'nrpe mysql'; could refer to:<br />
-&nbsp; 'nrpe:general-info mysql:juju-info' (juju-info client &#47; juju-info server)<br />
-&nbsp; 'nrpe:local-monitors mysql:local-monitors' (local-monitors client &#47; local-monitors server)<&#47;pre><br />
-This is because mysql has special support to be able to specify its own local monitors in addition to those in the usual basic group (more on this in part 2). To get around this we use:</p>
-<pre>juju add-relation nrpe:local-monitors wikidb:local-monitors<&#47;pre><br />
-<a href="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;AddNRPE.png"><img class="alignleft size-full wp-image-554" title="AddNRPE" src="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2012&#47;08&#47;AddNRPE.png" alt="" width="985" height="812" &#47;><&#47;a></p>
+<pre>juju add-relation nrpe wikidb # Put NRPE on wikidb
+
+ERROR Ambiguous relation 'nrpe mysql'; could refer to:
+  'nrpe:general-info mysql:juju-info' (juju-info client / juju-info server)
+  'nrpe:local-monitors mysql:local-monitors' (local-monitors client / local-monitors server)</pre>
+<p>This is because mysql has special support to be able to specify its own local monitors in addition to those in the usual basic group (more on this in part 2). To get around this we use:</p>
+<pre>juju add-relation nrpe:local-monitors wikidb:local-monitors</pre>
+<p><a href="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2012/08/AddNRPE.png"><img class="alignleft size-full wp-image-554" title="AddNRPE" src="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2012/08/AddNRPE.png" alt="" width="985" height="812" /></a></p>
 <p>&nbsp;</p>
 <p>This is a perfect example of how Juju's encapsulation around services pays off for re-usability. By wrapping a service like Nagios in a charm, we can start to really develop a set of best practices for using that service and collaborate around making it better for everyone.</p>
-<p>Of course, <a href="http:&#47;&#47;wiki.opscode.com&#47;display&#47;chef&#47;Nagios+Quick+Start">Chef<&#47;a> and <a href="http:&#47;&#47;blog.gurski.org&#47;index.php&#47;2010&#47;01&#47;28&#47;automatic-monitoring-with-puppet-and-nagios&#47;">Puppet<&#47;a> users can get this done with existing Nagios modules. Puppet, in particular, has really great Nagios support. However, I want to take a step back and explain why I think Juju has a place along side those methods and will accelerate systems engineering in new directions.</p>
-<p>While there is some level of encapsulation in the methods that Chef and Puppet put forth, they're not <strong>fully<&#47;strong> <strong>encapsulated<&#47;strong> in the way that they interact with other components in a Chef or Puppet system. In most cases, you still have to edit your own service configs to add specific Nagios integration. This works for the custom case, but it does not make it easy for users to collaborate on the way to deploy well known systems. It will also be hard to swap out components for new, better methods as they emerge. Every time you mention Nagios in your code, you are pushing Nagios deeper into your system engineering.</p>
-<p>With the method I've outlined above, <strong>any<&#47;strong> charmed service can be monitored for basic stats (including the <a href="http:&#47;&#47;jujucharms.com&#47;charms&#47;precise" target="_blank">80 or so that are in the official charm store<&#47;a>). You might ask though, what about custom Nagios plugins, or specifying more elaborate but somewhat generic service checks. That is all coming. I will show some examples in my next post about this. I will also go on later to show how Nagios + NRPE can be replaced with collectd, or some other system, without changing the charms that have implemented rich monitoring support.</p>
+<p>Of course, <a href="http://wiki.opscode.com/display/chef/Nagios+Quick+Start">Chef</a> and <a href="http://blog.gurski.org/index.php/2010/01/28/automatic-monitoring-with-puppet-and-nagios/">Puppet</a> users can get this done with existing Nagios modules. Puppet, in particular, has really great Nagios support. However, I want to take a step back and explain why I think Juju has a place along side those methods and will accelerate systems engineering in new directions.</p>
+<p>While there is some level of encapsulation in the methods that Chef and Puppet put forth, they're not <strong>fully</strong> <strong>encapsulated</strong> in the way that they interact with other components in a Chef or Puppet system. In most cases, you still have to edit your own service configs to add specific Nagios integration. This works for the custom case, but it does not make it easy for users to collaborate on the way to deploy well known systems. It will also be hard to swap out components for new, better methods as they emerge. Every time you mention Nagios in your code, you are pushing Nagios deeper into your system engineering.</p>
+<p>With the method I've outlined above, <strong>any</strong> charmed service can be monitored for basic stats (including the <a href="http://jujucharms.com/charms/precise" target="_blank">80 or so that are in the official charm store</a>). You might ask though, what about custom Nagios plugins, or specifying more elaborate but somewhat generic service checks. That is all coming. I will show some examples in my next post about this. I will also go on later to show how Nagios + NRPE can be replaced with collectd, or some other system, without changing the charms that have implemented rich monitoring support.</p>
 <p>So, while this at least starts to bring the official Nagios charm up to par with configuration management's rich Nagios ability, it also sets the stage for replacing Nagios with other things. The key difference here is that as you'll see in the next few parts, none of the charms will have to mention "Nagios". They'll just describe what things to monitor, and Nagios, Collectd, or whatever other system you have in place will find a way to interpret that and monitor it.</p>

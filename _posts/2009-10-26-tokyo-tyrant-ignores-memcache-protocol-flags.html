@@ -11,14 +11,14 @@ author:
 author_login: clint
 author_email: clint@fewbar.com
 author_url: http://fewbar.com
-excerpt: "We had a fun time this week with <a href=\"http:&#47;&#47;1978th.net&#47;tokyotyrant&#47;\">TokyoTyrant<&#47;a>.
-  Recently it has become apparent that <a href=\"http:&#47;&#47;www.memcachedb.org&#47;\">MemcacheDB<&#47;a>
+excerpt: "We had a fun time this week with <a href=\"http://1978th.net/tokyotyrant/\">TokyoTyrant</a>.
+  Recently it has become apparent that <a href=\"http://www.memcachedb.org/\">MemcacheDB</a>
   has been all but abandoned. As fantastic as the early work was by Steve Chu, the
-  project is in disrepair. That, coupled with the <a href=\"http:&#47;&#47;fewbar.com&#47;2009&#47;03&#47;memcachedb-fault-tolerance-procedures&#47;\">less
-  than obvious failover for its replication<&#47;a> combined to make us seek alternatives.\r\n\r\n<a
-  href=\"http:&#47;&#47;fewbar.com&#47;wp-content&#47;uploads&#47;2009&#47;10&#47;virtual_stupidity.jpg\"><img
-  class=\"alignnone size-full wp-image-121\" title=\"virtual_stupidity\" src=\"http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2009&#47;10&#47;virtual_stupidity.jpg\"
-  alt=\"virtual_stupidity\" width=\"280\" height=\"280\" &#47;><&#47;a>\r\n\r\n"
+  project is in disrepair. That, coupled with the <a href=\"http://fewbar.com/2009/03/memcachedb-fault-tolerance-procedures/\">less
+  than obvious failover for its replication</a> combined to make us seek alternatives.\r\n\r\n<a
+  href=\"http://fewbar.com/wp-content/uploads/2009/10/virtual_stupidity.jpg\"><img
+  class=\"alignnone size-full wp-image-121\" title=\"virtual_stupidity\" src=\"http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2009/10/virtual_stupidity.jpg\"
+  alt=\"virtual_stupidity\" width=\"280\" height=\"280\" /></a>\r\n\r\n"
 wordpress_id: 117
 wordpress_url: http://fewbar.com/?p=117
 date: '2009-10-26 21:28:52 -0700'
@@ -37,17 +37,17 @@ tags:
 - testing
 - RTFM
 ---
-<p>We had a fun time this week with <a href="http:&#47;&#47;1978th.net&#47;tokyotyrant&#47;">TokyoTyrant<&#47;a>. Recently it has become apparent that <a href="http:&#47;&#47;www.memcachedb.org&#47;">MemcacheDB<&#47;a> has been all but abandoned. As fantastic as the early work was by Steve Chu, the project is in disrepair. That, coupled with the <a href="http:&#47;&#47;fewbar.com&#47;2009&#47;03&#47;memcachedb-fault-tolerance-procedures&#47;">less than obvious failover for its replication<&#47;a> combined to make us seek alternatives.</p>
-<p><a href="http:&#47;&#47;fewbar.com&#47;wp-content&#47;uploads&#47;2009&#47;10&#47;virtual_stupidity.jpg"><img class="alignnone size-full wp-image-121" title="virtual_stupidity" src="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2009&#47;10&#47;virtual_stupidity.jpg" alt="virtual_stupidity" width="280" height="280" &#47;><&#47;a></p>
+<p>We had a fun time this week with <a href="http://1978th.net/tokyotyrant/">TokyoTyrant</a>. Recently it has become apparent that <a href="http://www.memcachedb.org/">MemcacheDB</a> has been all but abandoned. As fantastic as the early work was by Steve Chu, the project is in disrepair. That, coupled with the <a href="http://fewbar.com/2009/03/memcachedb-fault-tolerance-procedures/">less than obvious failover for its replication</a> combined to make us seek alternatives.</p>
+<p><a href="http://fewbar.com/wp-content/uploads/2009/10/virtual_stupidity.jpg"><img class="alignnone size-full wp-image-121" title="virtual_stupidity" src="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2009/10/virtual_stupidity.jpg" alt="virtual_stupidity" width="280" height="280" /></a></p>
 <p><a id="more"></a><a id="more-117"></a><br />
-<a href="http:&#47;&#47;krow.net">Brian Aker<&#47;a> had mentioned to me at one time that TokyoTyrant was way better than memcachedb and we should run it instead. I took notice and it turns out he's right! It does basically the same thing, applying the memcache protocol to an on disk key&#47;value store. However, the code is incredibly clean, well maintained, and runs extremely fast. There's also a lot more flexibility, with the ability to choose between in-memory or on disk storage, hash tables, B+Tree's, etc.</p>
-<p>The availability of log based asynchronous master&#47;master replication (somewhat similar to MySQL's replication in concept) was probably one of the biggest wins, allowing much simpler failover (just move the IP, or DNS, or whatever) when compared to MemcacheDB's adherence to BerkeleyDB's replication setup, which is a single-master system implementing an election algorithm.</p>
-<p>Somewhere during migration, we missed one tiny detail though. Sometimes, the devil is in the details. This is really the only evidence in <a href="http:&#47;&#47;1978th.net&#47;tokyotyrant&#47;spex.html#protocol">the documentation that tokyo tyrant has support for the memcache protocol<&#47;a>. It is very clear:</p>
+<a href="http://krow.net">Brian Aker</a> had mentioned to me at one time that TokyoTyrant was way better than memcachedb and we should run it instead. I took notice and it turns out he's right! It does basically the same thing, applying the memcache protocol to an on disk key/value store. However, the code is incredibly clean, well maintained, and runs extremely fast. There's also a lot more flexibility, with the ability to choose between in-memory or on disk storage, hash tables, B+Tree's, etc.</p>
+<p>The availability of log based asynchronous master/master replication (somewhat similar to MySQL's replication in concept) was probably one of the biggest wins, allowing much simpler failover (just move the IP, or DNS, or whatever) when compared to MemcacheDB's adherence to BerkeleyDB's replication setup, which is a single-master system implementing an election algorithm.</p>
+<p>Somewhere during migration, we missed one tiny detail though. Sometimes, the devil is in the details. This is really the only evidence in <a href="http://1978th.net/tokyotyrant/spex.html#protocol">the documentation that tokyo tyrant has support for the memcache protocol</a>. It is very clear:</p>
 <blockquote><p>Memcached Compatible Protocol</p>
-<p>As for the memcached (ASCII) compatible protocol, the server implements the following commands; "set", "add", "replace", "get", "delete", "incr", "decr", "stats", "flush_all", "version", and "quit". "noreply" options of update commands are also supported. However, "flags", "exptime", and "cas unique" parameters are ignored.<&#47;blockquote><br />
-Now, as I said, there's nothing ambiguous about this. That would have helped, if anyone on my team had ever read it. We installed TokyoTyrant, pointed our basic test code at it, and it worked. This is really a process problem, not so much a technical one. The process must be to assume it won't work, and test all the different use cases to make sure it works.</p>
+<p>As for the memcached (ASCII) compatible protocol, the server implements the following commands; "set", "add", "replace", "get", "delete", "incr", "decr", "stats", "flush_all", "version", and "quit". "noreply" options of update commands are also supported. However, "flags", "exptime", and "cas unique" parameters are ignored.</p></blockquote>
+<p>Now, as I said, there's nothing ambiguous about this. That would have helped, if anyone on my team had ever read it. We installed TokyoTyrant, pointed our basic test code at it, and it worked. This is really a process problem, not so much a technical one. The process must be to assume it won't work, and test all the different use cases to make sure it works.</p>
 <p>Now, why is that bit of the manual important? Well we use PHP. Specifically, we use the PECL "Memcache" module to access memcache protocol storage. Now, the Memcache module is mostly oriented toward caching in the memory based original memcached. It works great for memcachedb too, which simply ignores the exptime parameter. However, memcacheDB *does not* ignore "flags".</p>
-<p>And therein lies the problem. Users of the <a href="http:&#47;&#47;pecl.php.net&#47;package&#47;memcache">PECL Memcache module<&#47;a> may not know this, but the flags are *important*. There are two bits in that flags field that the Memcache module may set. Bit 0 is used to indicate whether or not the content has been serialized, and, therefore, on read, must be unserialized. Bit 1 is used to indicate whether or not the content has been gzipped.</p>
+<p>And therein lies the problem. Users of the <a href="http://pecl.php.net/package/memcache">PECL Memcache module</a> may not know this, but the flags are *important*. There are two bits in that flags field that the Memcache module may set. Bit 0 is used to indicate whether or not the content has been serialized, and, therefore, on read, must be unserialized. Bit 1 is used to indicate whether or not the content has been gzipped.</p>
 <p>So, while all of the strings that were stored in MemcacheDB and subsequently copied to TokyoTyrant worked great, the serialized objects, arrays, and gzipped values, were completely inoperative, as they were coming back to the code as strings and binary compressed data. The gzipped data was easy (turn off automatic gzip compression). The serialized data took some quick tap dancing to remedy, with code something like this:</p>
 <p><code lang="php"><br />
 class Memcache_BrokenFlags extends Memcache<br />
@@ -59,7 +59,7 @@ $uv = @unserialize($v);<br />
 return $uv === false ? $v : $uv;<br />
 }<br />
 }<br />
-<&#47;code></p>
+</code></p>
 <p>Luckily our code all uses one Factory method to spawn all "MemcacheDB" connections, so it was easy to substitute this in.</p>
-<p>Eventually we can just change the code by segregating into things that always serialize, and things that don't, and just do the serialization ourselves. This should eventually allow us to use the new <a href="http:&#47;&#47;pecl.php.net&#47;package&#47;tokyo_tyrant">tokyo_tyrant module in PECL<&#47;a>, which only reliably stores scalars (I noticed recent versions have added a call to the internal PHP function convert_to_string().. this is, I think, a mistake, but one that still leaves it up the programmer to explicitly serialize when serialization is desired).</p>
+<p>Eventually we can just change the code by segregating into things that always serialize, and things that don't, and just do the serialization ourselves. This should eventually allow us to use the new <a href="http://pecl.php.net/package/tokyo_tyrant">tokyo_tyrant module in PECL</a>, which only reliably stores scalars (I noticed recent versions have added a call to the internal PHP function convert_to_string().. this is, I think, a mistake, but one that still leaves it up the programmer to explicitly serialize when serialization is desired).</p>
 <p>This was a pretty big gotchya, and one that illustrates that even though sometimes us cowboy coders and sysadmins get annoyed when those pesky business people ask us for plans, schedules, expected impact, etc., and we keep assuring them we know whats up, its still important to actually know whats up, and make sure to RTFMC .. C as in, CAREFULLY.</p>

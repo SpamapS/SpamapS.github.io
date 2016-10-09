@@ -16,11 +16,10 @@ excerpt: "Ding ding ding.. in this corner, wearing black shorts and a giant sche
   must be searchable and which must not be. And in that corner, we have the contender,
   a kid from the back streets, outweighed and out reached by all his opponents, but
   still victorious in the queue shootout, with just open source, and 12 patch releases..
-  written in C, its <b><a href=\"http:&#47;&#47;gearman.org\">gearman<&#47;a><&#47;b>!\r\n\r\n<a
-  href=\"http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2010&#47;03&#47;ko-mike-tyson.png\"><img
-  src=\"http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2010&#47;03&#47;ko-mike-tyson.png\"
+  written in C, its <b><a href=\"http://gearman.org\">gearman</a></b>!\r\n\r\n<a href=\"http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2010/03/ko-mike-tyson.png\"><img
+  src=\"http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2010/03/ko-mike-tyson.png\"
   alt=\"\" title=\"ko-mike-tyson\" width=\"500\" height=\"437\" class=\"alignnone
-  size-full wp-image-155\" &#47;><&#47;a>\r\n"
+  size-full wp-image-155\" /></a>\r\n"
 wordpress_id: 154
 wordpress_url: http://fewbar.com/?p=154
 date: '2010-03-23 22:47:36 -0700'
@@ -37,14 +36,14 @@ tags:
 - PHP
 - gearman
 ---
-<p>Ding ding ding.. in this corner, wearing black shorts and a giant schema, we have over 11 million records in MySQL with a complex set of rules governing which must be searchable and which must not be. And in that corner, we have the contender, a kid from the back streets, outweighed and out reached by all his opponents, but still victorious in the queue shootout, with just open source, and 12 patch releases.. written in C, its <b><a href="http:&#47;&#47;gearman.org">gearman<&#47;a><&#47;b>!</p>
-<p><a href="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2010&#47;03&#47;ko-mike-tyson.png"><img src="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2010&#47;03&#47;ko-mike-tyson.png" alt="" title="ko-mike-tyson" width="500" height="437" class="alignnone size-full wp-image-155" &#47;><&#47;a><br />
+<p>Ding ding ding.. in this corner, wearing black shorts and a giant schema, we have over 11 million records in MySQL with a complex set of rules governing which must be searchable and which must not be. And in that corner, we have the contender, a kid from the back streets, outweighed and out reached by all his opponents, but still victorious in the queue shootout, with just open source, and 12 patch releases.. written in C, its <b><a href="http://gearman.org">gearman</a></b>!</p>
+<p><a href="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2010/03/ko-mike-tyson.png"><img src="http://fewbar.com.s3.amazonaws.com/wp-content/uploads/2010/03/ko-mike-tyson.png" alt="" title="ko-mike-tyson" width="500" height="437" class="alignnone size-full wp-image-155" /></a><br />
 <a id="more"></a><a id="more-154"></a></p>
-<p>I'm pretty excited today, as I'm preparing to go live with the first real, high load application of Gearman that I've written. What is it you say? Well it is a simple trigger based replicator from mysql to <a href="http:&#47;&#47;lucene.apache.org&#47;solr&#47;">SOLR<&#47;a>.</p>
+<p>I'm pretty excited today, as I'm preparing to go live with the first real, high load application of Gearman that I've written. What is it you say? Well it is a simple trigger based replicator from mysql to <a href="http://lucene.apache.org/solr/">SOLR</a>.</p>
 <p>I should say (because I know some of my colleagues read this blog) that I don't actually believe in this design. Replication using triggers seems fraught with danger. It totally makes sense if you have a giant application and can't track down everywhere that a table is changed. However, if your app is simple and properly abstracted, hopefully you know the 1 or 2 places that write to the table.</p>
-<p>I should also say that I really can't reveal all of the details. The general idea is pretty simple. Basically we have a trigger that dumps a primary key into gearman via the <a href="https:&#47;&#47;launchpad.net&#47;gearman-mysql-udf">gearman MySQL UDFs<&#47;a>. The idea is just to tell a gearman worker "look at this record in that table".</p>
+<p>I should also say that I really can't reveal all of the details. The general idea is pretty simple. Basically we have a trigger that dumps a primary key into gearman via the <a href="https://launchpad.net/gearman-mysql-udf">gearman MySQL UDFs</a>. The idea is just to tell a gearman worker "look at this record in that table".</p>
 <p>Once the worker picks it up, it applies some logic to the record.. "should this be searchable or not". If the answer is yes it should be searchable, the worker pushes the record into SOLR. If not, the worker will make sure it is not in solr.</p>
-<p>This at least is pretty simple. The end result is a system where we can rebuild the search index in parallel using multiple CPU's (thank you to solr&#47;lucene for being able to update indexes concurrently and efficiently btw). This is done by pushing all of the records in the table into the queue at once.</p>
+<p>This at least is pretty simple. The end result is a system where we can rebuild the search index in parallel using multiple CPU's (thank you to solr/lucene for being able to update indexes concurrently and efficiently btw). This is done by pushing all of the records in the table into the queue at once.</p>
 <p>Anyway, gearmand is performing like a champ, libgearman and the gearman pecl module are doing great. I'm just really happy to see gearman rolled out in production, as I really do think it has that nice mix of simplicity and performance. I love the commandline client which makes it easy to write scripts to inject things into queues, or query workers.  This allows me to access a worker like this:</p>
 <p><code>$ gearman -h gearmanbox -f all_workers -s<br />
 Known Workers: 11</p>
@@ -58,7 +57,7 @@ boxname_RealTimeUpdate_Queue_Subject_13359 jobs=470508,restarts=0,memory_MB=7.03
 boxname_RealTimeUpdate_Queue_Subject_13364 jobs=403182,restarts=0,memory_MB=7.03,lastcheckin=Tue, 23 Mar 2010 22:37:58 -0700<br />
 boxname_RealTimeUpdate_Property_SolrPublish_ jobs=219630,restarts=0,memory_MB=6.19,lastcheckin=Tue, 23 Mar 2010 22:37:59 -0700<br />
 boxname_RealTimeUpdate_Queue_TriggerWorker_2 jobs=393642,restarts=0,memory_MB=4.27,lastcheckin=Tue, 23 Mar 2010 22:37:59 -0700<br />
-boxname_RealTimeUpdate_Property_SolrBatchPub jobs=6,restarts=0,memory_MB=6.23,lastcheckin=Tue, 23 Mar 2010 22:37:28 -0700<&#47;code></p>
+boxname_RealTimeUpdate_Property_SolrBatchPub jobs=6,restarts=0,memory_MB=6.23,lastcheckin=Tue, 23 Mar 2010 22:37:28 -0700</code></p>
 <p>Brilliant.. no need for html or HTTP.. just a nice simple commandline interface.</p>
 <p>I think gearman still has a ways to go. I'd really like to see some more administration added to it. Deleting empty queues and quickly flushing all queues without restarting gearmand would be nice to haves. We'll see what happens going forward, but for not, thanks so much to the gearman team (especially Eric Day who showed me gearman, and Brian Aker for pushing hard to release v0.12).</p>
 <p>w00t!</p>
