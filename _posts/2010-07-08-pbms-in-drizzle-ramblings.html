@@ -1,0 +1,31 @@
+---
+layout: post
+status: publish
+published: true
+title: PBMS in Drizzle | Ramblings
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+wordpress_id: 243
+wordpress_url: http://fewbar.com/?p=243
+date: '2010-07-08 07:36:05 -0700'
+date_gmt: '2010-07-08 14:36:05 -0700'
+categories:
+- Drizzle
+tags:
+- drizzle
+- blobs
+- plugins
+---
+<p><a href="http:&#47;&#47;www.flamingspork.com&#47;blog&#47;2010&#47;07&#47;08&#47;pbms-in-drizzle&#47;">PBMS in Drizzle | Ramblings<&#47;a>.</p>
+<blockquote><p><span style="font-family: 'Lucida Grande', Verdana, Arial, sans-serif; line-height: 16px; font-size: 12px; color: #333333;"> <&#47;span></p>
+<p style="font-size: 1.05em;">For those not familiar with PBMS it does two things: provide a place (not in the table) for BLOBs to be stored (locally on disk or even out to S3) and provide a HTTP interface to get and store BLOBs.<&#47;p></p>
+<p style="font-size: 1.05em;">This means you can do really neat things such as have your BLOBs replicated, consistent and all those nice databasey things as well as easily access them in a scalable way (everybody knows how to cache HTTP).<&#47;p><br />
+<&#47;blockquote></p>
+<p style="font-size: 1.05em;">This is awesome. How many times have you added a URL to your database table and then had to write API's of some sort to go fetch that URL at read time, and write that URL somewhat atomically at write time?<&#47;p></p>
+<p style="font-size: 1.05em;">Drizzle isn't even "done" yet, and already the plugins are flying out of the community. The fact that this is a plugin, and won't affect *anybody* who doesn't want it, is why I'm confident Drizzle is moving in the right directly. I'm not sure why it has taken so long, but this feels like its doing for the RDBMS what apache has done for HTTP serving... make it flexible and extensible, and folks will find interesting ways to use it.<&#47;p></p>

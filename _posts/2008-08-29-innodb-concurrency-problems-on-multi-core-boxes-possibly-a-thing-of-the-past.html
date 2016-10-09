@@ -1,0 +1,56 @@
+---
+layout: post
+status: publish
+published: true
+title: Can more queries equal a healthier MySQL server?
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+excerpt: "This week was an ugly one for my monster database servers. It should have
+  been triumphant, but oddly enough, I think it shows how prone to mistuning InnoDB
+  on MySQL 5.0 is with multiple cores.\r\n\r\nThis server is a multi-core, high concurrency
+  server. The application has been designed a little bit naively in that it just throws
+  almost all queries at the main db server. Several bits have been designed to scale
+  by not doing that, but unfortunately, huge amounts of functionality were built around
+  those apps to prevent them from scaling.\r\n\r\nAs a result, we've had to scale
+  up the central database server and its redundant systems significantly. We started
+  with the Proliant DL380 G4 with two Xeon 3.4Ghz CPU's and 12GB of RAM, and plenty
+  of disks in an external RAID. As more traffic was added, we moved up to the DL580
+  servers with 4 Xeon 3.4Ghz and 64GB of RAM. This worked well, but still more traffic,
+  and more data, was coming and the app wasn't ready to change significantly. We finally
+  landed on the latest DL580 server, with 1GB of total battery backed write cache,
+  14 SAS disks, 128GB of RAM, and two quad core Xeon CPU's.\r\n"
+wordpress_id: 14
+wordpress_url: http://fewbar.com/?p=14
+date: '2008-08-29 23:21:34 -0700'
+date_gmt: '2008-08-30 06:21:34 -0700'
+categories:
+- Technology
+- MySQL
+- Scalability
+tags:
+- MySQL
+- innodb
+- Scalability
+- concurrency
+- performance
+---
+<p>This week was an ugly one for my monster database servers. It should have been triumphant, but oddly enough, I think it shows how prone to mistuning InnoDB on MySQL 5.0 is with multiple cores.</p>
+<p>This server is a multi-core, high concurrency server. The application has been designed a little bit naively in that it just throws almost all queries at the main db server. Several bits have been designed to scale by not doing that, but unfortunately, huge amounts of functionality were built around those apps to prevent them from scaling.</p>
+<p>As a result, we've had to scale up the central database server and its redundant systems significantly. We started with the Proliant DL380 G4 with two Xeon 3.4Ghz CPU's and 12GB of RAM, and plenty of disks in an external RAID. As more traffic was added, we moved up to the DL580 servers with 4 Xeon 3.4Ghz and 64GB of RAM. This worked well, but still more traffic, and more data, was coming and the app wasn't ready to change significantly. We finally landed on the latest DL580 server, with 1GB of total battery backed write cache, 14 SAS disks, 128GB of RAM, and two quad core Xeon CPU's.<br />
+<a id="more"></a><a id="more-14"></a><br />
+Some things got better. Writes were now incredibly fast. The server was churning out 1000 queries per second easily. Sometimes during peak times, query response time would suffer, but ultimately, the box was keeping up and performing well. <a href="http:&#47;&#47;fewbar.com&#47;2008&#47;07&#47;mysql-query-cache-scales-like-a-286-with-turbo-off&#47;">Especially after we turned of query caching<&#47;a>. After this week though, I wonder how much of the problem was query caching... more later.</p>
+<p>Anyway, whenever the server would need to have maintenance, some high traffic applications would suffer needlessly for their need of rarely changing data (memcached was out of the question for the complexity and "realtime" nature of this data). So we setup a selective replication fanout onto multiple boxes and pointed these apps at that cluster for these queries.</p>
+<p>Well the next day, without all of these tiny queries pounding on it, the database server had horrible problems. 400 threads stacked up inside InnoDB "Waiting for InnoDB queue". System resources were fine, but it was clear, InnoDB was having trouble. Queries that normally take 0.75 seconds were taking 300+ seconds, or just never completing. I knew there was real trouble, when killing the thread would result in it just changing state to "Killed", but never dying. Based on what I'd read in High Performance MySQL, and <a href="http:&#47;&#47;www.mysqlperformanceblog.com&#47;2006&#47;06&#47;05&#47;innodb-thread-concurrency&#47;">articles like this one<&#47;a>, I tried twiddling with innodb_thread_concurrency, innodb_concurrency_tickets, and innodb_thread_sleep_delay. None of them seemed to help, though innodb_thread_concurrency set to a value of about half the CPU cores seemed to delay the problems.</p>
+<p>I noticed that we were running MySQL v5.0.51a still. We had planned an upgrade to 5.0.67, which was just recently released, but hadn't gotten there yet. I went ahead and upgraded one of the boxes to it, and failed over to it. Instantly things were more healthy, and the health seemed to stay for hours, without any more InnoDB freakouts.</p>
+<p>After some research, it would seem that between 5.0.51a and 5.0.67, a lot of really big fixes were made to InnoDB to help it scale up on multi-core machines. The box has been healthy for a couple of days, though there's still a lot of work to do removing query load from the server.</p>
+<p>But why would a _reduction_ in queries cause concurrency problems? I have a theory, but no real ideas on how to test it.</p>
+<p>Before, we were doing 1000 queries per second. Things were healthy. We removed about 400 queries per second from that. These 400 queries were basically instantaneous.. often times returning no results at all and reading from tables and indexes completely stored in the innodb_buffer_pool. But, with query cache turned off, they were still being processed fully by InnoDB. When we removed these tiny queries from the queue imposed by innodb_thread_concurrency, I think we removed the equivalent of spin waits from the queue. These tiny, easy queries were just hard enough to process, to prevent a lot of bigger queries from hitting the queue at the same time. Thats why reducing innodb_thread_concurrency to 4 helped a bit.. with only 4 threads vying for mutexes and CPU resources constantly, InnoDB was able to (sort of) keep up.</p>
+<p>My final bit of evidence for this is that we actually, I think, had this problem before with the <a href="http:&#47;&#47;fewbar.com&#47;2008&#47;07&#47;mysql-query-cache-scales-like-a-286-with-turbo-off&#47;">aforementioned article<&#47;a>. Turning off the query cache moved these tiny queries out of the query cache, and into the InnoDB queue, providing the needed pseudo-spin-waits to prevent it from locking in on itself.</p>
+<p>I have to wonder if raising innodb_sync_spin_loops to something ridiculously high, like 50000, would have the same effect. Unfortunately, its very hard to test this without dedicating a lot of time to it.</p>
+<p>So, in this case, it would seem that more work can, in fact, make the server healthier.</p>

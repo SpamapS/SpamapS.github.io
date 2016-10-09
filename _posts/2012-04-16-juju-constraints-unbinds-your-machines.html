@@ -1,0 +1,43 @@
+---
+layout: post
+status: publish
+published: true
+title: Juju constraints unbinds your machines
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+wordpress_id: 534
+wordpress_url: http://fewbar.com/?p=534
+date: '2012-04-16 15:48:17 -0700'
+date_gmt: '2012-04-16 22:48:17 -0700'
+categories:
+- Ubuntu
+- Juju
+tags:
+- MySQL
+- ec2
+- ubuntu
+- cloud
+- juju
+---
+<p>This week, <a href="https:&#47;&#47;lists.ubuntu.com&#47;archives&#47;juju&#47;2012-April&#47;001426.html">William "I code more than you will ever be able to" Reade announced that Juju has a new feature called 'Constraints'.<&#47;a></p>
+<p>This is really, really cool and brings juju into a new area of capability for deploying big and little sites.</p>
+<p>To be clear, this allows you to abstract things pretty effectively.</p>
+<p>Consider this:</p>
+<p><code>juju deploy mysql --constraints mem=10G<br />
+juju deploy statusnet --constraints cpu=1<&#47;code></p>
+<p>This will result in your mysql service being on an extra large instance since it has 15GB of RAM. Your statusnet instances will be m1.small's since that will have just 1 ECU.</p>
+<p>Even cooler than this is now if you want a mysql slave in a different availability zone:</p>
+<p><code>juju deploy mysql --constraints ec2-zone=a mysql-a<br />
+juju deploy mysql --constraints ec2-zone=b mysql-b<br />
+juju add-relation mysql-a:master mysql-b:slave<br />
+juju add-relation statusnet mysql-a<&#47;code></p>
+<p>Now if mysql-a goes down</p>
+<p><code>juju remove-relation statusnet mysql-a<br />
+juju add-relation statusnet mysql-b<&#47;code></p>
+<p>Much and more is possible, but this really does make juju even more compelling as a tool for simple, easy deployment. <em>Edit: fixed ec2-zone to be the single character, per William's feedback.<&#47;em></p>

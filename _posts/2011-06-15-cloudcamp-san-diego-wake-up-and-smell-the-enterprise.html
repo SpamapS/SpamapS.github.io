@@ -1,0 +1,45 @@
+---
+layout: post
+status: publish
+published: true
+title: CloudCamp San Diego - Wake up and smell the Enterprise
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+excerpt: "I took a little trip down to San Diego yesterday to see what these <a href=\"http:&#47;&#47;cloudcamp-sandiego-2011.eventbrite.com&#47;\">CloudCamp<&#47;a>
+  events are all about. There are so many, and they're all over, I figure its a good
+  chance to take a look at what might be the \"Common man's\" view of the cloud. I
+  spend so much time talking to people at a really deep level about what the cloud
+  is, why we like it, why we hate it, etc. This \"un-conference\" was more about bringing
+  a lot of that information, distilled for business owners and professionals who need
+  to learn more about \"this cloud thing\".\r\n"
+wordpress_id: 443
+wordpress_url: http://fewbar.com/?p=443
+date: '2011-06-15 13:25:28 -0700'
+date_gmt: '2011-06-15 20:25:28 -0700'
+categories:
+- Ubuntu
+- Open Source
+- Cloud
+tags:
+- ec2
+- amazon
+- cloud
+- nosql
+- ensemble
+- cloudcampsan
+- cloudcamp
+- azure
+---
+<p>I took a little trip down to San Diego yesterday to see what these <a href="http:&#47;&#47;cloudcamp-sandiego-2011.eventbrite.com&#47;">CloudCamp<&#47;a> events are all about. There are so many, and they're all over, I figure its a good chance to take a look at what might be the "Common man's" view of the cloud. I spend so much time talking to people at a really deep level about what the cloud is, why we like it, why we hate it, etc. This "un-conference" was more about bringing a lot of that information, distilled for business owners and professionals who need to learn more about "this cloud thing".<br />
+<a id="more"></a><a id="more-443"></a><br />
+The lightning talks were quite basic. The most interesting one was given by a former lawyer who now runs IT for a medium sized law firm. Private cloud saves him money because he can now make a direct charge back to a client when they are taking up storage and computing space. This also allows him to keep his infrastructure more managable because they tend to give up resources more readily when there is a direct chargeback as opposed to just general service fees that try to cover this.</p>
+<p>There was a breakout session about SQL vs. NoSQL. I joined and was shocked at how dominant the Microsoft representative was. She certainly tried to convince us "this isn't about SQL Azure, its about SQL vs. NoSQL" but it was pretty much about all the things that suck more than SQL Azure, and about not mentioning anything that might compete directly with it. I brought up things like Drizzle, Cassandra, HDFS, Xeround, MongoDB, and MogileFS. These were all swiftly moved past, and not written on the white board. Her focus was on how SimpleDB differs from Amazon RDS, and how Microsoft Azure has its own key&#47;value&#47;column store for their cloud. The room was overpowered into silence for the most part.. there were about 20 developers and IT manager types in the room and they had no idea how this was going to help them take advantage of IaaS or PaaS clouds. I felt the session was interesting, but ultimately, completely pwned by the Microsoft rep. She ended by showing off 3D effects in their Silverlight based management tool. Anybody impressed deserves what they get, quite honestly.</p>
+<p>One good thing that did come out of that session was the ensuing discussion for it where I ended up talking with a gentleman from a local San Diego startup that was just acquired. This is a startup of 3 people that is 100% in Amazon EC2 on Ubuntu with PHP and MySQL. They have their services spread accross 3 regions and were not affected at all by the recent outtages in us-east-1. Their feeling on the SQL Azure folks is that its for people who have money to burn. For him, he spends $3000 a month and it is entirely on EC2 instances and S3&#47;EBS storage. The audience was stunned that it was so cheap, and that it was so easy to scale up and down as they add&#47;remove clients. He echoed something that the MS guys said too.. that because their app was architected this way from the beginning, it was extremely cost effective, and wouldn't even really save much money if they leased or owned servers instead of leasing instances, since they can calculate the costs and pass them directly on to the clients with this model, and their commitment is zero.</p>
+<p>Later on I proposed a breakout session on how repeatable is your infrastructure (basically, infrastructure as code). There was almost no interest, as this was a very business oriented un-conference. The few people who attended were just using AMI's to do everything. When something breaks, they fix it with parallel-ssh. For the one person who was using Windows in the cloud, he had no SSH, so fixing any system problems meant re-deploying his new AMI over and over.</p>
+<p>Overall I thought it was interesting to see where the non-webops world is with knowledge of the cloud. I think the work we're doing with <a href="http:&#47;&#47;ensemble.ubuntu.com&#47;">Ensemble<&#47;a> is really going to help people to deploy open source applications into private and public clouds so they don't need 3D enabled silverlight interfaces to manage a simple database or a bug tracking system for their internal developers.</p>

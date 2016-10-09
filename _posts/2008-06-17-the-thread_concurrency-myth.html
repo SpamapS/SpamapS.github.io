@@ -1,0 +1,40 @@
+---
+layout: post
+status: publish
+published: true
+title: The Thread_Concurrency myth
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+excerpt: "Just a few weeks ago, I found out that thread_concurrency's purported magical
+  effects at correcting <a href=\"http:&#47;&#47;bugs.mysql.com&#47;bug.php?id=15815\">MySQL's
+  concurrency limitations<&#47;a> (especially in 4.1) were something of a myth. It
+  was <a href=\"http:&#47;&#47;lists.mysql.com&#47;mysql&#47;208874\">a post on mysql's
+  lists<&#47;a> that alerted me to this. Apparently it only works on Solaris, Linux's
+  threading library ignores this parameter completely. This is not to be confused
+  with innodb_thread_concurrency, which is quite useful in controlling the flow of
+  transactions through InnoDB. I think the problem really lies in the fact that the
+  default my.cnf example configs tell us to set thread_concurrency to the number of
+  CPU's*2. They fail to mention that this only matters on Solaris, though <a href=\"http:&#47;&#47;dev.mysql.com&#47;doc&#47;refman&#47;4.1&#47;en&#47;server-system-variables.html#option_mysqld_thread_concurrency\">the
+  manual is quite clear<&#47;a>.\r\n"
+wordpress_id: 6
+wordpress_url: http://fewbar.com/?p=6
+date: '2008-06-17 10:20:16 -0700'
+date_gmt: '2008-06-17 17:20:16 -0700'
+categories:
+- MySQL
+tags:
+- linux
+- MySQL
+- solaris
+- threads
+---
+<p>Just a few weeks ago, I found out that thread_concurrency's purported magical effects at correcting <a href="http:&#47;&#47;bugs.mysql.com&#47;bug.php?id=15815">MySQL's concurrency limitations<&#47;a> (especially in 4.1) were something of a myth. It was <a href="http:&#47;&#47;lists.mysql.com&#47;mysql&#47;208874">a post on mysql's lists<&#47;a> that alerted me to this. Apparently it only works on Solaris, Linux's threading library ignores this parameter completely. This is not to be confused with innodb_thread_concurrency, which is quite useful in controlling the flow of transactions through InnoDB. I think the problem really lies in the fact that the default my.cnf example configs tell us to set thread_concurrency to the number of CPU's*2. They fail to mention that this only matters on Solaris, though <a href="http:&#47;&#47;dev.mysql.com&#47;doc&#47;refman&#47;4.1&#47;en&#47;server-system-variables.html#option_mysqld_thread_concurrency">the manual is quite clear<&#47;a>.<br />
+<a id="more"></a><a id="more-6"></a><br />
+I think I set this parameter to 1, 4, and 8 trying to see if it would affect things positively or negatively on quite a few 4.1 boxes. I always just sort of assumed it was going to help prevent any sort of snowballing of server load if it ever got hit hard.</p>
+<p>Yet another example where its important to RTFM!</p>

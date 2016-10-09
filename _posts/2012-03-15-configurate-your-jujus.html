@@ -1,0 +1,127 @@
+---
+layout: post
+status: publish
+published: true
+title: Configurate your juju's
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+excerpt: "I was reading <a href=\"http:&#47;&#47;www.jorgecastro.org&#47;2012&#47;03&#47;13&#47;need-a-quick-instance-easy-juju-trick&#47;\">Jorge's
+  Stomp Box<&#47;a> earlier today, and somebody mentioned how it would be an even
+  better trick if it were easier to configure juju quickly.\r\n\r\nAsk and ye shall
+  receive. I hacked a new sub-command into the experimental 'juju-jitsu' wrapper.
+  I'll let the scrape from my terminal do the talking. You can get it with:\r\n\r\n<code>\r\nbzr
+  branch lp:juju-jitsu\r\n<&#47;code>\r\n\r\nAnd try it with\r\n\r\n<code>\r\njuju-jitsu&#47;wrap-juju\r\njuju
+  setup-environment\r\n<&#47;code>\r\n"
+wordpress_id: 519
+wordpress_url: http://fewbar.com/?p=519
+date: '2012-03-15 16:46:08 -0700'
+date_gmt: '2012-03-15 23:46:08 -0700'
+categories:
+- Ubuntu
+- Cloud
+- Juju
+tags:
+- ubuntu
+- cloud
+- juju
+- juju-jitsu
+---
+<p>I was reading <a href="http:&#47;&#47;www.jorgecastro.org&#47;2012&#47;03&#47;13&#47;need-a-quick-instance-easy-juju-trick&#47;">Jorge's Stomp Box<&#47;a> earlier today, and somebody mentioned how it would be an even better trick if it were easier to configure juju quickly.</p>
+<p>Ask and ye shall receive. I hacked a new sub-command into the experimental 'juju-jitsu' wrapper. I'll let the scrape from my terminal do the talking. You can get it with:</p>
+<p><code><br />
+bzr branch lp:juju-jitsu<br />
+<&#47;code></p>
+<p>And try it with</p>
+<p><code><br />
+juju-jitsu&#47;wrap-juju<br />
+juju setup-environment<br />
+<&#47;code><br />
+<a id="more"></a><a id="more-519"></a></p>
+<pre>
+clint@clint-MacBookPro:~&#47;src&#47;juju-jitsu&#47;juju-jitsu$ .&#47;wrap-juju<br />
+Aliasing juju to &#47;home&#47;clint&#47;src&#47;juju-jitsu&#47;juju-jitsu&#47;juju-jitsu-wrapper...<br />
+(juju-jitsu) clint@clint-MacBookPro:~&#47;src&#47;juju-jitsu&#47;juju-jitsu$ juju setup-environment<br />
+Name for environment name : mybox<br />
+What provider do you want to use? (ec2,local) type [local]:<br />
+Default "series", a.k.a. release codename of Ubunt default-series [precise]:<br />
+local dir to store logs&#47;directory structure&#47;charm data-dir [~&#47;.juju&#47;data]:<br />
+environments:<br />
+mybox:<br />
+data-dir: ~&#47;.juju&#47;data<br />
+default-series: precise<br />
+type: local</p>
+<p>Do you want to</p>
+<p>[s]ave this to &#47;home&#47;clint&#47;.juju&#47;environments.yaml<br />
+[d]iff with existing &#47;home&#47;clint&#47;.juju&#47;environments.yaml<br />
+[q]uit</p>
+<p>[sdq]: d<br />
+diff: &#47;home&#47;clint&#47;.juju&#47;environments.yaml: No such file or directory<br />
+[sdq]: s<br />
+(juju-jitsu) clint@clint-MacBookPro:~&#47;src&#47;juju-jitsu&#47;juju-jitsu$ cat ~&#47;.juju&#47;environments.yaml<br />
+environments:<br />
+mybox:<br />
+data-dir: ~&#47;.juju&#47;data<br />
+default-series: precise<br />
+type: local<br />
+(juju-jitsu) clint@clint-MacBookPro:~&#47;src&#47;juju-jitsu&#47;juju-jitsu$ juju setup-environment<br />
+Name for environment name : mycloud<br />
+What provider do you want to use? (ec2,local) type [local]: ec2<br />
+Default "series", a.k.a. release codename of Ubunt default-series [precise]:<br />
+S3 Bucket to store data in control-bucket [juju-jitsu-D8mzlogDmvPjTpASolJnXK6HxwAW8YA8]:<br />
+Zookeeper Secret admin-secret [qUJIUiwji-jiAN-XTSC1ztxUrm2XrYys]:<br />
+(AWS_ACCESS_KEY_ID) access-key [XXXXXXXXXXXXXXXXXXXX]:<br />
+(AWS_SECRET_ACCESS_KEY) secret-key [xYxYxYxYxYxYxYxYxYxY&#47;WvWvWvWvWvWv]:<br />
+Default Instance Type (m1.small, c1.medium, etc default-instance-type :<br />
+Default AMI default-image-id :<br />
+EC2 Region region :<br />
+EC2 URI ec2-uri :<br />
+S3 URI s3-uri :<br />
+environments:<br />
+mybox:<br />
+data-dir: ~&#47;.juju&#47;data<br />
+default-series: precise<br />
+type: local<br />
+mycloud:<br />
+access-key: XXXXXXXXXXXXXXXXXXXX<br />
+admin-secret: qUJIUiwji-jiAN-XTSC1ztxUrm2XrYys<br />
+control-bucket: juju-jitsu-D8mzlogDmvPjTpASolJnXK6HxwAW8YA8<br />
+default-series: precise<br />
+secret-key: xYxYxYxYxYxYxYxYxYxY&#47;WvWvWvWvWvWv<br />
+type: ec2</p>
+<p>Do you want to</p>
+<p>[s]ave this to &#47;home&#47;clint&#47;.juju&#47;environments.yaml<br />
+[d]iff with existing &#47;home&#47;clint&#47;.juju&#47;environments.yaml<br />
+[q]uit</p>
+<p>[sdq]:<br />
+[sdq]: d<br />
+--- &#47;home&#47;clint&#47;.juju&#47;environments.yaml 2012-03-15 16:36:47.939298045 -0700<br />
++++ &#47;home&#47;clint&#47;.juju&#47;.environments.yaml.QqwCt_ 2012-03-15 16:37:20.629394484 -0700<br />
+@@ -3,3 +3,10 @@<br />
+data-dir: ~&#47;.juju&#47;data<br />
+default-series: precise<br />
+type: local<br />
++ mycloud:<br />
++ access-key: XXXXXXXXXXXXXXXXXXXX<br />
++ admin-secret: qUJIUiwji-jiAN-XTSC1ztxUrm2XrYys<br />
++ control-bucket: juju-jitsu-D8mzlogDmvPjTpASolJnXK6HxwAW8YA8<br />
++ default-series: precise<br />
++ secret-key: xYxYxYxYxYxYxYxYxYxY&#47;WvWvWvWvWvWv<br />
++ type: ec2<br />
+[sdq]: s<br />
+2012-03-15 16:37:23,799 juju-jitsu Backing up &#47;home&#47;clint&#47;.juju&#47;environments.yaml to &#47;home&#47;clint&#47;.juju&#47;environments.yaml.2<br />
+(juju-jitsu) clint@clint-MacBookPro:~&#47;src&#47;juju-jitsu&#47;juju-jitsu$ bzr info<br />
+Repository tree (format: 2a)<br />
+Location:<br />
+shared repository: &#47;home&#47;clint&#47;src&#47;juju-jitsu<br />
+repository branch: .</p>
+<p>Related branches:<br />
+push branch: bzr+ssh:&#47;&#47;bazaar.launchpad.net&#47;+branch&#47;juju-jitsu&#47;<br />
+parent branch: bzr+ssh:&#47;&#47;bazaar.launchpad.net&#47;+branch&#47;juju-jitsu&#47;<br />
+(juju-jitsu) clint@clint-MacBookPro:~&#47;src&#47;juju-jitsu&#47;juju-jitsu$<br />
+<&#47;pre></p>

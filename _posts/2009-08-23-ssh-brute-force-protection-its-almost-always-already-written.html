@@ -1,0 +1,29 @@
+---
+layout: post
+status: publish
+published: true
+title: SSH brute force protection - Its almost always already written
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+wordpress_id: 111
+wordpress_url: http://fewbar.com/?p=111
+date: '2009-08-23 09:49:36 -0700'
+date_gmt: '2009-08-23 16:49:36 -0700'
+categories:
+- Technology
+tags:
+- opensource
+- ssh
+- security
+- collaboration
+- python
+---
+<p>Every time I get my logwatch report and see the 20 - 40 daily brute force attempts on it, I cringe. I've locked it down to a point, but ultimately I prefer convenience on some level. Limiting any one IP to 2 ssh connections every 5 minutes has annoyed me as many times as it has probably saved me. Preventing root from logging in is nice too.</p>
+<p>Ultimately though, I wanted a way to fight back against the brute forcers.. to get a step ahead of them. From seeing the success of projects like <a href="http:&#47;&#47;spamhaus.org">SpamHAUS<&#47;a> and <a href="http:&#47;&#47;www.projecthoneypot.org">Project HoneyPot<&#47;a>, I know that massive group collaboration works. Of course I started thinking how I'd write it in my head. Every time... for months.</p>
+<p>Well, once I let go of my egotistical desire to write it, I found this great project, <a href="http:&#47;&#47;denyhosts.sourceforge.net">DenyHosts<&#47;a>, which does the same thing for the brute force scanners. I just installed it, and already it has added a few IPs to hosts.deny. Go download it, run it, and stop the annoying scanners!</p>

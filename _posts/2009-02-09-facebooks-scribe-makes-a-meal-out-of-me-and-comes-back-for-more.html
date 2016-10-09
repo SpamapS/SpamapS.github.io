@@ -1,0 +1,159 @@
+---
+layout: post
+status: publish
+published: true
+title: Facebook's scribe makes a meal out of me, and comes back for more
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+excerpt: "So, I was working on getting Facebook's seemingly amazing <a href=\"http:&#47;&#47;developers.facebook.com&#47;scribe&#47;\">Scribe<&#47;a>
+  logging architecture setup to check it out. One of the requirements it has is 'fb303',
+  which is included with <a href=\"http:&#47;&#47;incubator.apache.org&#47;thrift&#47;\">Thrift<&#47;a>
+  in the contrib directory. I ran into this:\r\n"
+wordpress_id: 40
+wordpress_url: http://fewbar.com/?p=40
+date: '2009-02-09 11:51:03 -0800'
+date_gmt: '2009-02-09 18:51:03 -0800'
+categories:
+- Uncategorized
+tags:
+- PHP
+- facebook
+- scribe
+- thrift
+- build
+---
+<p>So, I was working on getting Facebook's seemingly amazing <a href="http:&#47;&#47;developers.facebook.com&#47;scribe&#47;">Scribe<&#47;a> logging architecture setup to check it out. One of the requirements it has is 'fb303', which is included with <a href="http:&#47;&#47;incubator.apache.org&#47;thrift&#47;">Thrift<&#47;a> in the contrib directory. I ran into this:<br />
+<a id="more"></a><a id="more-40"></a><br />
+<code><br />
+[root@wolverine fb303]# .&#47;configure --with-thriftpath=&#47;usr&#47;local --with-boost=&#47;usr&#47;local<br />
+checking for a BSD-compatible install... &#47;usr&#47;bin&#47;install -c<br />
+checking whether build environment is sane... yes<br />
+checking for gawk... gawk<br />
+checking whether make sets $(MAKE)... yes<br />
+checking for style of include used by make... GNU</p>
+<p>checking for gcc... gcc<br />
+checking for C compiler default output file name... a.out<br />
+checking whether the C compiler works... yes<br />
+checking whether we are cross compiling... no<br />
+checking for suffix of executables...<br />
+checking for suffix of object files... o<br />
+checking whether we are using the GNU C compiler... yes<br />
+checking whether gcc accepts -g... yes<br />
+checking for gcc option to accept ANSI C... none needed<br />
+checking dependency style of gcc... gcc3<br />
+checking for g++... g++<br />
+checking whether we are using the GNU C++ compiler... yes<br />
+checking whether g++ accepts -g... yes<br />
+checking dependency style of g++... gcc3<br />
+checking for ranlib... ranlib<br />
+checking for bash... &#47;bin&#47;sh<br />
+checking for perl... &#47;usr&#47;bin&#47;perl<br />
+checking for python... &#47;usr&#47;bin&#47;python<br />
+checking for ar... &#47;usr&#47;bin&#47;ar<br />
+checking for ant... no<br />
+checking Checking EXTERNAL_PATH set to... &#47;usr&#47;local&#47;src&#47;scribetest&#47;thrift&#47;contrib&#47;fb303<br />
+checking whether to enable optimized build... yes<br />
+checking whether to enable static mode... yes<br />
+checking Checking thrift_home set to... &#47;usr&#47;local<br />
+checking for boostlib >= 1.33.1... yes<br />
+configure: creating .&#47;config.status<br />
+config.status: creating Makefile<br />
+config.status: creating cpp&#47;Makefile<br />
+config.status: creating py&#47;Makefile<br />
+config.status: executing depfiles commands<br />
+EXTERNAL_PATH &#47;usr&#47;local&#47;src&#47;scribetest&#47;thrift&#47;contrib&#47;fb303<br />
+[root@wolverine fb303]# make<br />
+make  all-recursive<br />
+make[1]: Entering directory `&#47;usr&#47;local&#47;src&#47;scribetest&#47;thrift&#47;contrib&#47;fb303'<br />
+Making all in .<br />
+make[2]: Entering directory `&#47;usr&#47;local&#47;src&#47;scribetest&#47;thrift&#47;contrib&#47;fb303'<br />
+make[2]: Nothing to be done for `all-am'.<br />
+make[2]: Leaving directory `&#47;usr&#47;local&#47;src&#47;scribetest&#47;thrift&#47;contrib&#47;fb303'<br />
+Making all in cpp<br />
+make[2]: Entering directory `&#47;usr&#47;local&#47;src&#47;scribetest&#47;thrift&#47;contrib&#47;fb303&#47;cpp'<br />
+make  all-am<br />
+make[3]: Entering directory `&#47;usr&#47;local&#47;src&#47;scribetest&#47;thrift&#47;contrib&#47;fb303&#47;cpp'<br />
+if g++ -DPACKAGE_NAME=\"libfb303\" -DPACKAGE_TARNAME=\"libfb303\" -DPACKAGE_VERSION=\"20080209\" -DPACKAGE_STRING=\"libfb303\ 20080209\" -DPACKAGE_BUGREPORT=\"\" -DHAVE_BOOST=  -I. -I.  -I.. -Igen-cpp -I&#47;usr&#47;local&#47;include&#47;thrift -I&#47;usr&#47;local&#47;include&#47;boost-1_37     -Wall -O3 -MT FacebookService.o -MD -MP -MF ".deps&#47;FacebookService.Tpo" -c -o FacebookService.o `test -f 'gen-cpp&#47;FacebookService.cpp' || echo '.&#47;'`gen-cpp&#47;FacebookService.cpp; \<br />
+then mv -f ".deps&#47;FacebookService.Tpo" ".deps&#47;FacebookService.Po"; else rm -f ".deps&#47;FacebookService.Tpo"; exit 1; fi<br />
+In file included from gen-cpp&#47;FacebookService.cpp:6:<br />
+gen-cpp&#47;FacebookService.h:28: error: `facebook::thrift' has not been declared<br />
+gen-cpp&#47;FacebookService.h:28: error: `Service' has not been declared<br />
+gen-cpp&#47;FacebookService.h:28: error: ISO C++ forbids declaration of `_return' with no type<br />
+gen-cpp&#47;FacebookService.h:72: error: `facebook::thrift' has not been declared<br />
+gen-cpp&#47;FacebookService.h:72: error: `Service' has not been declared<br />
+gen-cpp&#47;FacebookService.h:72: error: ISO C++ forbids declaration of `parameter' with no type<br />
+gen-cpp&#47;FacebookService.h:1077: error: `facebook::thrift' has not been declared<br />
+gen-cpp&#47;FacebookService.h:1077: error: ISO C++ forbids declaration of `Service' with no type<br />
+gen-cpp&#47;FacebookService.h:1077: error: expected `;' before "success"<br />
+gen-cpp&#47;FacebookService.h: In member function `bool facebook::fb303::FacebookService_getLimitedReflection_result::operator==(const facebook::fb303::FacebookService_getLimitedReflection_result&) const':<br />
+gen-cpp&#47;FacebookService.h:1086: error: `success' was not declared in this scope<br />
+gen-cpp&#47;FacebookService.h:1086: error: 'const class facebook::fb303::FacebookService_getLimitedReflection_result' has no member named 'success'<br />
+gen-cpp&#47;FacebookService.h:1086: warning: unused variable 'success'<br />
+gen-cpp&#47;FacebookService.h: At global scope:<br />
+gen-cpp&#47;FacebookService.h:1107: error: `facebook::thrift' has not been declared<br />
+gen-cpp&#47;FacebookService.h:1107: error: ISO C++ forbids declaration of `Service' with no type<br />
+gen-cpp&#47;FacebookService.h:1107: error: expected `;' before '*' token<br />
+gen-cpp&#47;FacebookService.h:1241: error: `facebook::thrift' has not been declared<br />
+gen-cpp&#47;FacebookService.h:1241: error: `Service' has not been declared<br />
+gen-cpp&#47;FacebookService.h:1241: error: ISO C++ forbids declaration of `_return' with no type<br />
+gen-cpp&#47;FacebookService.h:1243: error: `facebook::thrift' has not been declared<br />
+gen-cpp&#47;FacebookService.h:1243: error: `Service' has not been declared<br />
+gen-cpp&#47;FacebookService.h:1243: error: ISO C++ forbids declaration of `_return' with no type<br />
+gen-cpp&#47;FacebookService.h:1434: error: `facebook::thrift' has not been declared<br />
+gen-cpp&#47;FacebookService.h:1434: error: `Service' has not been declared<br />
+gen-cpp&#47;FacebookService.h:1434: error: ISO C++ forbids declaration of `_return' with no type<br />
+gen-cpp&#47;FacebookService.cpp: In member function `uint32_t facebook::fb303::FacebookService_getLimitedReflection_result::read(apache::thrift::protocol::TProtocol*)':<br />
+gen-cpp&#47;FacebookService.cpp:1795: error: 'class facebook::fb303::FacebookService_getLimitedReflection_result' has no member named 'success'<br />
+gen-cpp&#47;FacebookService.cpp: In member function `uint32_t facebook::fb303::FacebookService_getLimitedReflection_result::write(apache::thrift::protocol::TProtocol*) const':<br />
+gen-cpp&#47;FacebookService.cpp:1821: error: 'const class facebook::fb303::FacebookService_getLimitedReflection_result' has no member named 'success'<br />
+gen-cpp&#47;FacebookService.cpp: In member function `uint32_t facebook::fb303::FacebookService_getLimitedReflection_presult::read(apache::thrift::protocol::TProtocol*)':<br />
+gen-cpp&#47;FacebookService.cpp:1851: error: 'class facebook::fb303::FacebookService_getLimitedReflection_presult' has no member named 'success'<br />
+gen-cpp&#47;FacebookService.cpp: At global scope:<br />
+gen-cpp&#47;FacebookService.cpp:2614: error: `facebook::thrift' has not been declared<br />
+gen-cpp&#47;FacebookService.cpp:2614: error: variable or field `getLimitedReflection' declared void<br />
+gen-cpp&#47;FacebookService.cpp:2614: error: `int facebook::fb303::FacebookServiceClient::getLimitedReflection' is not a static member of `class facebook::fb303::FacebookServiceClient'<br />
+gen-cpp&#47;FacebookService.cpp:2614: error: `Service' was not declared in this scope<br />
+gen-cpp&#47;FacebookService.cpp:2614: error: `_return' was not declared in this scope<br />
+gen-cpp&#47;FacebookService.cpp:2615: error: expected `,' or `;' before '{' token<br />
+gen-cpp&#47;FacebookService.cpp:2633: error: `facebook::thrift' has not been declared<br />
+gen-cpp&#47;FacebookService.cpp:2633: error: variable or field `recv_getLimitedReflection' declared void<br />
+gen-cpp&#47;FacebookService.cpp:2633: error: `int facebook::fb303::FacebookServiceClient::recv_getLimitedReflection' is not a static member of `class facebook::fb303::FacebookServiceClient'<br />
+gen-cpp&#47;FacebookService.cpp:2633: error: `Service' was not declared in this scope<br />
+gen-cpp&#47;FacebookService.cpp:2633: error: `_return' was not declared in this scope<br />
+gen-cpp&#47;FacebookService.cpp:2634: error: expected `,' or `;' before '{' token<br />
+gen-cpp&#47;FacebookService.cpp: In member function `void facebook::fb303::FacebookServiceProcessor::process_getLimitedReflection(int32_t, apache::thrift::protocol::TProtocol*, apache::thrift::protocol::TProtocol*)':<br />
+gen-cpp&#47;FacebookService.cpp:3070: error: 'class facebook::fb303::FacebookService_getLimitedReflection_result' has no member named 'success'<br />
+make[3]: *** [FacebookService.o] Error 1<br />
+make[3]: Leaving directory `&#47;usr&#47;local&#47;src&#47;scribetest&#47;thrift&#47;contrib&#47;fb303&#47;cpp'<br />
+make[2]: *** [all] Error 2<br />
+make[2]: Leaving directory `&#47;usr&#47;local&#47;src&#47;scribetest&#47;thrift&#47;contrib&#47;fb303&#47;cpp'<br />
+make[1]: *** [all-recursive] Error 1<br />
+make[1]: Leaving directory `&#47;usr&#47;local&#47;src&#47;scribetest&#47;thrift&#47;contrib&#47;fb303'<br />
+make: *** [all] Error 2<br />
+<&#47;code></p>
+<p>I googled around but found nothing. I tried logging into #thrift on Freenode, and "SteveC_" informed me that he had the same problem, and pointed me at this <a href="https:&#47;&#47;issues.apache.org&#47;jira&#47;browse&#47;THRIFT-292">thrift<&#47;a> bug report that explains it a little better. It would seem that Thrift is no longer in the  'facebook' namespace, but rather 'apache'. This makes perfect sense. However, fb303 still expects it to be facebook. So, on Steve's advice of replacing the word 'facebook' with 'apache' in the fb303 tree, I did this in fb303:</p>
+<p>find . -type f | xargs perl -p -i -e 's&#47;facebook&#47;apache&#47;g'</p>
+<p>And the make continued a little further until I hit this:</p>
+<p><code><br />
+make[2]: Leaving directory `&#47;usr&#47;local&#47;src&#47;scribetest&#47;thrift&#47;contrib&#47;fb303&#47;cpp'<br />
+Making all in py<br />
+make[2]: Entering directory `&#47;usr&#47;local&#47;src&#47;scribetest&#47;thrift&#47;contrib&#47;fb303&#47;py'<br />
+&#47;usr&#47;bin&#47;python setup.py build<br />
+running build<br />
+running build_py<br />
+error: package directory 'fb303' does not exist<br />
+make[2]: *** [all-local] Error 1<br />
+make[2]: Leaving directory `&#47;usr&#47;local&#47;src&#47;scribetest&#47;thrift&#47;contrib&#47;fb303&#47;py'<br />
+make[1]: *** [all-recursive] Error 1<br />
+make[1]: Leaving directory `&#47;usr&#47;local&#47;src&#47;scribetest&#47;thrift&#47;contrib&#47;fb303'<br />
+make: *** [all] Error 2<br />
+<&#47;code></p>
+<p>However, this error seemed to be irrelevant, as 'make install' put fb303 where it was supposed to go.</p>
+<p>Building scribe, the same 'find' command from above was required. I ran it after running into the first 'no such thing as facebook' error, and the make continued, and scribe seemed to work just fine.</p>
+<p>Hopefully this will find its way into google's indexes and help somebody.</p>

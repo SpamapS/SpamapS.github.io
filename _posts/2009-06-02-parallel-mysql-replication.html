@@ -1,0 +1,53 @@
+---
+layout: post
+status: publish
+published: true
+title: Parallel mysql replication?
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+excerpt: "Its always been a dream of mine. I've <a href=\"https:&#47;&#47;lists.launchpad.net&#47;drizzle-discuss&#47;msg03988.html\">posted
+  about parallel replication<&#47;a> on Drizzle's mailing list before. I think when
+  faced with the problem of a big, highly concurrent master, and scaling out reads
+  simply with lower cost slaves, this is going to be the only way to go.\r\n\r\nSo
+  today I was really glad to see that somebody is trying out the idea. Seppo Jaakola
+  from <a href=\"http:&#47;&#47;www.codership.com&#47;\">\"Codership\"<&#47;a>, who
+  I've never heard of before today, <a href=\"https:&#47;&#47;lists.launchpad.net&#47;drizzle-discuss&#47;msg04214.html\">posted
+  a link<&#47;a> to an article on his blog about his <a href=\"http:&#47;&#47;www.codership.com&#47;content&#47;parallel-applying\">experimentation
+  with parallel replication slaves<&#47;a>. The findings are pretty interesting.\r\n"
+wordpress_id: 80
+wordpress_url: http://fewbar.com/?p=80
+date: '2009-06-02 12:08:48 -0700'
+date_gmt: '2009-06-02 19:08:48 -0700'
+categories:
+- MySQL
+- Scalability
+tags:
+- MySQL
+- replication
+- Scalability
+- drizzle
+- parallelism
+---
+<p>Its always been a dream of mine. I've <a href="https:&#47;&#47;lists.launchpad.net&#47;drizzle-discuss&#47;msg03988.html">posted about parallel replication<&#47;a> on Drizzle's mailing list before. I think when faced with the problem of a big, highly concurrent master, and scaling out reads simply with lower cost slaves, this is going to be the only way to go.</p>
+<p>So today I was really glad to see that somebody is trying out the idea. Seppo Jaakola from <a href="http:&#47;&#47;www.codership.com&#47;">"Codership"<&#47;a>, who I've never heard of before today, <a href="https:&#47;&#47;lists.launchpad.net&#47;drizzle-discuss&#47;msg04214.html">posted a link<&#47;a> to an article on his blog about his <a href="http:&#47;&#47;www.codership.com&#47;content&#47;parallel-applying">experimentation with parallel replication slaves<&#47;a>. The findings are pretty interesting.<br />
+<a id="more"></a><a id="more-80"></a><br />
+I hope that he'll be able to repeat his tests with a real world setup. The software they've written seems to have the right idea. The biggest issue I have with the tests is that  the tests were run on tiny hardware. Hyperthreading? Single disks? Thats not really the point of having parallel replication slaves.</p>
+<p>The idea is that you have maybe a gigantic real time write server for OLTP. This beast may have lots of medium-power CPU cores, and an obscene amount of RAM, and a lot of battery backed write cache for writes.</p>
+<p>Now you know that there are tons of reads that shouldn't ever be done against this server. You drop a few replication slaves in, and you realize that you need a box with as much disk storage as your central server, and probably just as much write cache. Pretty soon scaling out those reads is just not very cost effective.</p>
+<p>However, if you could have lots of CPU cores, and lots of cheap disks, you could dispatch these writes to be done in parallel, and you wouldn't need expensive disk systems or lots of RAM for each slave.</p>
+<p>So, the idea is not to make slaves faster in a 1:1 size comparison. Its to make it easier for a cheap slave to keep up with a very busy, very expensive master.</p>
+<p>I do see where another huge limiting factor is making sure things synchronize in commit order. I think thats an area where a lot of time needs to be spent on optimization. The order should already be known so that the commiter thread is just waiting for the next one in line, and if the next 100 are already done it can just rip through them quickly, not signal them that they can go. Something like this seems right:</p>
+<p><code><br />
+id=first_commit_id();<br />
+while(wait_for_commit(id)) {<br />
+  commit(id);<br />
+  id++;<br />
+}<br />
+<&#47;code></p>
+<p>I applaud the efforts of Codeship, and I hope they'll continue the project and maybe ship something that will rock all our worlds.</p>

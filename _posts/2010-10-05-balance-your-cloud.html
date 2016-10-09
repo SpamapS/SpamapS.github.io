@@ -1,0 +1,42 @@
+---
+layout: post
+status: publish
+published: true
+title: Balance Your Cloud
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+excerpt: "Seems like eons ago (just under 6 months..) when I joined Canonical, and
+  hopped on a plane headed for Brussels and UDS-Maverick.\r\n\r\nWhat a whirlwind,
+  attending sessions, meeting the real rock stars of the Ubuntu world, and getting
+  to know my super distributed team.\r\n\r\nOne of the sessions was based on <a href=\"https:&#47;&#47;blueprints.launchpad.net&#47;ubuntu&#47;+spec&#47;server-maverick-uds-cloud-loadbalancing\">a
+  blueprint for load balancing in the cloud<&#47;a>. The idea was that rather than
+  rely on amazon's Elastic Load Balancer, you could build your own solution that you
+  could possibly even move around between UEC, EC2, or even Rackspace clouds.\r\n"
+wordpress_id: 293
+wordpress_url: http://fewbar.com/?p=293
+date: '2010-10-05 00:14:44 -0700'
+date_gmt: '2010-10-05 07:14:44 -0700'
+categories:
+- Ubuntu
+- Open Source
+- Cloud
+tags:
+- python
+- ubuntu
+- cloud
+- uds-m
+- clb
+---
+<p>Seems like eons ago (just under 6 months..) when I joined Canonical, and hopped on a plane headed for Brussels and UDS-Maverick.</p>
+<p>What a whirlwind, attending sessions, meeting the real rock stars of the Ubuntu world, and getting to know my super distributed team.</p>
+<p>One of the sessions was based on <a href="https:&#47;&#47;blueprints.launchpad.net&#47;ubuntu&#47;+spec&#47;server-maverick-uds-cloud-loadbalancing">a blueprint for load balancing in the cloud<&#47;a>. The idea was that rather than rely on amazon's Elastic Load Balancer, you could build your own solution that you could possibly even move around between UEC, EC2, or even Rackspace clouds.<br />
+<a id="more"></a><a id="more-293"></a><br />
+Well it got a lower priority to some other stuff, so unfortunately, many parts got dropped (like ELB compatible cli tools).</p>
+<p>But, I managed to find the time to create <a href="https:&#47;&#47;launchpad.net&#47;clb">a proof of concept for managing haproxy's config file<&#47;a> (perhaps my first real python project), and write up <a href="https:&#47;&#47;wiki.ubuntu.com&#47;CloudLoadbalancingHowto">a HOWTO for using it<&#47;a>.</p>
+<p>Honestly, its not the best HOWTO I've ever written. Its got a lot of stuff left out. But, it should be enough to get most admins past the "tinker for a few hours" phase and into the "tinker for 40 minutes right before getting it working then passing out on your keyboard at 4:00am" phase. I know thats how far it got me..</p>

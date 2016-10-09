@@ -1,0 +1,94 @@
+---
+layout: post
+status: publish
+published: true
+title: Nagios is from Mars, and MySQL is from Venus (Monitoring Part 2)
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+excerpt: In <a title="Juju and Nagios, sittin&rsquo; in a tree.. (Part 1)" href="http:&#47;&#47;fewbar.com&#47;2012&#47;08&#47;juju-and-nagios-sittin-in-a-tree-polling-your-nrpe&#47;"
+  target="_blank">my previous post about Nagios<&#47;a>, I showed how the rich <a
+  href="http:&#47;&#47;jujucharms.com&#47;charms&#47;precise&#47;nagios" target="_blank">Nagios
+  charm<&#47;a> simplifies adding basic monitoring to <a href="http:&#47;&#47;juju.ubuntu.com&#47;"
+  target="_blank">Juju<&#47;a> environments. But, we need more than that. Services
+  know more about how to verify they are working than a monitoring system could ever
+  guess.
+wordpress_id: 580
+wordpress_url: http://fewbar.com/?p=580
+date: '2012-09-04 22:50:07 -0700'
+date_gmt: '2012-09-05 05:50:07 -0700'
+categories:
+- Ubuntu
+- Juju
+tags:
+- ubuntu
+- monitoring
+- cloud
+- juju
+- nagios
+---
+<p>In <a title="Juju and Nagios, sittin&rsquo; in a tree.. (Part 1)" href="http:&#47;&#47;fewbar.com&#47;2012&#47;08&#47;juju-and-nagios-sittin-in-a-tree-polling-your-nrpe&#47;" target="_blank">my previous post about Nagios<&#47;a>, I showed how the rich <a href="http:&#47;&#47;jujucharms.com&#47;charms&#47;precise&#47;nagios" target="_blank">Nagios charm<&#47;a> simplifies adding basic monitoring to <a href="http:&#47;&#47;juju.ubuntu.com&#47;" target="_blank">Juju<&#47;a> environments. But, we need more than that. Services know more about how to verify they are working than a monitoring system could ever guess.<a id="more"></a><a id="more-580"></a></p>
+<p>So, for that, we have the '<a href="http:&#47;&#47;jujucharms.com&#47;interfaces&#47;monitors" target="_blank">monitors<&#47;a>' interface. Currently sparsely documented, as it is extremely new, the idea is simple.</p>
+<ul>
+<li>Providing charms define what monitoring systems should look at generically<&#47;li>
+<li>Requiring charms monitor any of the things they can, ignoring those they cannot.<&#47;li><br />
+<&#47;ul><br />
+This is defined through a YAML file. Here is the example.monitors.yaml included with the nagios charm:</p>
+<pre># Version of the spec, mostly ignored but 0.3 is the current one<br />
+version: '0.3'<br />
+# Dict with just 'local' and 'remote' as parts<br />
+monitors:<br />
+    # local monitors need an agent to be handled. See nrpe charm for<br />
+    # some example implementations<br />
+    local:<br />
+        # procrunning checks for a running process named X (no path)<br />
+        procrunning:<br />
+            # Multiple procrunning can be defined, this is the "name" of it<br />
+            nagios3:<br />
+                min: 1<br />
+                max: 1<br />
+                executable: nagios3<br />
+    # Remote monitors can be polled directly by a remote system<br />
+    remote:<br />
+        # do a request on the HTTP protocol<br />
+        http:<br />
+            nagios:<br />
+                port: 80<br />
+                path: &#47;nagios3&#47;<br />
+                # expected status response (otherwise just look for 200)<br />
+                status: 'HTTP&#47;1.1 401'<br />
+                # Use as the Host: header (the server address will still be used to connect() to)<br />
+                host: www.fewbar.com<br />
+        mysql:<br />
+            # Named basic check<br />
+            basic:<br />
+                username: monitors<br />
+                password: abcdefg123456<&#47;pre><br />
+There are two main classes of monitors: local, remote. This is in reference to the service unit's location. Local monitors are intended to be run inside the same machine&#47;container as the service. Remote monitors are then, quite obviously, meant to be run outside the machine&#47;container. So, above, you see remote monitors for the mysql protocol and http, and a local monitor to see if processes are running.</p>
+<p>The MySQL charm now includes some of these monitors:</p>
+<pre>version: '0.3'<br />
+monitors:<br />
+    local:<br />
+        procrunning:<br />
+            mysqld:<br />
+                name: MySQL Running<br />
+                min: 1<br />
+                max: 1<br />
+                executable: mysqld<br />
+    remote:<br />
+        mysql:<br />
+            basic:<br />
+                user: monitors<&#47;pre><br />
+The remote part is fed directly to nagios, which knows how to monitor mysql remotely, and so translates it into a check_mysql command. The local bits are ignored by Nagios. But, when we also relate the subordinate charm NRPE to a MySQL service, then we'll have an agent which understands local. It actually converts those into remote monitors of type 'nrpe' which Nagios does understand. So upon relating NRPE to Nagios, each subordinate unit feeds its unique NRPE monitors back to Nagios and they are added to the target units' monitors.</p>
+<p>Honestly, this all sounds very complicated. But luckily, you don't have to really grasp it to take advantage of it in a charm. The whole point is this: <strong>All one needs to do is write a monitors.yaml, and add the monitors relation with this joined hook to your charm<&#47;strong>:</p>
+<pre>#!&#47;bin&#47;bash<br />
+# .. Anything you need to do to enable the monitoring host to access ports&#47;users&#47;etc goes here<br />
+relation-set monitors="$(cat monitors.yaml)" target-id=${JUJU_UNIT_NAME&#47;&#47;\&#47;&#47;-} target-address=$(unit-get private-address)<&#47;pre><br />
+If you have local things you want to give to a monitoring agent, you can use the <a href="http:&#47;&#47;jujucharms.com&#47;interfaces&#47;local-monitors">'local-monitors' interface<&#47;a>, which is basically the same as monitors, but only ever used in container scoped relations required by subordinate charms such as NRPE or collectd.</p>
+<p>Now you can easily provide monitors to any monitoring system. If Nagios doesn't support what you want to monitor, its fairly easy to add support. And as more monitoring systems are charmed and have the monitors interface added, your charm will be more useful out of the box.</p>
+<p>In the next post, which will wrap up this series on monitoring, I'll talk about how to add monitors support to some other monitoring systems such as collectd, and also how to write a subordinate charm to communicate your monitors to an external monitoring service.</p>

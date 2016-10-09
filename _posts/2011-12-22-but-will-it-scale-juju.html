@@ -1,0 +1,66 @@
+---
+layout: post
+status: publish
+published: true
+title: But will it scale? - Taking Limesurvey horizontal with juju...
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+excerpt: "<img class=\"alignleft size-medium wp-image-487\" style=\"border-style:
+  initial; border-color: initial;\" title=\"Will it Blend?\" src=\"http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2011&#47;12&#47;will-it-blend-300x168.jpg\"
+  alt=\"\" width=\"300\" height=\"168\" &#47;>\r\n\r\nOne of the really cool things
+  about using the cloud, and especially <a href=\"https:&#47;&#47;juju.ubuntu.com&#47;\">juju<&#47;a>,
+  is that it instantly enables things that often times take a lot of thought to even
+  try out in traditional environments. While I was developing some little PHP apps
+  \"back in the day\", I knew eventually they'd need to go to more than one server,
+  but testing them for that meant, well, finding and configuring multiple servers.
+  Even with VMs, I had to go allocate one and configure it. Oops, I'm out of time,
+  throw it on one server, pray, move to next task.\r\n\r\nThis left a very serious
+  question in my mind.. \"When the time comes, will my app actually scale?\"\r\n"
+wordpress_id: 486
+wordpress_url: http://fewbar.com/?p=486
+date: '2011-12-22 18:41:49 -0800'
+date_gmt: '2011-12-23 01:41:49 -0800'
+categories:
+- MySQL
+- PHP
+- Scalability
+- Ubuntu
+- Cloud
+- Juju
+tags:
+- ec2
+- testing
+- ubuntu
+- cloud
+- lamp
+- juju
+- limesurvey
+- charms
+---
+<p><img class="alignleft size-medium wp-image-487" style="border-style: initial; border-color: initial;" title="Will it Blend?" src="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2011&#47;12&#47;will-it-blend-300x168.jpg" alt="" width="300" height="168" &#47;></p>
+<p>One of the really cool things about using the cloud, and especially <a href="https:&#47;&#47;juju.ubuntu.com&#47;">juju<&#47;a>, is that it instantly enables things that often times take a lot of thought to even try out in traditional environments. While I was developing some little PHP apps "back in the day", I knew eventually they'd need to go to more than one server, but testing them for that meant, well, finding and configuring multiple servers. Even with VMs, I had to go allocate one and configure it. Oops, I'm out of time, throw it on one server, pray, move to next task.</p>
+<p>This left a very serious question in my mind.. "When the time comes, will my app actually scale?"<br />
+<a id="more"></a><a id="more-486"></a></p>
+<p>Have I forgotten some huge piece to make sure it is&nbsp;stateless, or will it scale horizontally the way I intended it to? Things have changed though, and now we have the ability to&nbsp;start virtual machines via an API on several providers, and actually *test* whether our app will scale.</p>
+<p>This brings us to our story. Recently, <a href="https:&#47;&#47;bugs.launchpad.net&#47;charm&#47;+bug&#47;899849">Nick Barcet created a juju<&#47;a> <a href="https:&#47;&#47;juju.ubuntu.com&#47;Charms">charm<&#47;a> for <a href="http:&#47;&#47;www.limesurvey.org&#47;">Limesurvey<&#47;a>. This is a really cool little app that lets users create rich, multi faceted surveys and invite the internet to vote on things, answer questions, etc. etc. This is your standard "LAMP" application, and it seems written in a way that will allow it to scale out.</p>
+<p>However, when Nick submitted the charm for the official juju charms collection, I wanted to see if it actually would scale the way I knew LAMP apps should. So, I fired up juju on ec2, threw in some haproxy, and related it to my limesurvey service, and then started adding units. This is incredibly simple with juju:</p>
+<pre>juju deploy --repository charms local:mysql<&#47;pre></p>
+<pre>juju deploy --repository charms local:limesurvey<&#47;pre></p>
+<pre>juju deploy --repository charms local:haproxy<&#47;pre></p>
+<pre>juju add-relation mysql limesurvey<&#47;pre></p>
+<pre>juju add-relation limesurvey haproxy<&#47;pre></p>
+<pre>juju add-unit limesurvey<&#47;pre></p>
+<pre>juju expose haproxy<&#47;pre><br />
+Lo and behold, it didn't scale. <a href="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2011&#47;12&#47;633325462873135493.jpg"><img class="alignright size-medium wp-image-492" title="633325462873135493" src="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2011&#47;12&#47;633325462873135493-300x225.jpg" alt="" width="300" height="225" &#47;><&#47;a>There were a few issues with the default recommendations of limesurvey that Nick had encoded into the charm. These were simple things, like assuming that the local hostname would be the hostname people use to access the site.</p>
+<p>Once that was solved, there were some other scaling problems immediately revealed. First on the ticket was that Limesurvey, by default, uses MyISAM for its storage engine in MySQL. This is a huge mistake, and I can't imagine why *anybody* would use MyISAM in a modern application. MyISAM uses a "whole table" locking scheme for both reads and writes, so whenever anything writes to any part of the table, all reads and writes must wait for that to finish. InnoDB, available since MySQL 4.0, and the default storage engine for MySQL 5.5 and later, doesn't suffer from this problem as it implements an MVCC model and row-level locks to allow concurrent reads and writes.</p>
+<p>The MyISAM locks caused request timeouts when I pointed siege at the load balancer, because too many requests were stacking up waiting for updates to complete before even reading from the table. This is especially critical on something like the session storage that limesurvey does in the database, as it effectively meant that only one user can do anything at a time with the database.</p>
+<p>Scalability testing in 10 minutes or less, with a server investment of about $1US. Who knew it could be this easy? Granted, I stopped at three app server nodes, and we didn't even get to scaling out the database (something limesurvey doesn't really have native support for). But these are things that are already solved, and that have been encoded in charms already. Now we just have to suggest small app changes to allow users to take advantage of all those well know best practices sitting in charms.</p>
+<p><img class="aligncenter size-medium wp-image-495" style="border-style: initial; border-color: initial;" title="winning" src="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2011&#47;12&#47;winning-262x300.png" alt="" width="262" height="300" &#47;></p>
+<p>(check <a href="https:&#47;&#47;bugs.launchpad.net&#47;charm&#47;+bug&#47;899849">the bug comments<&#47;a> for the results, I'd be interested if somebody wants to repeat the test).</p>
+<p>So, in a situation where one needs to deploy now, and scale later, I think juju will prove quite useful. It should be on anybody's radar who wants to get off the ground quickly.</p>

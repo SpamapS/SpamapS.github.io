@@ -1,0 +1,116 @@
+---
+layout: post
+status: publish
+published: true
+title: MemcacheDB fault tolerance procedures
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+excerpt: "It semeed so simple, just setup two memcachedb instances and point them
+  at eachother. Instant fault tolerance, Right? If only it were so simple!\r\n\r\nIts
+  not entirely clear from the documentation how to setup memcachedb for fault tolerance.
+  Here's the procedures I've found useful.\r\n"
+wordpress_id: 46
+wordpress_url: http://fewbar.com/?p=46
+date: '2009-03-25 11:07:24 -0700'
+date_gmt: '2009-03-25 18:07:24 -0700'
+categories:
+- Uncategorized
+tags:
+- linux
+- Scalability
+- reliability
+- memcachedb
+- PHP
+- fault tolerance
+- heartbeat
+---
+<p>It semeed so simple, just setup two memcachedb instances and point them at eachother. Instant fault tolerance, Right? If only it were so simple!</p>
+<p>Its not entirely clear from the documentation how to setup memcachedb for fault tolerance. Here's the procedures I've found useful.<br />
+<a id="more"></a><a id="more-46"></a></p>
+<ul>
+<li><strong>Set up replication right<&#47;strong>. With all due respect to Steve Chu, The docs aren't really clear on how to setup replication. Its much simpler than it looks. Just run MemcacheDB as you would if it were standalone, but then add a combination of these 3 options:
+<ul>
+<li>You must have a -R line if you want to participate in replication. This is your hostname and port that listens for connections from other machines for replication. It is the same value that should be listed in every other machine's -O.<&#47;li>
+<li>a -O for *every* other machine that may want to replicate to&#47;from this machine. I am sure there are situations where you won't need these, but it makes re-syncing and elections more predictable. You won't be able to re-sync "live" after a failure without -O options.<&#47;li>
+<li>-M&#47;-S are not required. If you start n machines without -M or -S, but with appropriate -R and -O lines, they will arbitrarily elect a master. If you run them with -M and -S, then the -M box will just be pushy and always elect itself the master, and the -S boxes will, likewise, always try to defer to slave status.<&#47;li>
+<li>Lets say we wanted to listen for memcache protocol on port 45000 on host 'node1' and replicate to 'node2'<&#47;li></p>
+<li>Standalone: <code>memcachedb -p 45000 -H &#47;home&#47;memdb&#47;data -u memdb -N<&#47;code><&#47;li>
+<li>Replication w&#47; elected master: <code>memcachedb -p 45000 -H &#47;home&#47;memdb&#47;data -u memdb -N -R node1:46000 -O node2:46000<&#47;code><&#47;li>
+<li>Replication Master: <code>memcachedb -p 45000 -H &#47;home&#47;memdb&#47;data -u memdb -N -R node1:46000 -O node2:46000 -M<&#47;code><&#47;li><br />
+<&#47;ul><br />
+        <&#47;li>
+<li><strong>Only the current master can accept writes<&#47;strong>. You can see which machine is the master with the 'stats rep' command. In v1.2.1 its shown as an environment id. Below st_env_id and st_master are the same, so this is the master:<br />
+<code><br />
+stats rep<br />
+STAT st_bulk_fills 0<br />
+STAT st_bulk_overflows 0<br />
+STAT st_bulk_records 11<br />
+STAT st_bulk_transfers 3<br />
+STAT st_client_rerequests 0<br />
+STAT st_client_svc_miss 0<br />
+STAT st_client_svc_req 0<br />
+STAT st_dupmasters 0<br />
+STAT st_egen 3<br />
+STAT st_election_cur_winner 2147483647<br />
+STAT st_election_gen 0<br />
+STAT st_election_lsn 1&#47;28<br />
+STAT st_election_nsites 0<br />
+STAT st_election_nvotes 1<br />
+STAT st_election_priority 100<br />
+STAT st_election_sec 5<br />
+STAT st_election_status 0<br />
+STAT st_election_tiebreaker 3676766282<br />
+STAT st_election_usec 69747<br />
+STAT st_election_votes 0<br />
+STAT st_elections 1<br />
+STAT st_elections_won 1<br />
+STAT st_env_id 2147483647<br />
+STAT st_env_priority 100<br />
+STAT st_gen 2<br />
+STAT st_log_duplicated 0<br />
+STAT st_log_queued 0<br />
+STAT st_log_queued_max 0<br />
+STAT st_log_queued_total 0<br />
+STAT st_log_records 0<br />
+STAT st_log_requested 0<br />
+STAT st_master 2147483647<br />
+STAT st_master_changes 0<br />
+STAT st_max_lease_sec 0<br />
+STAT st_max_lease_usec 0<br />
+STAT st_max_perm_lsn 0&#47;0<br />
+STAT st_msgs_badgen 0<br />
+STAT st_msgs_processed 5<br />
+STAT st_msgs_recover 0<br />
+STAT st_msgs_send_failures 2<br />
+STAT st_msgs_sent 10<br />
+STAT st_newsites 0<br />
+STAT st_next_lsn 1&#47;8916<br />
+STAT st_next_pg 0<br />
+STAT st_nsites 2<br />
+STAT st_nthrottles 0<br />
+STAT st_outdated 0<br />
+STAT st_pg_duplicated 0<br />
+STAT st_pg_records 0<br />
+STAT st_pg_requested 0<br />
+STAT st_startsync_delayed 0<br />
+STAT st_startup_complete 0<br />
+STAT st_status 2<br />
+STAT st_txns_applied 0<br />
+STAT st_waiting_lsn 0&#47;0<br />
+STAT st_waiting_pg 0<br />
+END<br />
+<&#47;code><br />
+However, its much simpler, I think, to just try and store a value on an instance. If you get "STORED" back, then this is the master. If you get NOT_STORED back, this is a slave. If it blocks (timeouts are hard in simple scripts, I know.. perldoc -f alarm), you are in a "DOWN" state. The danger here is one of split brain where both nodes thing they're the master.. but.. if they're not talking, you have bigger problems!<&#47;li></p>
+<li><strong>Out of sync slaves can't READ either!<&#47;strong> This one bit us just the other day. Something ocurred where our slave wasn't able to retrieve the latest log entries from the master. Because of this, it was reporting errors in replication. During this time, *all* commands blocked. We were relying on basic round-robin DNS for failover, thinking that memcachedb was simple enough, it was either "up" or "down". Unfortunately, it was stalled on one box, so everything that hit that box blocked and timed out until we firewalled the port so connections wouldn't succeed. We eventually had to stop the instance, copy a db_hotbackup from the master, then start it again. This still had to catch up from the point at which the db_hotbackup copies logs were checkpointed, which was (because we're on v1.0.3) many hours before. While it was catching up, all commands (even stats commands.. which is disappointing..) blocked.<br />
+<&#47;li>
+<li><strong>Use a load balancer, not round robin<&#47;strong>. With that said, a load balancer is a far better solution then round robin. In this case, because the box was "up", but failing to respond, we were at the mercy of the pecl memcache module's definition of what was "up" or "down" for reads. A load balancer separates this logic out into monitors so the code can just connect to a virtual IP, or use some list of servers it is given.<&#47;li></p>
+<li><strong>Even better.. just use a floating IP<&#47;strong>. MemcacheDB seems to scale to ridiculous levels with reads. Like, 400:1 read:write performance. Do you really need lots of slaves? Just having an IP that follows the master will give you fault tolerance. Its easy to determine if a box is the master. You can even do a 'rep_set_priority 500' to make sure a box stays the master as long as it has the IP. If you're running on Linux, Good old <a href="http:&#47;&#47;www.linux-ha.org&#47;">Heartbeat<&#47;a> is perfect for this. If you need to scale past the write capabilities of one box, then partitioning by using a stable hash algorithm on the keys is a far better solution than master&#47;slave replication, and is already built in to pretty much every memcache client.<&#47;li>
+<li><strong>Be careful with db_archive&#47;db_checkpoint<&#47;strong>. This is mostly regarding v1.0.3, as I don't know the impact of these commands on v1.1 or 1.2. However, it would seem that even with a replication policy of "ACK_ONE", its still possible to purge logs that the slave needs. This may or may not be true (something else could have gone wrong) but it seems that running db_checkpoint&#47;db_archive too aggressively seems to have broken our replication. There's no reason to purge logs too often, so be wary when doing so.<&#47;li><br />
+<&#47;ul></p>
+<p>Hopefully this will help other users who are starting to setup MemcacheDB and need fault tolerance.</p>

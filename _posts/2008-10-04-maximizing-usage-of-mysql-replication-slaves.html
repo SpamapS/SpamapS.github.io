@@ -1,0 +1,41 @@
+---
+layout: post
+status: publish
+published: true
+title: Deciding whether to send reads to slave or master
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+excerpt: "There are quite a few articles out there that talk about how to give your
+  application some context and send reads to one server, and writes to another. There
+  are even some mentions of marking your connection \"dirty\" and then sending all
+  reads to the write server.\r\n\r\nAs a first try at scaling things, I recently made
+  a change to our web application's data access layer where reads went to a group
+  of readonly slaves. However, if a write was made to a database, a value was put
+  into the user's session, saying that the database was dirty, and causing all subsequent
+  reads to go to the master server.\r\n"
+wordpress_id: 18
+wordpress_url: http://fewbar.com/?p=18
+date: '2008-10-04 10:43:42 -0700'
+date_gmt: '2008-10-04 17:43:42 -0700'
+categories:
+- MySQL
+- Scalability
+tags:
+- MySQL
+- replication
+- Scalability
+- web
+- application
+---
+<p>There are quite a few articles out there that talk about how to give your application some context and send reads to one server, and writes to another. There are even some mentions of marking your connection "dirty" and then sending all reads to the write server.</p>
+<p>As a first try at scaling things, I recently made a change to our web application's data access layer where reads went to a group of readonly slaves. However, if a write was made to a database, a value was put into the user's session, saying that the database was dirty, and causing all subsequent reads to go to the master server.<br />
+<a id="more"></a><a id="more-18"></a><br />
+This was good as users would use the readonly slaves as long as they hadn't changed anything in the database. The real problem though, was that as soon as the user logged in, their account was updated to say that they had logged in, marking that database dirty.</p>
+<p>Rather than try to cleverly change this one problem, we changed the "dirty" value from a boolean to a timestamp. Whenever the user writes to the database, it records the current time in their session. Then a global timeout is applied to that. This gives the replication slaves time to catch up and get the record that was just changed, then the user will have a consistent view fo their data.</p>
+<p>This is great, but I think a further step is to have something publish the actual maximum lag of the slaves into a memcache key, and simply double that value as the timeout. This would allow maximum usage of the readonly slaves and keep the master server busy doing mostly writes.</p>

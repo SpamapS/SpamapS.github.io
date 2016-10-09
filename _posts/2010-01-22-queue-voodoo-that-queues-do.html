@@ -1,0 +1,90 @@
+---
+layout: post
+status: publish
+published: true
+title: How do you do, that voodoo, that Queues Do?
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+excerpt: "Queues seem to be all over the place right now. Maybe its like when I wanted
+  a VW GTi VR6 a few years back. I kept seeing them pass me on the freeway and thought
+  \"crap, everybody is getting this hot new thing and I'm missing out!\".\r\n\r\nI
+  think everybody at one point looked at MySQL and tought.. \"that would work fine
+  as a queue system\". For low volume stuff, it *is* fine. But then somebody grabs
+  your little transactional, relational, reliable queue system and plugs 5 million
+  messages per hour through it, and somewhere, a man name Heikki cries.\r\n\r\nSo
+  then you start to look around.. and for those of us who have meager budgets and
+  tend to use open source, there aren't a lot of choices."
+wordpress_id: 136
+wordpress_url: http://fewbar.com/?p=136
+date: '2010-01-22 01:32:46 -0800'
+date_gmt: '2010-01-22 08:32:46 -0800'
+categories:
+- Scalability
+tags:
+- PHP
+- queuing
+- amqp
+- stomp
+- gearman
+- qpid
+- C
+---
+<p>Queues seem to be all over the place right now. Maybe its like when I wanted a VW GTi VR6 a few years back. I kept seeing them pass me on the freeway and thought "crap, everybody is getting this hot new thing and I'm missing out!".</p>
+<p>I think everybody at one point looked at MySQL and tought.. "that would work fine as a queue system". For low volume stuff, it *is* fine. But then somebody grabs your little transactional, relational, reliable queue system and plugs 5 million messages per hour through it, and somewhere, a man name Heikki cries.</p>
+<p>So then you start to look around.. and for those of us who have meager budgets and tend to use open source, there aren't a lot of choices.<a id="more"></a><a id="more-136"></a> <a href="http:&#47;&#47;wiki.secondlife.com&#47;wiki&#47;Message_Queue_Evaluation_Notes">The guys at Second Life did some research for all of us...<&#47;a>. Once you get through that though, you realize that the needs of second life, a MMORPG, are quite a bit different from your average web app.</p>
+<p>So, without further ado, my "queue" system round up.</p>
+<ul>
+<li><a href="http:&#47;&#47;activemq.apache.org&#47;">ActiveMQ<&#47;a> - This shining star of the queueing world seems to come up quickly in conversation. At Adicio, we actually gave it a good try. The main problem was, we're a PHP shop. The PHP accessibility comes not through the normal Java Messing Service connector, but <a href="http:&#47;&#47;stomp.codehaus.org&#47;Protocol">"STOMP"<&#47;a>.
+<p &#47;>
+Honestly, I'm not a big fan of these giant Apache sponsored java projects. <a href="http:&#47;&#47;lucene.apache.org&#47;solr&#47;">SOLR<&#47;a> has changed my mind a bit, as it seems to work well and doesn't really crash. Then again, I'm not carrying a pager anymore, so maybe it does suck and I'm just not seeing it.</p>
+<p &#47;>
+Anyway, at first, ActiveMQ was winning me over. It was pretty quick.. had a pretty simple setup curve (just start up the latest version, and you have a working persistent queue system), and despite having mountains of documentation that reads like the text spammers shove into their emails randomly to pass bayesian filters, it made sense.</p>
+<p &#47;>
+However, its fall was pretty quick, as the first problem we hit was its Producer Throttling. This probably works fine when you're using the JMS connector. However, with Stomp, when ActiveMQ decides your queue is too full, and it needs you to stop, it just stops acking your packets. Your stomp client blocks (or spins, in non-block mode) and you wait. This is made worse by the fairly naive php stomp driver, which doesn't really check to see why its write failed, or even try to see if it <b>can<&#47;b>.</p>
+<p &#47;>
+Things got better when that was disabled, but the stomp driver was still haphazard. After figuring out that the Master&#47;Slave protocol requires one to shut down the slave whenever failing back to a downed master, I had had enough. Sionara ActiveMQ.<br />
+<&#47;li></p>
+<li><a href="http:&#47;&#47;www.rabbitmq.com&#47;">RabbitMQ<&#47;a> - This one seems to be a favorite of many. My experience is limited, and I really haven't tried it that much. Its written in erlang, which I guess automatically makes something "telco reliable". Cool.<&#47;li>
+<li><a href="http:&#47;&#47;qpid.apache.org&#47;">QPID<&#47;a> - Wow, this one is supposedly INCREDIBLE. <a href="http:&#47;&#47;www.redhat.com&#47;mrg&#47;messaging&#47;features&#47;#aio">"500,000 messages per second per LUN." <&#47;a>. WOW. It also has RedHat's backing, which is a big win for me.<br />
+In fact, as I write this, I'm doing my best to build and install the latest qpid on CentOS 5.4. </p>
+<pre>
+ gcc -DHAVE_CONFIG_H -I. -I. -I.&#47;src&#47;config -I.&#47;include&#47; -I&#47;usr&#47;src&#47;redhat&#47;BUILD&#47;xerces-c-src_2_8_0&#47;src -I.&#47;src&#47;lexer&#47; -D_GNU_SOURCE -D_REENTRANT -O2 -g -m64 -mtune=generic -MT mapm_add.lo -MD -MP -MF .deps&#47;mapm_add.Tpo -c src&#47;mapm&#47;mapm_add.c  -fPIC -DPIC -o .libs&#47;mapm_add.o<br />
+...<br />
+<&#47;pre><br />
+In case you're familiar, I'm there. Oops, thats not qpid. Thats xerces-c. Which I have to build.. and I also have to build xqilla after that. Luckily, 40 other packages required to build qpid were available in the standard CentOS yum repository.</p>
+<p &#47;>
+Another unfortunate reality is that there is no qpid connectivity available for PHP. Unless the <a href="http:&#47;&#47;code.google.com&#47;p&#47;php-amqp&#47;">php-amqp module<&#47;a> works. Its really not clear yet.<br />
+Anyway, this looks like a promising messaging technology. However, this much software leaves a lot of room for things to break.. so, while I will probably complete the build, as I want to find out how it stacks up to the others in terms of simplicity and performance, I think this one is dead.</p>
+<p &#47;>
+<&#47;li></p>
+<li><a href="http:&#47;&#47;gearman.org">Gearman<&#47;a> - Ok I'm going to say it up front. I like this one. Its really not a "queue" system per s&eacute;. The name is an anagram of 'manager' (say that 5 times fast!). Its one of those great things that came out of the Danga group, the same people who created MogileFS and Memcached.
+<p &#47;>
+Call me stupid, but I like to be able to read things. QPID is in C++, and is so big, I don't even know where to start. Java gives me the shivers, and I don't even know what erlang looks like. But damn, who doesn't like poring over well written C? Thats pretty much what the new C port of gearmand is.</p>
+<p &#47;>
+I'm especially fond of the ease with which one can write a persistence layer. I recently submitted code to make the tokyocabinet queue store better. Its a simple B+Tree store that everybody's going crazy about these days. Its also written in really nice C.</p>
+<p &#47;>
+The built in ability for gearman clients&#47;workers (producers&#47;consumers) to have a 2 way conversation is especially appealing. Its not like they can just freely pass messages back and forth. But clients can choose to wait for the job they submitted to complete. They can also check on the status of the job fairly easily. Workers can send back two integers (numerator and denominator), which is particularly useful for sending back a count of things done over the count of things to do.</p>
+<p &#47;>
+Combine all this cool stuff with the dead simple 'gearman' command line client, and you have a happy Clint. I wrote a little PHP worker that just sits around collecting data sent to it by the other workers running. When it receives a "show_all_workers" message (function in gearman-ese), it just spits back a text report of what it knows. This can be triggered by just saying:</p>
+<pre>
+$ gearman -s -f show_all_workers</p>
+<p>Known Workers: 5</p>
+<p>dev3.adicio.com_Adicio_App_Reverse_Worker_29336 jobs=26508,restarts=0,memory_MB=1.47,lastcheckin=Thu, 21 Jan 2010 15:33:32 -0800<br />
+dev3.adicio.com_Adicio_App_Reverse_Worker_29333 jobs=19194,restarts=0,memory_MB=1.47,lastcheckin=Thu, 21 Jan 2010 15:33:32 -0800<br />
+dev3.adicio.com_Adicio_App_Reverse_Worker_29356 jobs=29208,restarts=0,memory_MB=1.47,lastcheckin=Thu, 21 Jan 2010 15:33:32 -0800<br />
+dev3.adicio.com_Adicio_App_Reverse_Worker_29370 jobs=27638,restarts=0,memory_MB=1.47,lastcheckin=Thu, 21 Jan 2010 15:33:32 -0800<br />
+dev3.adicio.com_Adicio_App_Reverse_Worker_29332 jobs=10636,restarts=0,memory_MB=1.47,lastcheckin=Thu, 21 Jan 2010 15:33:32 -0800</p>
+<p>$<br />
+<&#47;pre></p>
+<p>This is pretty damn cool. Now double the fun with <a href="https:&#47;&#47;launchpad.net&#47;gearman-mysql-udf">MySQL UDF's<&#47;a>, and you have a workable solution for queueing via MySQL trigger.<br />
+<a href="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2010&#47;01&#47;paris-hilton-thats-hot.jpg"><img src="http:&#47;&#47;fewbar.com&#47;wp-content&#47;uploads&#47;2010&#47;01&#47;paris-hilton-thats-hot.jpg" alt="" title="paris hilton thats hot" width="256" height="256" class="alignnone size-full wp-image-138" &#47;><&#47;a></p>
+<p &#47;>
+So, I can't help but give this one the nod for simplicity of design. There are no massive books written to explain what gearman does. Just a nice easy C library, and perhaps one of the most important things, a really useful PHP extension.<br />
+<&#47;li><br />
+<&#47;ul></p>

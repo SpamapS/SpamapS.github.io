@@ -1,0 +1,294 @@
+---
+layout: post
+status: publish
+published: true
+title: So what is Ensemble anyway?
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+excerpt: "Have you heard of <a href=\"http:&#47;&#47;ensemble.ubuntu.com&#47;\">Ensemble<&#47;a>?
+  Are you excited about Cloud&#47;Service Orchestration? What? Ok you're not alone
+  if you are scratching your head.\r\n\r\nEnsemble is an implementation of a new idea
+  that has been taking shape the last couple of years. Ever since Amazon hooked up
+  a remote API to thousands of machines to provide access to their virtual infrastructure
+  (and called it macaroni? err.. AWS), people have been dreaming up ways to take advantage
+  of what is basically a robotic \"NOC guy\". No longer do you have to pre-rack servers
+  or call your vendor frantically to get servers sent next-day to your colo. Right?\r\n\r\nNaturally,
+  the system administrators that would normally be in charge of racking servers, applied
+  their existing tools to the job, to mixed success. Config management is really good
+  at modelling identical hosts. But with virtual hosts instantly available, this left
+  those thinking at a higher level wanting more. Chef in particular implemented a
+  nice set of tools and functionality to allow this high level \"service\" definition
+  with their knife tools and simple ruby API.\r\n\r\nBut how easy are Chef's cookbooks
+  to share and use without modification?"
+wordpress_id: 414
+wordpress_url: http://fewbar.com/?p=414
+date: '2011-06-03 11:53:08 -0700'
+date_gmt: '2011-06-03 18:53:08 -0700'
+categories:
+- Scalability
+- Ubuntu
+- Ensemble
+tags:
+- ec2
+- Scalability
+- ubuntu
+- puppet
+- cloud
+- ensemble
+- principia
+- orchestration
+- config management
+- chef
+- mediawiki
+---
+<p>Have you heard of <a href="http:&#47;&#47;ensemble.ubuntu.com&#47;">Ensemble<&#47;a>? Are you excited about Cloud&#47;Service Orchestration? What? Ok you're not alone if you are scratching your head.</p>
+<p>Ensemble is an implementation of a new idea that has been taking shape the last couple of years. Ever since Amazon hooked up a remote API to thousands of machines to provide access to their virtual infrastructure (and called it macaroni? err.. AWS), people have been dreaming up ways to take advantage of what is basically a robotic "NOC guy". No longer do you have to pre-rack servers or call your vendor frantically to get servers sent next-day to your colo. Right?</p>
+<p>Naturally, the system administrators that would normally be in charge of racking servers, applied their existing tools to the job, to mixed success. Config management is really good at modelling identical hosts. But with virtual hosts instantly available, this left those thinking at a higher level wanting more. Chef in particular implemented a nice set of tools and functionality to allow this high level "service" definition with their knife tools and simple ruby API.</p>
+<p>But how easy are Chef's cookbooks to share and use without modification?<a id="more"></a><a id="more-414"></a> How easy are they to integrate together? Puppet has modules that are also capable of similar functionality, and the recent integration of Mcollective, plus puppet Faces, has certainly added a lot of the same things Chef had to support this kind of application modelling, but again, the modules seem to require a lot of convention and assumption, and tweaking to get useful.</p>
+<p>Its my opinion, that this is very much like the way tarballs+autoconf became the de-facto standard for distributing free software. It was *so much* better than writing a Makefile by hand, and it achieved an enormous amount of portability, so developers adopted it rapidly. In fact, it is still the dominant way to distribute portable open source applications.</p>
+<p>But at some point, the limitations of this became clear. There was a need for something more concise, that could distribute both the source, and binaries, built for a platform. There was some limited<a href="http:&#47;&#47;slackware.org"> early success with tarballs<&#47;a> built by convention. But then, Enter RPM and DPKG. These included ways to express facts about software, like its dependencies, architecture, and the revisions made to it to work on the target platform. This allowed distributors of software to more easily maintain their systems, and enabled users to manage the software in their environments.</p>
+<p>At that point, some smart guy figured out that we should be able to download and automatically configure all of the software needed for one application to work properly, just from its packaging information. To my mind, apt-get was my first experience with this, though FreeBSD ports authors may disagree there. Either way, this made it very easy for admins and users to install software without spending hours in the 7 levels of dependency hell.</p>
+<p>In many ways, Service Orchestration is a way of bringing the benefits of packaging to the cloud. It should allow us to build out our cloud in a sane way, taking advantage of the knowledge that has been gained by others. For the bits that we need to finely tune, it should step aside and allow that without compromising the system.</p>
+<p>Ensemble is an implementation of this idea, and <a href="https:&#47;&#47;launchpad.net&#47;principia">Principia<&#47;a> is a collection of "<a href="https:&#47;&#47;ensemble.ubuntu.com&#47;docs&#47;formula.html">Formulas<&#47;a>" for Ensemble. They are tightly coupled to Ubuntu, as they are in many ways meant to be the dpkg and apt-get for Ubuntu in the cloud.</p>
+<p>Its pretty easy to try out Ensemble and Principia on Ubuntu. Right now you'll need an EC2 account with an access key setup, though we're working on making this work with just your local machine for rapid development.</p>
+<p><em><strong>Its been pointed out to me that the version of principia-tools that was available at the time of this writing didn't include &#47;usr&#47;share&#47;principia-tools&#47;tests. I've uploaded a fixed version to the ensemble PPA, so if you tried these instructions and failed, please try updating principia-tools. If that fails, you can get the tests with bzr branch lp:principia-tools.<&#47;strong><br />
+<&#47;em></p>
+<p><code><br />
+sudo add-apt-repository ppa:ensemble&#47;ppa<br />
+sudo apt-get update<br />
+sudo apt-get install principia-tools<br />
+export AWS_SECRET_ACCESS_KEY=xxxxxxxxxxxxxxxx<br />
+export AWS_SECRET_KEY_ID=0123456789ABCDEF<br />
+ensemble bootstrap<br />
+principia getall &#47;some&#47;path&#47;for&#47;formulas<br />
+&#47;usr&#47;share&#47;principia-tools&#47;tests&#47;mediawiki.sh &#47;some&#47;path&#47;for&#47;formulas<br />
+<&#47;code></p>
+<p>What does this give you, well it should give you a 7 node mediawiki cluster of t1.micro's in the us-east-1 region of EC2. I just ran it and now I have this:</p>
+<pre>machines:<br />
+  0: {dns-name: ec2-50-19-158-109.compute-1.amazonaws.com, instance-id: i-215dd84f}<br />
+  1: {dns-name: ec2-50-17-16-228.compute-1.amazonaws.com, instance-id: i-8d58dde3}<br />
+  2: {dns-name: ec2-72-44-49-114.compute-1.amazonaws.com, instance-id: i-9558ddfb}<br />
+  3: {dns-name: ec2-50-19-47-106.compute-1.amazonaws.com, instance-id: i-6d5bde03}<br />
+  4: {dns-name: ec2-174-129-132-248.compute-1.amazonaws.com, instance-id: i-7f5bde11}<br />
+  5: {dns-name: ec2-50-19-152-136.compute-1.amazonaws.com, instance-id: i-755bde1b}<br />
+  6: {dns-name: '', instance-id: i-4b5bde25}<br />
+services:<br />
+  demo-wiki:<br />
+    formula: local:mediawiki-62<br />
+    relations: {cache: wiki-cache, db: wiki-db, website: wiki-balancer}<br />
+    units:<br />
+      demo-wiki&#47;0:<br />
+        machine: 2<br />
+        relations: {}<br />
+        state: null<br />
+      demo-wiki&#47;1:<br />
+        machine: 6<br />
+        relations: {}<br />
+        state: null<br />
+  wiki-balancer:<br />
+    formula: local:haproxy-13<br />
+    relations: {reverseproxy: demo-wiki}<br />
+    units:<br />
+      wiki-balancer&#47;0:<br />
+        machine: 4<br />
+        relations: {}<br />
+        state: null<br />
+  wiki-cache:<br />
+    formula: local:memcached-10<br />
+    relations: {cache: demo-wiki}<br />
+    units:<br />
+      wiki-cache&#47;0:<br />
+        machine: 3<br />
+        relations: {}<br />
+        state: null<br />
+      wiki-cache&#47;1:<br />
+        machine: 5<br />
+        relations: {}<br />
+        state: null<br />
+  wiki-db:<br />
+    formula: local:mysql-93<br />
+    relations: {db: demo-wiki}<br />
+    units:<br />
+      wiki-db&#47;0:<br />
+        machine: 1<br />
+        relations: {}<br />
+        state: null<&#47;pre></p>
+<p>At the top you see the machines that ensemble spun up in EC2 in the 'machines' section. The numbers there correspond to the 'machine: #' in the service&#47;units definitions below. If you look through, you'll see above that wiki-balancer is machine 4, which has a hostname of ec2-174-129-132-248.compute-1.amazonaws.com. If you go to that hostname, once all relations are up (I like to use 'watch ensemble status' to see when this happens), you should see a working mediawiki. But not just a working mediawiki, a scalable one. If you want to pour on the traffic, spin up 3 more demo-wiki's to handle the app server load:</p>
+<p><code><br />
+ensemble add-unit demo-wiki<br />
+ensemble add-unit demo-wiki<br />
+ensemble add-unit demo-wiki<br />
+<&#47;code></p>
+<p>These will of course take a minute or two to spin up. Once they're ready they'll show up in the status output:</p>
+<pre>services:<br />
+  demo-wiki:<br />
+    formula: local:mediawiki-62<br />
+    relations: {cache: wiki-cache, db: wiki-db, website: wiki-balancer}<br />
+    units:<br />
+      demo-wiki&#47;0:<br />
+        machine: 2<br />
+        relations:<br />
+          cache: {state: up}<br />
+          db: {state: up}<br />
+          website: {state: up}<br />
+        state: started<br />
+      demo-wiki&#47;1:<br />
+        machine: 6<br />
+        relations:<br />
+          cache: {state: up}<br />
+          db: {state: up}<br />
+          website: {state: up}<br />
+        state: started<br />
+      demo-wiki&#47;2:<br />
+        machine: 7<br />
+        relations:<br />
+          cache: {state: up}<br />
+          db: {state: up}<br />
+          website: {state: up}<br />
+        state: started<br />
+      demo-wiki&#47;3:<br />
+        machine: 8<br />
+        relations:<br />
+          cache: {state: up}<br />
+          db: {state: up}<br />
+          website: {state: up}<br />
+        state: started<br />
+      demo-wiki&#47;4:<br />
+        machine: 9<br />
+        relations:<br />
+          cache: {state: up}<br />
+          db: {state: up}<br />
+          website: {state: up}<br />
+        state: started<br />
+<&#47;pre></p>
+<p>How about a little test then? After I got to this point, I logged in as WikiSysop (change the password folks! its change-me) and imported the Wikipedia exports for "Ubuntu" and "EC2". After that I used harvestman to spider the site and then saved all the urls in a file, urls.txt. Alright! Now lets fire up *siege* from a machine outside the cluster, but in the same availability zone &#47; security group (so at least we're only dealing with EC2's latency and not my net connection), and see if we can take this cluster down!</p>
+<p><code><br />
+$ siege -i -c 5 -f urls.txt<br />
+...<br />
+Transactions:		         563 hits<br />
+Availability:		      100.00 %<br />
+Elapsed time:		       95.58 secs<br />
+Data transferred:	        2.64 MB<br />
+Response time:		        0.35 secs<br />
+Transaction rate:	        5.89 trans&#47;sec<br />
+Throughput:		        0.03 MB&#47;sec<br />
+Concurrency:		        2.04<br />
+Successful transactions:         544<br />
+Failed transactions:	           0<br />
+Longest transaction:	       13.54<br />
+Shortest transaction:	        0.00<br />
+<&#47;code></p>
+<p>This is, btw, the best run I got out of t1.micro's. Sometimes it would get quite ugly:</p>
+<p><code><br />
+Transactions:		         892 hits<br />
+Availability:		       99.55 %<br />
+Elapsed time:		      221.69 secs<br />
+Data transferred:	        3.64 MB<br />
+Response time:		        0.61 secs<br />
+Transaction rate:	        4.02 trans&#47;sec<br />
+Throughput:		        0.02 MB&#47;sec<br />
+Concurrency:		        2.45<br />
+Successful transactions:         849<br />
+Failed transactions:	           4<br />
+Longest transaction:	       27.41<br />
+Shortest transaction:	        0.00<br />
+<&#47;code></p>
+<p>Lets try the whole thing over with m1.small. First I edit ~&#47;.ensemble&#47;environments.yaml and add an override for the default-instance-type:</p>
+<p><code><br />
+ensemble: environments<&#47;code></p>
+<pre>
+environments:<br />
+  sample:<br />
+    type: ec2<br />
+    default-instance-type: m1.small<br />
+    control-bucket: ensemble-12345678901234567890<br />
+    admin-secret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx<br />
+<&#47;pre></p>
+<p>Then I re-run the whole test:</p>
+<p><code><br />
+Transactions:		         290 hits<br />
+Availability:		       98.98 %<br />
+Elapsed time:		       81.79 secs<br />
+Data transferred:	        0.78 MB<br />
+Response time:		        0.53 secs<br />
+Transaction rate:	        3.55 trans&#47;sec<br />
+Throughput:		        0.01 MB&#47;sec<br />
+Concurrency:		        1.89<br />
+Successful transactions:         277<br />
+Failed transactions:	           3<br />
+Longest transaction:	        1.50<br />
+Shortest transaction:	        0.00<br />
+<&#47;code></p>
+<p>Oops! I forgot to add my 3 extra nodes. Note that these two m1.smalls are already almost keeping up. Now as I add these, I keep siege running. Its pretty cool to watch the response times drop as nodes come online to carry some of the load.</p>
+<p>Now with 5 m1.small's:</p>
+<p><code><br />
+Transactions:		         273 hits<br />
+Availability:		      100.00 %<br />
+Elapsed time:		       54.27 secs<br />
+Data transferred:	        0.99 MB<br />
+Response time:		        0.47 secs<br />
+Transaction rate:	        5.03 trans&#47;sec<br />
+Throughput:		        0.02 MB&#47;sec<br />
+Concurrency:		        2.38<br />
+Successful transactions:         260<br />
+Failed transactions:	           0<br />
+Longest transaction:	       19.92<br />
+Shortest transaction:	        0.00<br />
+<&#47;code></p>
+<p>And with higher concurrency raised from 5 to 10:</p>
+<p><code><br />
+Transactions:		         327 hits<br />
+Availability:		      100.00 %<br />
+Elapsed time:		       42.20 secs<br />
+Data transferred:	        1.30 MB<br />
+Response time:		        0.66 secs<br />
+Transaction rate:	        7.75 trans&#47;sec<br />
+Throughput:		        0.03 MB&#47;sec<br />
+Concurrency:		        5.12<br />
+Successful transactions:         318<br />
+Failed transactions:	           0<br />
+Longest transaction:	       25.51<br />
+Shortest transaction:	        0.00<br />
+<&#47;code></p>
+<p>And now if we add 2 more, for a total of 7 nodes, concurrency of 10 gets even better:</p>
+<p><code><br />
+Transactions:		         531 hits<br />
+Availability:		      100.00 %<br />
+Elapsed time:		       53.37 secs<br />
+Data transferred:	        1.75 MB<br />
+Response time:		        0.44 secs<br />
+Transaction rate:	        9.95 trans&#47;sec<br />
+Throughput:		        0.03 MB&#47;sec<br />
+Concurrency:		        4.35<br />
+Successful transactions:         507<br />
+Failed transactions:	           0<br />
+Longest transaction:	       15.49<br />
+Shortest transaction:	        0.00<br />
+<&#47;code></p>
+<p>And with 2 more (total of 9 units in demo-wiki serving the app):</p>
+<p><code><br />
+Transactions:		         354 hits<br />
+Availability:		      100.00 %<br />
+Elapsed time:		       34.41 secs<br />
+Data transferred:	        1.23 MB<br />
+Response time:		        0.41 secs<br />
+Transaction rate:	       10.29 trans&#47;sec<br />
+Throughput:		        0.04 MB&#47;sec<br />
+Concurrency:		        4.22<br />
+Successful transactions:         337<br />
+Failed transactions:	           0<br />
+Longest transaction:	       11.45<br />
+Shortest transaction:	        0.00<br />
+<&#47;code></p>
+<p>Anyway, this isn't a Mediawiki benchmark. This is to show you how easy it is to scale up and down in response to load with Ensemble. We all know that scaling out works, these graphs show it nicely:</p>
+<p><img src="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2011&#47;06&#47;resptime.png" alt="Response Time" &#47;><br />
+<img src="http:&#47;&#47;fewbar.com.s3.amazonaws.com&#47;wp-content&#47;uploads&#47;2011&#47;06&#47;tps.png" alt="Transactions per Second" &#47;></p>
+<p>Notice how the transactions&#47;second went up all the time, but the response time went up drastically with the jump in concurrency. This is where you need to have the ability to scale quickly, and where, if you can live with the other limitations of EC2 or any other IaaS provider, the cloud should actually win you business, since better response time means more happy users.</p>
+<p>Now that my siege is over, I can safely remove the unnecessary units one by one with 'ensemble remove-unit demo-wiki&#47;9', etc. etc. There's still a lot of room for sugar to be added. We could say "ensemble resize-service demo-wiki 5" and it might just pick 5 to keep and remove the rest, or add 3 to fulfill the request. There are also a ton of other ideas just bubbling up that are really exciting.</p>
+<p>Come say hi and hack on ensemble with us in Freenode, #ubuntu-ensemble and on the mailing list on <a href="https:&#47;&#47;lists.ubuntu.com&#47;mailman&#47;listinfo&#47;ensemble">the mailing list<&#47;a>.</p>

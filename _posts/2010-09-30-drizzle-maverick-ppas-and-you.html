@@ -1,0 +1,50 @@
+---
+layout: post
+status: publish
+published: true
+title: Drizzle, Maverick, PPA's, and you
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+excerpt: "So, this week, <a href=\"https:&#47;&#47;launchpad.net&#47;drizzle\">Drizzle<&#47;a>
+  released its beta, which is really exciting. But at the same time, I decided to
+  <a href=\"https:&#47;&#47;bugs.launchpad.net&#47;ubuntu&#47;+source&#47;drizzle&#47;+bug&#47;644587\">ask
+  the Ubuntu MOTU pull it out of Ubuntu 10.10<&#47;a> (a.k.a. maverick) entirely.
+  The reasons, may not be entirely obvious.\r\n"
+wordpress_id: 281
+wordpress_url: http://fewbar.com/?p=281
+date: '2010-09-30 12:12:05 -0700'
+date_gmt: '2010-09-30 19:12:05 -0700'
+categories:
+- Ubuntu
+- Drizzle
+tags:
+- drizzle
+- ubuntu
+- maverick
+- debian
+- natty
+- uds-n
+---
+<p>So, this week, <a href="https:&#47;&#47;launchpad.net&#47;drizzle">Drizzle<&#47;a> released its beta, which is really exciting. But at the same time, I decided to <a href="https:&#47;&#47;bugs.launchpad.net&#47;ubuntu&#47;+source&#47;drizzle&#47;+bug&#47;644587">ask the Ubuntu MOTU pull it out of Ubuntu 10.10<&#47;a> (a.k.a. maverick) entirely. The reasons, may not be entirely obvious.<br />
+<a id="more"></a><a id="more-281"></a></p>
+<ul>
+<li>Licensing: There is some ambiguity on the licensing of certain non-critical source code in Drizzle that we weren't certain Debian archive admins would accept. Since we like to follow Debian as closely as possible in Ubuntu, the MOTU sponsor we had was requesting that we upload into Debian first. Upon review of earlier packages, the debian archive maintainers pointed out some ambiguities in the copyright documentation, and it turns out, there are some ambiguities still in the source code. These things take time to sort out, though I'm confident we've figured most, if not all, of them out. <&#47;li>
+<li>Beta status: Drizzle released their first beta just yesterday. This is great, and would be a good release to have in Maverick, but its going to change *a lot* before the "elliot" milestone is released in early 2011. Monty Taylor assures me that they're going to be ready to release before feature freeze of Natty (11.04). Until then, they're going to be fixing bugs in the betas and releasing those fixes. In the face of that, its probably better to point people at a <a href="https:&#47;&#47;launchpad.net&#47;~drizzle-developers&#47;+archive&#47;ppa">PPA<&#47;a> that will have the latest bug fix release in it, and tools included to help debug&#47;fix the release as well.<&#47;li>
+<li>Quality: Even though its clear that drizzle is beta to those following drizzle closely, it may not be entirely clear to everyone. Beta versions make it into Ubuntu all the time, but being a database engine, I'm hesitant to have the casual user try it out. In 6 months, Drizzle will be at a stable release stage, and all users should be feeling pretty good about running on it. That seems like the right time to put it into Debian and Ubuntu.<&#47;li><br />
+<&#47;ul></p>
+<p>So, what should you do if you want to run Drizzle on Maverick?</p>
+<p>There are two package archives maintained by the drizzle developers <b>just for ubuntu<&#47;b>.</p>
+<p><a href="https:&#47;&#47;launchpad.net&#47;~drizzle-developers&#47;+archive&#47;ppa">The PPA for drizzle development<&#47;a> - This should have the latest stable release, and all of the build-depends to rebuild it.<br />
+<a href="https:&#47;&#47;launchpad.net&#47;~drizzle-developers&#47;+archive&#47;trunk">The Drizzle Trunk PPA<&#47;a> - This should have the latest daily build of drizzle from the source code repository, which may have fixes made since the last stable release.</p>
+<p>Those links include instructions for adding the PPA's to your system, after that, just</p>
+<p><code><br />
+apt-get install drizzle-server drizzle-client<br />
+<&#47;code></p>
+<p>And have fun!</p>
+<p>Also, we'll be discussing drizzle sometime at <a href="http:&#47;&#47;uds.ubuntu.com&#47;">UDS-N in Orlando<&#47;a>. So make sure to check the schedule out and join us (remotely or on site) if you want to chime in or hear what we're going to do with the Narwhal and Drizzle.</p>

@@ -1,0 +1,60 @@
+---
+layout: post
+status: publish
+published: true
+title: Why hasn't OpenID, or something else, taken over yet?
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+excerpt: "I just happened upon a site that mentioned <a href=\"http:&#47;&#47;bubbl.us&#47;\">bubbl.us<&#47;a>
+  as a way to brainstorm. Cool tool. I played with it and decided I wanted to keep
+  the data I had put in it to play with later, but was annoyed that I had to create
+  yet another user id+email+password combination on yet another site that I probably
+  won't visit again for a long while. Plus, say I want to add it onto my facebook
+  wall. Facebook might be able to extract the images, but they might now. How lame
+  is that?\r\n\r\nMy current solution for the login problem is less than ideal. I
+  use the java program <a href=\"http:&#47;&#47;jpwsafe.sourceforge.net&#47;\">Password
+  Safe<&#47;a> to save my accounts+passwords, which it generates randomly. The pass
+  phrase for my password safe is pretty complex, and I change it on about an annual
+  basis. The program re-locks the safe after 5 minutes of inactivity, so this is reasonably
+  safe against casual compromise. Of course, keyboard shoulder surfing and a subsequent
+  theft of my machine (or temporary control) could render it useless, but I'm willing
+  to accept those risks and do what I can to maintain control of the laptop. If somebody
+  steals my laptop, unless they can crack the encryption quickly, I feel pretty good
+  that I'll have enough time to restore from backup, change all the passwords, and
+  set a new combination.\r\n\r\nHowever, this is basically as good as our current
+  \"status quo\" of online fractured identity can get. And I still don't have anything
+  to bring all of my online presence together.\r\n"
+wordpress_id: 165
+wordpress_url: http://fewbar.com/?p=165
+date: '2010-04-22 14:54:14 -0700'
+date_gmt: '2010-04-22 21:54:14 -0700'
+categories:
+- Technology
+- Life
+- Geeky
+tags:
+- google
+- facebook
+- security
+- identity
+- openid
+- foaf
+---
+<p>I just happened upon a site that mentioned <a href="http:&#47;&#47;bubbl.us&#47;">bubbl.us<&#47;a> as a way to brainstorm. Cool tool. I played with it and decided I wanted to keep the data I had put in it to play with later, but was annoyed that I had to create yet another user id+email+password combination on yet another site that I probably won't visit again for a long while. Plus, say I want to add it onto my facebook wall. Facebook might be able to extract the images, but they might now. How lame is that?</p>
+<p>My current solution for the login problem is less than ideal. I use the java program <a href="http:&#47;&#47;jpwsafe.sourceforge.net&#47;">Password Safe<&#47;a> to save my accounts+passwords, which it generates randomly. The pass phrase for my password safe is pretty complex, and I change it on about an annual basis. The program re-locks the safe after 5 minutes of inactivity, so this is reasonably safe against casual compromise. Of course, keyboard shoulder surfing and a subsequent theft of my machine (or temporary control) could render it useless, but I'm willing to accept those risks and do what I can to maintain control of the laptop. If somebody steals my laptop, unless they can crack the encryption quickly, I feel pretty good that I'll have enough time to restore from backup, change all the passwords, and set a new combination.</p>
+<p>However, this is basically as good as our current "status quo" of online fractured identity can get. And I still don't have anything to bring all of my online presence together.<br />
+<a id="more"></a><a id="more-165"></a><br />
+I recall with fond memories watching <a href="http:&#47;&#47;identity20.com&#47;media&#47;OSCON2005&#47;">Dick Hardt's amazing Identity 2.0 presentation<&#47;a> from the audience at OSCON 2005. I came away thinking to myself "oh good, somebody is on it." I put it out of my mind as a systems administrator with a lot of things to think about on the backend, and no real concern for the frontend.</p>
+<p>Fast forward 5 years, and I see that we're not much better off now. Dick Hardt's company Sxip produced <a href="http:&#47;&#47;www.sxipper.com&#47;">Sxipper<&#47;a>, which is pretty cool, but still puts it on the users to safeguard and manage their data. Oh and really, I never heard about it until I went looking for Sxip again, and I don't know anybody using it, I think its just a cool curiosity, not a solution.</p>
+<p>This really is an issue that affects people, but they may not know it. Look at <a href="http:&#47;&#47;www.equalsdrummond.name&#47;?p=267">the trouble this guy went through to make google accounts useful for people with multiple email addresses<&#47;a>. As we start sharing and sending and moving data, our identities clearly can't be defined as email addresses anymore. I have 3 that I use a lot, and a couple of others that just refuse to die for whatever reason. Changing them means trying to find every site on which I've used them. UGH.</p>
+<p><a href="http:&#47;&#47;openid.net">OpenID<&#47;a> was, and still is, a promising direction. There are some definite security pitfalls in the way its been done in the past, but I think they've solved most of them. It doesn't really satisfy Dick's Photo ID requirement where the issuer doesn't get to know what you're using it for. Still I love when I sign up for a site and I can use my OpenID login. I use my launchpad.net account for this, mostly because it was the first site that had a very clear "this is your open ID url" link.</p>
+<p><a href="http:&#47;&#47;esw.w3.org&#47;Foaf%2Bssl">FOAF-SSL<&#47;a> or "WebID" also seems interesting as a way to promote social credibility and utilize existing technologies rather than try to invent the whole thing. Even twitter seems to have rudimentary support. But its still a long way off from being in control of our identity. Given the meager number of <a href="http:&#47;&#47;esw.w3.org&#47;Foaf%2Bssl&#47;RelyingParties">relying parties<&#47;a>, I'd say it may not ever get there, which is too bad.</p>
+<p>So now I'm just confused. How and when are we going to get this done? When can I say "this is me, here's some proof that this is me, now lets get something done."?</p>
+<p>Social networks sort of try to do this with the social proof of many friends. But at issue there is how closed off those social relationships are. Facebook wants me *on Facebook*. They don't want to enable me to also use myspace or my Ning community seamlessly.</p>
+<p>Until we as users know why we'd want that, and somebody is able to provide it, I guess I'm just stuck with my password safe.</p>

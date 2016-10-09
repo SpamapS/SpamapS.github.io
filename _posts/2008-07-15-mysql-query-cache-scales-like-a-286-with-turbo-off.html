@@ -1,0 +1,43 @@
+---
+layout: post
+status: publish
+published: true
+title: Query Cache defeats Serverzilla
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+excerpt: "So a few days ago, my big mean MySQL server started having problems that
+  were very hard to explain. It was slowing down, taking a minute to run queries that
+  usually take a few seconds, and Linux load averages were in the teens, despite having
+  quiet disks (less than 0.1% cpu IO wait time) and plenty of RAM (128G for about
+  200G of data total...).\r\n\r\nThe developers were stumped. The other systems guys
+  were stumped. So was I. But it still seemed ok. We found all sorts of things to
+  point fingers at, but nothing made sense.\r\n"
+wordpress_id: 11
+wordpress_url: http://fewbar.com/?p=11
+date: '2008-07-15 13:47:55 -0700'
+date_gmt: '2008-07-15 20:47:55 -0700'
+categories:
+- MySQL
+- Scalability
+tags:
+- linux
+- MySQL
+- caching
+---
+<p>So a few days ago, my big mean MySQL server started having problems that were very hard to explain. It was slowing down, taking a minute to run queries that usually take a few seconds, and Linux load averages were in the teens, despite having quiet disks (less than 0.1% cpu IO wait time) and plenty of RAM (128G for about 200G of data total...).</p>
+<p>The developers were stumped. The other systems guys were stumped. So was I. But it still seemed ok. We found all sorts of things to point fingers at, but nothing made sense.<br />
+<a id="more"></a><a id="more-11"></a><br />
+Then this Monday, everything came to a screeching halt. 3 second queries were taking 15 minutes. 30 second queries were never completing. The CPU's were only a little busy. What gives?! This box has 8 CPU cores and 128G of RAM.. nothing can take it down, right?!</p>
+<p>We threw our hands in the air and failed over to the active standby (the other side of our master<->master replication pair). Suddenly all was well. But something smelled wrong. We blamed some kind of bug in MySQL.</p>
+<p>I spent all day trying to make Memcached more efficient, and trying to explain why suddenly this beast was felled by such tiny arrows as instantaneous queries that should have been cached anyway.</p>
+<p>Oh wait, did somebody say cached? As in the MySQL query cache? I mentioned this in the #mysql channel on <a href="http:&#47;&#47;freenode.net">Freenode<&#47;a>, and Mr. Eric Bergen (ebergen) from <a href="http:&#47;&#47;www.provenscaling.com&#47;">Proven Scaling<&#47;a> immediately said something like "well duh, turn off the cache, moron". I was dumbfounded. Shouldn't it be helping us with all those tiny queries?</p>
+<p>Well apparently not. <a href="http:&#47;&#47;lists.mysql.com&#47;internals&#47;35777">This recent thread on the MySQL internals list<&#47;a> talks about mutex contention in the query cache while it is *searched*, not just while it is updated. This is disasterous for an environment where thousands and thousands of tiny queries are being run constantly. Even with query_cache_type set to 2, or "cache on demand" mode, every query in the system must run through this mutex.</p>
+<p>So, this morning when the standby box again cried for mercy, hitting max_connections and spinning all queries around in circles, I ran 'SET GLOBAL query_cache_type=2'. Instantly the server became more healthy. I half expected to trade one problem for another.. with the server being consumed by tiny queries. But instead, these tiny queries did as expected, and took very little time to complete. And large queries against tables that change every second or 2 didn't have to contend for the query cache, they just ran through like nothing.</p>
+<p>So, it would appear that for any sort of multi-core installations of MySQL, the query cache is not only a waste, but a hazard!</p>
+<p>Thanks again to Mr. Bergen. I would not have thought about that until he said it.</p>

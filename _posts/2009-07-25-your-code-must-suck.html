@@ -1,0 +1,51 @@
+---
+layout: post
+status: publish
+published: true
+title: Your code must suck
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+excerpt: "While attending <a href=\"http:&#47;&#47;en.oreilly.com&#47;oscon2009\">OSCON
+  2009<&#47;a> w&#47; my faithful sidekick <a href=\"http:&#47;&#47;poorlycoded.com&#47;\">fluffy<&#47;a>,
+  we constantly kept finding instances of a common theme. The leading companies and
+  projects seem to share one attribute that might shock you.\r\n\r\nThey all have
+  at least *some* crappy code. At some point, all of them"
+wordpress_id: 103
+wordpress_url: http://fewbar.com/?p=103
+date: '2009-07-25 14:19:24 -0700'
+date_gmt: '2009-07-25 21:19:24 -0700'
+categories:
+- Technology
+tags:
+- linux
+- MySQL
+- code
+- postgresql
+- freebsd
+- design patterns
+---
+<p>While attending <a href="http:&#47;&#47;en.oreilly.com&#47;oscon2009">OSCON 2009<&#47;a> w&#47; my faithful sidekick <a href="http:&#47;&#47;poorlycoded.com&#47;">fluffy<&#47;a>, we constantly kept finding instances of a common theme. The leading companies and projects seem to share one attribute that might shock you.</p>
+<p>They all have at least *some* crappy code. At some point, all of them<a id="more"></a><a id="more-103"></a> have set aside their principles and thrown in a hack to get things working. This is reinforced by those projects that have their dignity, but no market share. FreeBSD users are famous for saying that Linux is coded by 10,000 monkeys. FreeBSD is an awesome project, that has powered some <a href="http:&#47;&#47;yahoo.com">huge websites<&#47;a>. However, the primary Free OS is Linux. Even further along that line is Windows, which is pretty much a hack on a hack on a hack, but somehow, everybody ends up running it.</p>
+<p>This isn't to say that all of the code in popular projects sucks. Just that some of it does. I'm still waiting for the example of an organization that has produced pure, beautiful code with no compromises, and then gone on to garner a large market share and&#47;or massive profits.</p>
+<p>The site <a href="http:&#47;&#47;www.thedailywtf.com&#47;">TheDailyWTF<&#47;a> exists primarily because of this fact. I hit that site at least twice a week to have a good laugh. Many times it causes me to reminisce about some of the things I saw early in my career. Just as often, I'm reminded of something more recent. The trend doesn't seem to stop, despite advances in computing and human understanding, it goes back decades. I imagine Ogg, the first guy who designed a wheel, snarked about how Thag's wheels weren't perfectly round. But ultimately, Thag was able to produce wheels that weren't perfectly round, but rolled pretty well. He probably got them out in half the time, and ended up trading more wheels for Mammoth pelts than Ogg by a factor of five. No doubt Thag was able to attract more mates with his Mammoth Pelt fortune, so maybe its just in our nature. </p>
+<p>Really though, this flies in the face of code purity, which we all want. Code sucking == profit? Hacks == market share? This doesn't sit well with those of us who pride ourselves on brace placement discipline, and knowing at least 5 design patterns without looking them up in a book. But there it is, that pile of dung you knocked out at 3am the day before release to QA... 3 years ago. Still powering the site despite being closer to Alpaca bile than beautiful code.</p>
+<p>This doesn't mean projects fail without hacks. What it means though, is that projects that obsess over doing things "the right way" tend to languish, and rarely achieve success on a massive scale. For some that is ok, they're happy to have produced something great that a few people like and that works right for them. In fact, this is largely the  (healthy) attitude I see from the PostgreSQL project. </p>
+<p>The PostgreSQL developers and users tend to feel strongly that their database is far superior to the likes of say, MySQL. They'll tell you that they have always had full ACID compliance, that their bug counts are low, and performance continues to rise with every release.</p>
+<p>I know a lot of people are successfully running PostgreSQL, but really, by contrast, seems like everybody's running MySQL. MySQL is not bad code either. It just has hacks. Ok, having dug into it a bit now, it has <strong>a lot<&#47;strong> of hacks. But, why is MySQL the leader, and PostgreSQL the follower.</p>
+<p>I think the answer is right there in that last sentence. As Cesar Milan will tell you, "choo gotta be da pack leader". PostgreSQL probably would have continued on as a fine, but obscure, database engine had MySQL not revolutionized data storage in the same way Apache revolutionized web serving. MySQL has managed to carve out a huge market with Free software, while PostgreSQL's market is only now beginning to grow. Really PostgreSQL has refused to follow in MySQL's footsteps for a long time, and because of that, they've avoided many of the pitfalls MySQL has fallen in to as their scope creeps larger and larger like an amoeba slowly devouring the edges of the enterprise market that used to seem so far from its original targets.</p>
+<p>However, even the Postgres guys know that hacks may be necessary. <a href="http:&#47;&#47;archives.postgresql.org&#47;pgsql-hackers&#47;2008-05&#47;msg00913.php">As of May, 2008 they have given in<&#47;a> and will produce a general purpose master&#47;slave replication system. The message to the "pgsql-hackers" list has an air of reluctance to it..</p>
+<blockquote><p>Users who might consider<br />
+PostgreSQL are choosing other database systems because our existing<br />
+replication options are too complex to install and use for simple cases.<br />
+In practice, simple asynchronous single-master-multiple-slave<br />
+replication covers a respectable fraction of use cases, so we have<br />
+concluded that we should allow such a feature to be included in the core<br />
+project.<&#47;blockquote></p>
+<p>Its like they're finally saying "ok we want more users, so we'll include this thing that goes against our principles." Personally I think this is great, as PostgreSQL <strong>is<&#47;strong> a nice RDBMS, and to be able to use it for small-medium scaleout just like MySQL is really quite exciting.</p>
+<p>So, the moral of the story is, if you want your project to be successful, throw in some crap code. Otherwise your developers will be up on their high horses too long, and not down in the trenches getting things done.</p>

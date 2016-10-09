@@ -1,0 +1,33 @@
+---
+layout: post
+status: publish
+published: true
+title: Handlersocket -- NoSQL for MySQL, now on your favorite Linux..
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+wordpress_id: 347
+wordpress_url: http://fewbar.com/?p=347
+date: '2011-02-09 00:42:19 -0800'
+date_gmt: '2011-02-09 07:42:19 -0800'
+categories:
+- MySQL
+- Ubuntu
+tags:
+- MySQL
+- ubuntu
+- natty
+- handlersocket
+- nosql
+---
+<p><a href="https:&#47;&#47;github.com&#47;ahiguti&#47;HandlerSocket-Plugin-for-MySQL">Handlersocket<&#47;a> is what all the cool kids are using these days.. I think. Basically you get a couple of new ports on your mysql server that allow SQL-free reading and writing for doing many thousands of tiny transactions per second without the overhead of parsing SQL.</p>
+<p>Thanks to my venerable Ubuntu sponsor, Chuck Short, <a href="https:&#47;&#47;launchpad.net&#47;ubuntu&#47;+source&#47;handlersocket">handlersocket is now available in Ubuntu Natty<&#47;a> in the universe repository. apt-get install handlersocket-mysql-5.1 handlersocket-doc, then follow the instructions in &#47;usr&#47;share&#47;doc&#47;handlersocket-doc&#47;docs-en to enable it, and you have yourself a bonified NoSQL solution for your MySQL server. </p>
+<p>There are also client libraries for perl (libnet-handlersocket-perl) and C&#47;C++ (libhsclient-dev .. static only as the API is in flux). Other languages are still not packaged, but the protocol is simple, and links to early implementations are listed in the README file, which should be at &#47;usr&#47;share&#47;doc&#47;handlersocket-mysql-5.1&#47;README.</p>
+<p>It should be on Debian unstable as well soon...<br />
+<em>Update April 3 2011, Handlersocket is now in Debian Unstable as well<&#47;em></p>
+<p>Happy hacking!</p>

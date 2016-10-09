@@ -1,0 +1,55 @@
+---
+layout: post
+status: publish
+published: true
+title: The Rocket Ship to Havana - OpenStack Summit Spring 2013
+author:
+  display_name: clint
+  login: clint
+  email: clint@fewbar.com
+  url: http://fewbar.com
+author_login: clint
+author_email: clint@fewbar.com
+author_url: http://fewbar.com
+excerpt: "I started this blog post as \"The Road to Havana\", but immediately it struck
+  me that the term \"road\" just doesn't do this summit justice.\r\n\r\nDay 1 was
+  full of <a href=\"http:&#47;&#47;wiki.openstack.org&#47;Heat\">Heat<&#47;a> for
+  me. As a recent addition to the Heat core reviewer team, it was quite helpful and
+  a pleasure to meet most of the other developers in person. This happened about 10
+  minutes before our first session together. It never ceases to impress me how easy
+  it is to meet somebody in real life whom you've been corresponding with over only
+  IRC and email. In this case, I felt face to face contact just added warmth and depth
+  to already warm and friendly professional relationships.\r\n\r\nHeat is on a path
+  toward being a really great solution for managing large application deployments
+  in OpenStack clouds. "
+wordpress_id: 608
+wordpress_url: http://fewbar.com/?p=608
+date: '2013-04-22 14:00:58 -0700'
+date_gmt: '2013-04-22 21:00:58 -0700'
+categories:
+- Cloud
+- OpenStack
+tags:
+- ubuntu
+- cloud
+- juju
+- openstack
+- tripleo
+- heat
+---
+<p>I started this blog post as "The Road to Havana", but immediately it struck me that the term "road" just doesn't do this summit justice.</p>
+<p>Day 1 was full of <a href="http:&#47;&#47;wiki.openstack.org&#47;Heat">Heat<&#47;a> for me. As a recent addition to the Heat core reviewer team, it was quite helpful and a pleasure to meet most of the other developers in person. This happened about 10 minutes before our first session together. It never ceases to impress me how easy it is to meet somebody in real life whom you've been corresponding with over only IRC and email. In this case, I felt face to face contact just added warmth and depth to already warm and friendly professional relationships.</p>
+<p>Heat is on a path toward being a really great solution for managing large application deployments in OpenStack clouds. <a id="more"></a><a id="more-608"></a>Six months ago I was focused on <a href="http:&#47;&#47;juju.ubuntu.com&#47;">Juju<&#47;a> as a part of that discussion, and Heat was just this little incubating <a href="http:&#47;&#47;aws.amazon.com&#47;cloudformation&#47;aws-cloudformation-templates&#47;">AWS CloudFormation<&#47;a> compatibility engine. Juju has been focusing on a rewrite, which I think is a mistake the project will likely be regretting for a long time. Meanwhile, Heat has turned into a project to gather effort around making orchestration and high order control services built in features of OpenStack.</p>
+<p>We had a few discussions about scaling and performance, including <a href="https:&#47;&#47;blueprints.launchpad.net&#47;heat&#47;+spec&#47;concurrent-resource-scheduling">concurrent launching of resources<&#47;a> and <a href="https:&#47;&#47;blueprints.launchpad.net&#47;heat&#47;+spec&#47;multiple-engines">scaling out the Heat engine<&#47;a>. These were pretty low level discussions involving mostly the developers already involved, and like any good summit, we had contributions of ideas from many attendees, and solutions seem clear.</p>
+<p>One thing that was clear to me before the summit was that a storm was brewing with regards to how Heat users would express their application deployments.</p>
+<p>From some of the larger "enterprise" focused vendors, my own employer (HP) included, comes <a href="https:&#47;&#47;blueprints.launchpad.net&#47;heat&#47;+spec&#47;tosca-support">a recommendation to support TOSCA<&#47;a>. This is a really large, <a href="https:&#47;&#47;www.oasis-open.org&#47;committees&#47;tosca&#47;">wide ranging standard<&#47;a> that only partially even applies to Heat's current scope. However, it seems like a natural fit for TOSCA users to use something built into the cloud to deploy their applications.</p>
+<p><a href="https:&#47;&#47;wiki.openstack.org&#47;wiki&#47;Heat&#47;DSL">Rackspace contributed a spec<&#47;a> and will likely contribute some existing code for a native format that Heat users can use. This format is more narrow in focus than TOSCA, and I think has real potential. It was in need of a good name, so I dubbed it "Heat Orchestration Template" during a session. HOT seems to have stuck for at least a while, though "Heat DSL" may also end up being its name.</p>
+<p>There were also some interesting discussions around auto scaling going into Heat. I think it is understood by everyone that this is a different interface to similar, but not identical, control services. Because having competing control services can be problematic, it makes sense to have them all live in Heat for now. Rackspace has committed some developers to getting the problem solved and code published during this cycle, so we are all excited to see their work.</p>
+<p>On a larger scale, the "<a href="http:&#47;&#47;github.com&#47;tripleo">TripleO<&#47;a> (OpenStack on OpenStack)" program that our team at HP has been driving under the tutelage of Robert Collins got extreme amounts of exposure. With Bare-Metal nova landing in OpenStack for grizzly, and Heat fully integrated, nearly all of our components are blessed and thus prepped for the usual community contribution fire hose that OpenStack brings. The other pieces, <a href="http:&#47;&#47;github.com&#47;stackforge&#47;diskimage-builder">diskimage-builder<&#47;a>, <a href="http:&#47;&#47;github.com&#47;stackforge&#47;os-config-applier">os-config-applier<&#47;a>, and <a href="http:&#47;&#47;github.com&#47;stackforge&#47;os-refresh-config">os-refresh-config<&#47;a>, are all in StackForge and will be absorbed into OpenStack as we flesh out the TripleO effort.</p>
+<p>After the day 1 "Heat firehose" of sessions, I spent a lot of time just communicating to various interested parties about what it all means and where Heat and TripleO fit in with the OpenStack ecosystem. My talk about using Heat to manage OpenStack was well attended and there were some great questions. <a href="https:&#47;&#47;region-a.geo-1.objects.hpcloudsvc.com:443&#47;v1&#47;42841271810042&#47;Docs&#47;OpenStackSummit_HeatOpenStackManagement.pdf">Slides are available here<&#47;a>. <em>Update 2013-04-26: videos have been posted!<&#47;em></p>
+<p><iframe width="560" height="315" src="http:&#47;&#47;www.youtube.com&#47;embed&#47;O-SdNaFq2CQ" frameborder="0" allowfullscreen><&#47;iframe></p>
+<p>One big surprise was to see the tool chain of TripleO mentioned in the keynote by Mark Shuttleworth. The concept we have subscribed to is to copy the Unix tool method. One needs to support incremental adoption of tools and thus one tool should do one job well. To demonstrate this, I have used this image a few times:</p>
+<p><img class="alignnone" src="http:&#47;&#47;spamaps.org&#47;tripleo-gospel.svg" alt="" width="1052" height="744" &#47;></p>
+<p>This is not a controversial pattern, and has proven successful for solving large problems in computing before. So, imagine my surprise when I saw that Mark Shuttleworth was arguing against it in a slide, showing Juju trying to do all of these jobs, and suggesting this was better than our (unfinished) effort to break the problem up and write a single tool for each distinct task. I spoke with Mark afterwards, and I think we will just agree to disagree on the approach. Having been quite involved with Juju since very early in its existence, I am still rooting for Juju to accomplish what it has set out to do. However, I am troubled by the lack of focus and unclear integration path.</p>
+<p>I want to end on a happy note. This was my first OpenStack summit as an employee of <a href="http:&#47;&#47;hpcloud.com">HP Cloud Services<&#47;a>. I want to thank HP for the opportunities provided to me, and also for sponsoring OpenStack. There are so many talented and focused people at HP, I think we're going to do some really amazing work together.</p>
+<p>Overall, this was a great OpenStack Summit. The Havana cycle will see OpenStack growing more features and improving the deployment story, which is good for everyone. I am particularly excited about the proposition of gathering for "OpenStack 'I'", which will be in Hong Kong! So, rock on Stackers, can't wait to see you all again in the fall!</p>
