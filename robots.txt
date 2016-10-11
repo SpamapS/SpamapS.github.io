@@ -1,1 +1,1 @@
-Sitemap: /sitemap.xml
+Sitemap: http://fewbar.com/sitemap.xml
