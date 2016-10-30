@@ -62,7 +62,7 @@ we need to write down how things work now, record the current theory of
 operation, and then collaborate on improvements to those theories and
 the actual implementations.
 
-Without the Architecture Working Group, I'm sure OpenStack will remain a
+Without the Architecture Working Group, I'm sure OpenStack will remain
 valuable and even be maintainable. However, I'd like to see it continue
 to evolve and thrive even faster, and I'm proud to be working with people
 to try and provide a safe place to make that happen.
