@@ -59,7 +59,7 @@ of developing and even operating it.
 
 We want to make sure that OpenStack can continue moving forward, and so,
 we need to write down how things work now, record the current theory of
-operatoin, and then collaborate on improvements to those theories and
+operation, and then collaborate on improvements to those theories and
 the actual implementations.
 
 Without the Architecture Working Group, I'm sure OpenStack will remain a
