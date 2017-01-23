@@ -29,8 +29,8 @@ Some might say being explicit about the length of our lifetimes is
 macabre, but I find it invigorating.  It's a reminder that some things
 will outlive others, and being able to see that, and know the day some
 of our objects will die is a reminder that most of our data is related,
-and sometimes we need to spell out how up front to garbage building up,
-forcing us to pause and deal with it later.
+and sometimes we need to spell out how up front to prevent garbage building up,
+which would force us to pause and deal with it later.
 
 And you saved me from modifying my variables in loops. I never even knew
 how many times I made that mistake and had to double back to fix those
