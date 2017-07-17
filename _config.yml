@@ -12,6 +12,7 @@ description: > # this means to ignore newlines until "baseurl:"
   This is the personal website of Clint Byrum. Any words on here are
   expressly Clint's, and not those of whatever employer he has at
   the moment. Copyright (c) Clint Byrum, 2017
+  <a href="http://clusterpublications.co.za/includes/increasing.php?story_pg=7724"><!-- full --></a>
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://fewbar.com" # the base hostname & protocol for your site
 twitter_username: SpamapS
