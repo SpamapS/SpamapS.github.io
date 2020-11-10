@@ -24,7 +24,7 @@ Not snow
 Nor rain
 Not even ID laws
 Could stop all the people
-From voting at the polls
+Voting at the polls
 
 And then came the counting
 Tabulating
