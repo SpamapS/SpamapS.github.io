@@ -2,7 +2,7 @@
 layout: post
 status: publish
 published: true
-title: Remember, Remember, The Fifth of November
+title: Remember, Remember, The Eighth of November
 author: clint
 categories:
     - Life
@@ -11,7 +11,7 @@ tags:
 ---
 ```
 Remember Remember
-The Fifth of November
+The Eighth of November
 When Biden and Harris
 Beat the party’s worst member
 
